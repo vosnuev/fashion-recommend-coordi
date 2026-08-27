@@ -207,6 +207,7 @@ output
 docs/*
 !docs/wardrobe-product-import-investigation.md
 !docs/lookbook-admin-csv-guide.md
+!docs/lookbook-api-design.md
 !docs/wardrobe-custom-category-contract.md
 !docs/wardrobe-custom-category-chat-followup.md
 !docs/wardrobe-category-order-preference-chat-contract.md
