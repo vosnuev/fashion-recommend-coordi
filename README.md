@@ -194,6 +194,53 @@
 
 <img src="docs/service-architecture.svg" width="100%">
 
+```mermaid
+flowchart LR
+  subgraph Client["📱 Client"]
+    Mobile["Mobile<br/>Expo · RN · TypeScript"]
+  end
+
+  subgraph AWS["☁️ AWS API 스택"]
+    API["API<br/>Django/DRF · JWT"]
+    Chat["chat-worker<br/>멀티에이전트 · SSE"]
+    Outfit["outfit-worker<br/>코디 평가"]
+    Weather["weather-collector<br/>기상청 APIHub"]
+    PG[("PostgreSQL 16<br/>원본 · DDL")]
+    Redis[("Redis 7<br/>큐 · 캐시")]
+  end
+
+  subgraph GPU["🔥 GPU 서버 (RunPod / EC2)"]
+    Image["image-processor<br/>옷장 GPU 워커"]
+    Product["product-indexer<br/>상품 임베딩"]
+    Embed["text-embedding-api<br/>BGE-M3 · 한국어"]
+  end
+
+  Qdrant[("Qdrant<br/>벡터 검색")]
+
+  Mobile -->|"REST · SSE"| API
+  API -->|"queue"| Chat
+  API -->|"queue"| Outfit
+  API -->|"callback"| Image
+  Chat -->|"query"| Embed
+  Image -->|"vectors"| Qdrant
+  Product -->|"vectors"| Qdrant
+  Weather -->|"forecast"| API
+  API -->|"SQL"| PG
+  API -->|"queue"| Redis
+
+  classDef frontend fill:#e3f2fd,stroke:#1976d2,color:#000
+  classDef backend fill:#fff3e0,stroke:#f57c00,color:#000
+  classDef cloud fill:#fce4ec,stroke:#c2185b,color:#000
+  classDef database fill:#e8f5e9,stroke:#388e3c,color:#000
+  classDef external fill:#f3e5f5,stroke:#7b1fa2,color:#000
+
+  class Mobile frontend
+  class API,Chat,Outfit backend
+  class Image,Product,Embed cloud
+  class PG,Qdrant,Redis database
+  class Weather external
+```
+
 | 계층 | 서비스 | 역할 | 통신 |
 |---|---|---|---|
 | **클라이언트** | `mobile/` | Expo Router 기반 RN 앱 (iOS · Android · Web) | REST · SSE |
