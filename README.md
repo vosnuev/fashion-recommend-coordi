@@ -194,6 +194,24 @@
 
 <img src="docs/cozy-architecture.png" width="100%">
 
+| 계층 | 서비스 | 역할 | 통신 |
+|---|---|---|---|
+| **클라이언트** | `mobile/` | Expo Router 기반 RN 앱 (iOS · Android · Web) | REST · SSE |
+| **API** | `api` | Django/DRF · JWT · 스키마 소유 · 작업 큐잉 | 내부 Redis Queue |
+| **CPU 워커** | `chat-worker` | 채팅 오케스트레이션 → 추천 → SSE publish | Redis Stream |
+| | `outfit-worker` | 코디 평가 (룰 + VLM 루브릭) | Redis Stream |
+| | `daily-look-worker` | 오늘의 룩 생성 · 대안 후보 | Redis Stream |
+| | `outfit-render-worker` | 코디 카드 · 가상 착장 렌더 | Redis Stream |
+| **수집기** | `weather-collector` | 기상청 APIHub 실황·단기·중기 | API |
+| | `naver-collector` / `eleven-collector` | 쇼핑 상품 수집 + LLM 태깅 | API → S3 |
+| **GPU 워커** | `image-processor` | 옷장 사진 → 열거·상품컷·태깅·임베딩 | Redis Stream |
+| | `wardrobe-item-tagger` | 단일 아이템 사진 일괄 태깅 (Qwen3-VL) | Redis Stream |
+| | `wardrobe-reindex-worker` | 기존 크롭·태그 → 임베딩 재생성 | Redis Stream |
+| | `product-indexer` | 상품 이미지·텍스트 임베딩 → Qdrant | Redis Stream |
+| | `text-embedding-api` | 채팅 질의 → BGE-M3 벡터 | HTTP |
+| | `golden-set` | 골든 코디 → 판단 지식 배치 | 배치 |
+| **데이터** | PostgreSQL 16 · Qdrant · Redis · S3 | 원본 · 벡터 · 큐/캐시 · 이미지 | — |
+
 클라이언트 — 백엔드 — AI 워커 — 데이터의 4계층이다. **API 서버는 무거운 AI 작업을 직접 하지 않는다.** 모든 생성·분석 작업은 Redis 신뢰성 큐(`BLMOVE pending→processing`, ack 시에만 제거, 재시도 초과 시 dead 큐)에 넣고 202로 응답하며, 워커가 처리한 뒤 내부 콜백 또는 SSE로 결과를 돌려준다.
 
 ### 벡터 컬렉션
