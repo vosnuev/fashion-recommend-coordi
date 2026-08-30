@@ -672,11 +672,3 @@ python manage.py sweep_stale_analyses             # 고착된 코디 평가 정�
 <p align="center">
   <sub>SK네트웍스 Family AI 캠프 28기 · 최종 프로젝트 1팀 · COZY</sub>
 </p>
-
----
-
-## 📱 Expo 빌드
-
-- 계정 · 프로젝트: [expo.dev/accounts/vosnuevo](https://expo.dev/accounts/vosnuevo)
-- EAS Build: `mobile/` 디렉터리 기준, 프로필 `preview` · `production`
-- 산출물: APK / IPA / web bundle
