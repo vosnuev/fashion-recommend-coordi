@@ -473,6 +473,8 @@ fashion-recommend-coordi/
 
 ## 🚀 빠른 시작
 
+> 모든 환경변수는 **Infisical**로 관리한다. `.env`는 `infisical export`로만 생성·갱신, 커밋 금지.
+
 ### Docker
 
 ```bash
