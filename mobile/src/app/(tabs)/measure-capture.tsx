@@ -1,17 +1,17 @@
 import { Icon, type IconName } from '@/components/icon';
+import { Image } from 'expo-image';
 import { router, useLocalSearchParams } from 'expo-router';
 import { goBack } from '@/lib/goBack';
-import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Fonts , ContentMax} from '@/constants/theme';
+import { Editorial, ink, Fonts , ContentMax} from '@/constants/theme';
 import { useBreakpoint } from '@/hooks/use-breakpoint';
-import { measureStore } from '@/state/measure';
+import { pickBodyPhoto } from '@/lib/pickItemPhoto';
+import { measureStore, useMeasure } from '@/state/measure';
 
-const INK = '#1c1917';
-const BONE = '#eae0d3';
-const ink = (a: number) => `rgba(28,25,23,${a})`;
+const INK = Editorial.ink;
+const BONE = Editorial.bone;
 
 function Steps({ active }: { active: number }) {
   return (
@@ -34,15 +34,15 @@ const GUIDE: { icon: IconName; text: string }[] = [
 export default function MeasureCapture() {
   const { contentStyle } = useBreakpoint();
   const { returnTo } = useLocalSearchParams<{ returnTo?: string }>();
-  const [shots, setShots] = useState<{ front: boolean; side: boolean }>({
-    front: false,
-    side: false,
-  });
-  const both = shots.front && shots.side;
+  /* 첨부 여부만 로컬 boolean 으로 들고 있으면 "무엇을 붙였는지"를 화면이 알 수 없다.
+     스토어의 photos(uri) 를 그대로 구독해 슬롯에 사진을 띄운다 — 재첨부하면 uri 가 바뀌므로
+     바뀐 사진이 눈에 바로 보이고, 화면을 나갔다 돌아와도 첨부한 사진이 남는다. */
+  const { photos } = useMeasure();
+  const both = Boolean(photos.front && photos.side);
 
   return (
     <View style={styles.container}>
-      <SafeAreaView edges={['top', 'bottom']} style={styles.safe}>
+      <SafeAreaView edges={['top']} style={styles.safe}>
         <View style={styles.top}>
           <Pressable hitSlop={12} onPress={() => goBack('/(tabs)/my')}>
             <Icon name="chevron.left" tintColor={INK} size={20} />
@@ -58,26 +58,39 @@ export default function MeasureCapture() {
           {/* 촬영 슬롯 2컷 */}
           <View style={styles.slots}>
             {(['front', 'side'] as const).map((k) => {
-              const done = shots[k];
+              const uri = photos[k];
               return (
                 <Pressable
                   key={k}
-                  style={styles.slot}
-                  onPress={() => {
-                    setShots((s) => ({ ...s, [k]: true }));
-                    // 실제 카메라 연동 전까지 mock URI 를 스토어에 기록
-                    measureStore.setPhoto(k, `mock://photo/${k}`);
+                  style={[styles.slot, Boolean(uri) && styles.slotFilled]}
+                  onPress={async () => {
+                    // 앨범에서 전신 사진 1장 선택 (웹은 파일 선택 창). 취소하면 무시.
+                    const picked = await pickBodyPhoto();
+                    if (!picked) return;
+                    measureStore.setPhoto(k, picked);
                   }}>
                   <View style={styles.silhouette}>
-                    <Icon
-                      name={done ? 'checkmark.circle.fill' : 'camera'}
-                      tintColor={done ? INK : ink(0.35)}
-                      size={26}
-                    />
+                    {uri ? (
+                      <>
+                        {/* key 에 uri 를 넣어 재첨부 때 이미지를 새로 마운트한다 —
+                            이전 사진이 잠깐 남아 보이면 바뀐 건지 확인이 안 된다. */}
+                        <Image
+                          key={uri}
+                          source={{ uri }}
+                          style={StyleSheet.absoluteFill}
+                          contentFit="cover"
+                        />
+                        <View style={styles.doneBadge}>
+                          <Icon name="checkmark.circle.fill" tintColor={INK} size={18} />
+                        </View>
+                      </>
+                    ) : (
+                      <Icon name="camera" tintColor={ink(0.35)} size={26} />
+                    )}
                   </View>
                   <Text style={styles.slotLabel}>{k === 'front' ? '정면' : '측면'}</Text>
-                  <Text style={[styles.slotState, done && styles.slotStateDone]}>
-                    {done ? '촬영 완료' : '탭하여 촬영'}
+                  <Text style={[styles.slotState, Boolean(uri) && styles.slotStateDone]}>
+                    {uri ? '다른 사진으로 바꾸기' : '탭하여 첨부'}
                   </Text>
                 </Pressable>
               );
@@ -101,7 +114,7 @@ export default function MeasureCapture() {
           <View style={styles.privacy}>
             <Icon name="lock.shield" tintColor={ink(0.5)} size={15} />
             <Text style={styles.privacyText}>
-              사진은 치수 추정에만 쓰이고 90일 후 자동 삭제돼요.
+              사진은 서버에 저장하지 않고 치수 추정 후 바로 폐기해요.
             </Text>
           </View>
 
@@ -119,12 +132,12 @@ export default function MeasureCapture() {
           </Pressable>
         </ScrollView>
 
-        <View style={[styles.bottomBar, contentStyle(ContentMax.narrow)]}>
+        <View style={[styles.bottomBar, { paddingBottom: 12 }, contentStyle(ContentMax.narrow)]}>
           <Pressable
             style={[styles.cta, !both && styles.ctaDisabled]}
             disabled={!both}
             onPress={() => {
-              measureStore.estimate(); // 추정 시작(비동기) — STEP3 가 결과를 구독
+              measureStore.startPhotoMeasurement(); // 사진 업로드→폴링 시작 — STEP3 가 결과를 구독
               router.push({
                 pathname: '/measure-result',
                 params: returnTo ? { returnTo } : undefined,
@@ -141,18 +154,18 @@ export default function MeasureCapture() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#ffffff' },
+  container: { flex: 1, backgroundColor: Editorial.page },
   safe: { flex: 1 },
   top: { paddingHorizontal: 20, paddingTop: 8 },
   content: { paddingHorizontal: 24, paddingTop: 8, paddingBottom: 24 },
 
   steps: { flexDirection: 'row', gap: 6, marginBottom: 24 },
   step: { flex: 1, height: 3, borderRadius: 2, backgroundColor: ink(0.1) },
-  stepOn: { backgroundColor: INK },
+  stepOn: { backgroundColor: Editorial.selected },
 
-  eyebrow: { fontSize: 11, letterSpacing: 1.5, color: ink(0.4), fontWeight: '600' },
+  eyebrow: { fontSize: 11, letterSpacing: 1.5, color: Editorial.textCaption, fontWeight: '600' },
   title: { fontFamily: Fonts.serif, fontSize: 28, color: INK, marginTop: 10, lineHeight: 34 },
-  lead: { fontSize: 14, color: ink(0.5), marginTop: 12 },
+  lead: { fontSize: 14, color: Editorial.textCaption, marginTop: 12 },
 
   slots: { flexDirection: 'row', gap: 12, marginTop: 26 },
   slot: {
@@ -164,6 +177,8 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     paddingVertical: 20,
   },
+  // 사진이 들어오면 테두리를 진하게 — 어느 쪽을 채웠는지 카드 단위로도 구분된다.
+  slotFilled: { borderColor: ink(0.28) },
   silhouette: {
     width: 90,
     height: 120,
@@ -172,23 +187,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 4,
+    // 사진이 absoluteFill 로 깔리므로 모서리를 잘라 줘야 둥근 박스가 유지된다.
+    overflow: 'hidden',
+  },
+  doneBadge: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: Editorial.surface,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   slotLabel: { fontSize: 15, fontWeight: '600', color: INK },
-  slotState: { fontSize: 12, color: ink(0.4) },
+  slotState: { fontSize: 12, color: Editorial.textCaption },
   slotStateDone: { color: INK, fontWeight: '500' },
 
   sectionTitle: { fontSize: 13, fontWeight: '600', color: INK, marginTop: 30, marginBottom: 12 },
-  guideCard: { backgroundColor: '#fcffff', borderRadius: 16, padding: 8 },
+  guideCard: { backgroundColor: Editorial.surfaceSoft, borderWidth: 1, borderColor: Editorial.line, borderRadius: 16, padding: 8 },
   guideRow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 8, paddingVertical: 10 },
   guideIcon: {
     width: 32,
     height: 32,
     borderRadius: 10,
-    backgroundColor: '#fff',
+    backgroundColor: Editorial.surface,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  guideText: { flex: 1, fontSize: 13.5, color: ink(0.7) },
+  guideText: { flex: 1, fontSize: 13.5, color: Editorial.textSoft },
 
   privacy: {
     flexDirection: 'row',
@@ -197,7 +225,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     paddingHorizontal: 4,
   },
-  privacyText: { flex: 1, fontSize: 12, color: ink(0.45), lineHeight: 18 },
+  privacyText: { flex: 1, fontSize: 12, color: Editorial.textCaption, lineHeight: 18 },
 
   bottomBar: {
     paddingHorizontal: 24,
@@ -210,12 +238,12 @@ const styles = StyleSheet.create({
   cta: {
     height: 52,
     borderRadius: 999,
-    backgroundColor: INK,
+    backgroundColor: Editorial.cta,
     alignItems: 'center',
     justifyContent: 'center',
   },
   ctaDisabled: { backgroundColor: ink(0.22) },
   ctaText: { color: '#fff', fontSize: 15, fontWeight: '500' },
 
-  skipText: { fontSize: 14, color: ink(0.5), fontWeight: '500', textDecorationLine: 'underline' },
+  skipText: { fontSize: 14, color: Editorial.textCaption, fontWeight: '500', textDecorationLine: 'underline' },
 });

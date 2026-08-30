@@ -1,11 +1,10 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Fonts } from '@/constants/theme';
+import { Editorial, Fonts } from '@/constants/theme';
 
 // 에디토리얼 본 팔레트 (라이트 고정)
-const INK = '#1c1917';
-const ink = (a: number) => `rgba(28,25,23,${a})`;
+const INK = Editorial.ink;
 
 export type StubAction = {
   label: string;
@@ -56,7 +55,7 @@ export function ScreenStub({
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#ffffff' },
+  container: { flex: 1, backgroundColor: Editorial.page },
   center: {
     flex: 1,
     alignItems: 'center',
@@ -64,11 +63,11 @@ const styles = StyleSheet.create({
     gap: 6,
     paddingHorizontal: 32,
   },
-  eyebrow: { fontSize: 11, letterSpacing: 2, color: ink(0.4), fontWeight: '500' },
+  eyebrow: { fontSize: 11, letterSpacing: 2, color: Editorial.textCaption, fontWeight: '500' },
   title: { fontFamily: Fonts.serif, fontSize: 34, color: INK },
   note: {
     fontSize: 13,
-    color: ink(0.45),
+    color: Editorial.textCaption,
     textAlign: 'center',
     lineHeight: 20,
     marginTop: 6,
@@ -79,11 +78,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 28,
     minWidth: 200,
     borderRadius: 999,
-    backgroundColor: INK,
+    backgroundColor: Editorial.cta,
     alignItems: 'center',
     justifyContent: 'center',
   },
   buttonText: { color: '#ffffff', fontSize: 14, fontWeight: '500' },
   linkBtn: { paddingVertical: 6 },
-  linkText: { color: ink(0.5), fontSize: 13 },
+  linkText: { color: Editorial.textCaption, fontSize: 13 },
 });

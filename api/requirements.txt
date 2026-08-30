@@ -6,7 +6,29 @@ django-cors-headers>=4.4
 drf-spectacular>=0.28,<1.0
 psycopg2-binary>=2.9
 Pillow>=10.0
+pillow-heif>=0.18
 python-dotenv>=1.0
 requests>=2.31
 PyJWT>=2.8
 cryptography>=42.0
+boto3>=1.34
+redis>=5.0
+qdrant-client>=1.12
+openai>=1.40
+
+# 신체치수 추정 (ml/body_measurement/src/inference.py)
+# ⚠️ scikit-learn은 반드시 1.8.0으로 고정한다. 서빙에 쓰는
+#    artifacts/models/hist_gradient_boosting.joblib이 1.8.0으로 저장돼 있어
+#    1.9.0에서 열면 ModuleNotFoundError: No module named '_loss'로 실패한다.
+#    모델을 재학습하면 이 핀도 같이 올려야 한다.
+#    pickle은 numpy/scipy 내부 구조도 참조하므로 이들도 함께 고정해야 핀이 의미가
+#    있다 (아래는 로딩·추론을 실제로 검증한 조합).
+#    scipy/numpy는 모델을 학습·검증한 로컬 환경의 실제 버전에 맞춘다. 이전 값
+#    (scipy 1.18.0 / numpy 2.5.1)은 Python 3.12 이상을 요구해 api 이미지
+#    (python:3.11-slim)에서 빌드가 깨졌고, 검증 환경과도 달라 핀 역할을 못 했다.
+scikit-learn==1.8.0
+scipy==1.17.1
+numpy==2.4.3
+joblib==1.5.3
+pandas>=2.2
+Jinja2>=3.1

@@ -1,0 +1,29 @@
+# 루트를 빌드 컨텍스트로 쓰는 이미지(ml/golden_set/Dockerfile)용 제외 목록.
+# api/ 등 자체 컨텍스트를 쓰는 빌드는 각자의 .dockerignore를 따르므로 영향이 없다.
+.git/
+.github/
+
+# 시크릿은 절대 이미지에 넣지 않는다 (compose가 env_file로 주입한다).
+.env
+.env.*
+dev.env
+
+# 런타임 산출물·캐시
+**/__pycache__/
+**/*.py[cod]
+**/.venv/
+**/venv/
+**/node_modules/
+**/runs/
+*.log
+api/staticfiles/
+local/
+output/
+
+# 골든셋 빌드와 무관한 대용량 자산
+mobile/
+docs/
+test/
+collector/
+ml/body_measurement/
+ml/datasets/

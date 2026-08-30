@@ -1,9 +1,9 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { Animated, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Icon } from '@/components/icon';
-import { BottomTabInset, Editorial, Type } from '@/constants/theme';
+import { Editorial, Type } from '@/constants/theme';
+import { useBottomTabInset } from '@/hooks/use-bottom-tab-inset';
 
 type ToastVariant = 'default' | 'success' | 'error';
 type ToastOptions = { variant?: ToastVariant; duration?: number };
@@ -24,7 +24,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toast, setToast] = useState<ToastState>(null);
   const anim = useRef(new Animated.Value(0)).current;
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const insets = useSafeAreaInsets();
+  const tabInset = useBottomTabInset();
 
   const hide = useCallback(() => {
     Animated.timing(anim, { toValue: 0, duration: 180, useNativeDriver: true }).start(() =>
@@ -59,7 +59,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               styles.toast,
               toast.variant === 'error' && styles.toastError,
               {
-                bottom: BottomTabInset + insets.bottom + 16,
+                bottom: tabInset + 16,
                 opacity: anim,
                 transform: [
                   { translateY: anim.interpolate({ inputRange: [0, 1], outputRange: [16, 0] }) },

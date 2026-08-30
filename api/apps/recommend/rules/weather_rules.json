@@ -1,0 +1,67 @@
+{
+  "schema_version": "weather-rules-v1",
+  "note": "기온대별 착장 규칙. 체형 규칙과 같은 원칙으로 코드가 아니라 이 파일이 판단 원천이다. 값은 image-processor/pipeline/taxonomy.py의 태그 라벨만 쓴다 — style_rules.validate_rules()가 로딩 시 검사한다.",
+  "weights": {
+    "note": "하드 필터가 아니라 감점이다. 27도에 아우터가 든 코디를 검색에서 아예 제외하면, 골든셋이 아우터 코디 위주일 때 후보가 0건이 되어 사용자는 아무것도 못 본다. 감점은 순위만 밀어내므로 그 사고가 없다. 다만 취향 기피(-60)보다는 약하게 둔다 — 사용자가 직접 고른 조건이 날씨 추정보다 우선이다.",
+    "discourage": -40,
+    "encourage": 12
+  },
+  "bands": [
+    {
+      "label": "더움",
+      "min": 23,
+      "hint": "겉옷 불필요",
+      "discourage": [
+        {"category_large": "아우터", "reason": "기온이 높아 겉옷이 부담스럽다"},
+        {"material": "니트", "reason": "더운 날씨에 두께감이 부담스럽다"},
+        {"material": "울", "reason": "더운 날씨에 맞지 않는 소재다"},
+        {"material": "패딩충전재", "reason": "더운 날씨에 맞지 않는 소재다"}
+      ],
+      "encourage": [
+        {"sleeve": "반팔", "reason": "기온이 높아 짧은 소매가 편하다"},
+        {"material": "린넨", "reason": "통기성이 좋아 더운 날에 어울린다"}
+      ]
+    },
+    {
+      "label": "선선",
+      "min": 17,
+      "max": 23,
+      "hint": "얇은 겉옷이 어울림",
+      "discourage": [
+        {"material": "패딩충전재", "reason": "이 기온에는 과하다"}
+      ],
+      "encourage": [
+        {"category_large": "아우터", "reason": "일교차에 대비한 얇은 겉옷이 어울린다"},
+        {"sleeve": "긴팔", "reason": "아침저녁 선선함에 맞다"}
+      ]
+    },
+    {
+      "label": "쌀쌀",
+      "min": 9,
+      "max": 17,
+      "hint": "겉옷 권장",
+      "discourage": [
+        {"sleeve": "민소매", "reason": "이 기온에는 춥다"}
+      ],
+      "encourage": [
+        {"category_large": "아우터", "reason": "쌀쌀한 기온에 겉옷이 필요하다"},
+        {"material": "니트", "reason": "적당한 두께감이 이 기온에 맞다"}
+      ]
+    },
+    {
+      "label": "추움",
+      "max": 9,
+      "hint": "두꺼운 겉옷 필수",
+      "discourage": [
+        {"sleeve": "민소매", "reason": "이 기온에는 춥다"},
+        {"sleeve": "반팔", "reason": "이 기온에는 춥다"},
+        {"material": "린넨", "reason": "추운 날씨에 맞지 않는 소재다"}
+      ],
+      "encourage": [
+        {"category_large": "아우터", "reason": "추운 기온에 겉옷이 반드시 필요하다"},
+        {"material": "패딩충전재", "reason": "보온이 필요한 기온이다"},
+        {"material": "울", "reason": "보온이 필요한 기온이다"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+# 세그멘테이션 모델 비교 테스트 통합 의존성 (test/ 전용)
+# segformer / sam2(grounded) / sam3(+gemini) 3개 테스트를 모두 커버한다.
+#
+# Docker: 베이스 이미지(pytorch/pytorch)에 torch/torchvision이 포함되어 있어
+#         아래 torch 계열은 이미 충족된 상태로 넘어간다.
+# 로컬(비도커, GPU): CUDA 버전에 맞춰 별도 설치 권장:
+#         pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+torch>=2.3.1
+torchvision>=0.18
+
+transformers>=4.44        # SegFormer, Grounding DINO
+ultralytics>=8.3.237      # SAM2(ultralytics 체크포인트), SAM3SemanticPredictor 지원 최소 버전
+open_clip_torch>=2.24     # Marqo-FashionSigLIP (segformer/sam2 특징 추출)
+google-genai>=1.0.0       # Gemini 태깅 (sam3)
+huggingface_hub>=0.24     # sam2.1 HF 체크포인트, sam3 가중치 다운로드
+opencv-python-headless>=4.9
+pillow>=10.0
+numpy>=1.26
+
+# ── 공식 Meta SAM2 (sam2/test_grounded_sam2_common_package.py) ──────
+# pyproject가 빌드 시 torch를 요구하므로, 이미 torch가 설치된 환경에서
+# `pip install --no-build-isolation -r requirements.txt` 로 설치한다
+# (Dockerfile이 이 방식을 사용). 재현성이 필요하면 커밋 SHA로 고정할 것.
+SAM-2 @ git+https://github.com/facebookresearch/sam2.git
+
+# ── CLIP (SAM 3 텍스트 프롬프트 토크나이저) ─────────────────────────
+# 반드시 ultralytics 포크(패키지명 clip, v1.0)여야 한다. PyPI의 clip은 전혀
+# 다른 패키지라 설치되면 "TypeError: 'SimpleTokenizer' object is not
+# callable"로 SAM3 추론이 실패한다 (ultralytics SAM-3 공식 문서 명시).
+# 커밋 SHA 고정으로 빌드 재현성 확보.
+clip @ https://github.com/ultralytics/CLIP/archive/c4b6ea0932a2c0f39a0fa528af5ec4982ff15cab.zip

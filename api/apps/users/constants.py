@@ -1,4 +1,4 @@
-"""추구미(Pursuit) 관련 상수.
+"""사용자 개인화 설정 상수.
 
 화면 카테고리 목록 + 정렬 순서가 여기서 단일 진실 공급원(Single Source of Truth).
 - `PREFERENCE_CATEGORIES`: 화면에 보일 11개 카테고리 (key, label)
@@ -8,6 +8,31 @@
 """
 
 from __future__ import annotations
+
+BUDGET_CATEGORIES: tuple[str, ...] = (
+    "상의",
+    "하의",
+    "아우터",
+    "원피스/세트",
+    "신발",
+    "가방",
+    "액세서리",
+)
+
+DEFAULT_CATEGORY_BUDGETS: dict[str, int] = {
+    "상의": 50_000,
+    "하의": 50_000,
+    "아우터": 150_000,
+    "원피스/세트": 50_000,
+    "신발": 100_000,
+    "가방": 200_000,
+    "액세서리": 50_000,
+}
+
+
+def effective_category_budgets(overrides: dict[str, int] | None) -> dict[str, int]:
+    """시스템 기본값 위에 사용자가 직접 설정한 값만 덮어쓴다."""
+    return DEFAULT_CATEGORY_BUDGETS | (overrides or {})
 
 # 11개 카테고리 — 프론트 화면 순서와 1:1 매핑
 # key: JSON payload에 쓰일 키, label: 화면/관리자에 보일 한글 이름

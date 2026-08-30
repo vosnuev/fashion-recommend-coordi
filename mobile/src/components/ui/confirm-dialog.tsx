@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useRef, useState } from 'react';
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { Editorial, ink, Type } from '@/constants/theme';
+import { Editorial, Type } from '@/constants/theme';
 
 type ConfirmOptions = {
   title: string;
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   card: {
     width: '100%',
     maxWidth: 360,
-    backgroundColor: '#fff',
+    backgroundColor: Editorial.surface,
     borderRadius: 20,
     paddingHorizontal: 24,
     paddingTop: 26,
@@ -89,16 +89,16 @@ const styles = StyleSheet.create({
   title: { fontSize: Type.lead, fontWeight: '700', color: Editorial.ink, textAlign: 'center' },
   message: {
     fontSize: Type.footnote,
-    color: ink(0.5),
+    color: Editorial.textCaption,
     textAlign: 'center',
     marginTop: 10,
     lineHeight: 21,
   },
   actions: { flexDirection: 'row', gap: 10, marginTop: 24 },
   btn: { flex: 1, height: 50, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
-  cancel: { backgroundColor: Editorial.surface },
-  cancelText: { fontSize: Type.label, fontWeight: '600', color: ink(0.6) },
-  confirm: { backgroundColor: Editorial.ink },
+  cancel: { backgroundColor: Editorial.surface, borderWidth: 1, borderColor: Editorial.line },
+  cancelText: { fontSize: Type.label, fontWeight: '600', color: Editorial.textCaption },
+  confirm: { backgroundColor: Editorial.cta },
   confirmDanger: { backgroundColor: Editorial.danger },
   confirmText: { fontSize: Type.label, fontWeight: '600', color: '#fff' },
 });

@@ -1,0 +1,300 @@
+# ============================================================
+# GPU 서버 전용 compose (RunPod / GPU EC2).
+#
+# 이 파일은 GPU가 필요한 워커 2종만 띄운다. db / qdrant / redis / api /
+# collector는 AWS 쪽 스택(docker-compose.yml)에 이미 떠 있다고 가정하고,
+# 접속 주소는 전부 .env 값(원격 호스트)을 그대로 쓴다.
+#
+#   ./run-gpu.sh                                          # 시크릿 내보내기 + 기동
+#   docker compose -f docker-compose.gpu.yml up -d --build
+#   docker compose -f docker-compose.gpu.yml up -d product-indexer   # 하나만
+#   docker compose -f docker-compose.gpu.yml logs -f
+#   docker compose -f docker-compose.gpu.yml down
+#
+# ── .env 취급 (루트 .env 하나로 통합 관리) ─────────────────────────
+# 이 파일이 리포 루트에 있으므로 compose는 루트 `.env`를 자동으로 읽는다.
+#   1) `${VAR}` 보간 — 아래 compose 정의 안의 치환에 쓰인다.
+#   2) `env_file: .env` — 파일의 모든 키를 컨테이너 환경변수로 주입한다.
+#
+# 즉 컨테이너 안에는 `.env` 파일 자체가 없고 값만 환경변수로 들어간다.
+# 반대로 리포에서 `python -m product_indexer.product_indexer`처럼 직접
+# 실행할 때는 코드가 루트 `.env` 파일을 읽어야 한다. 양쪽을 모두 만족시키려고
+# indexer/util/env.py, image-processor/config.py의 로더가
+#   ENV_FILE 지정 → 상위 디렉터리 탐색 → (없으면) 조용히 통과
+# 순으로 동작하고 항상 override=False로 읽는다. 그래서 아래 `environment:`에
+# 적은 컨테이너 전용 고정값을 .env 파일이 되돌리지 못한다.
+#
+# ── GPU ────────────────────────────────────────────────────────
+# deploy.resources.reservations.devices 는 NVIDIA Container Toolkit이 설치된
+# 호스트에서만 동작한다. GPU 없는 호스트에서 스모크 테스트할 때는 해당 블록을
+# 주석 처리하고 .env에서 PRODUCT_INDEXER_DEVICE=cpu / DEVICE=cpu 로 바꾼다.
+# ============================================================
+name: skn28-gpu
+
+services:
+  # 네이버·11번가 상품 임베딩 worker.
+  # 기본 CMD는 drain 트리거 HTTP API(:8080)이고, collector가 태깅 완료 후
+  # POST /v1/product-indexer/drain 을 호출하면 subprocess로 실제 임베딩을 돈다.
+  product-indexer:
+    build:
+      # 공용 util 패키지 포함을 위해 컨텍스트는 indexer/ 전체
+      context: ./indexer
+      dockerfile: product_indexer/Dockerfile.product-indexer
+    image: skn28-product-indexer
+    container_name: skn28-product-indexer
+    restart: unless-stopped
+    env_file:
+      - .env                  # PRODUCT_*, QDRANT_*, AWS_* 등
+    environment:              # env_file보다 우선하는 컨테이너 전용 고정값
+      TZ: Asia/Seoul
+      # Dockerfile과 같은 값. 아래 hf_cache 볼륨과 짝이다.
+      HF_HOME: /app/.cache/huggingface
+      # 컨테이너 안에서는 항상 전 인터페이스 bind (외부 노출은 ports가 통제)
+      PRODUCT_INDEXER_API_HOST: 0.0.0.0
+      PRODUCT_INDEXER_API_PORT: "8080"
+    ports:
+      # 호스트 포트가 겹치면 .env에서 PRODUCT_INDEXER_API_HOST_PORT를 바꾼다.
+      # 운영에서는 HTTPS reverse proxy 뒤에 두고 collector에서만 접근시킨다.
+      - "${PRODUCT_INDEXER_API_HOST_PORT:-8080}:8080"
+    volumes:
+      # FashionSigLIP(~0.8GB) + bge-m3(~2.3GB) 재다운로드 방지 (두 서비스 공유)
+      - hf_cache:/app/.cache/huggingface
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          python -c "import urllib.request,sys;
+          sys.exit(0 if urllib.request.urlopen(
+          'http://127.0.0.1:8080/health', timeout=5).status == 200 else 1)"
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  # 질의 텍스트 → BGE-M3 벡터 HTTP API (:8081).
+  # 채팅 추천이 사용자 문장으로 골든 코디를 찾을 때 API 서버가 호출한다.
+  # 이 서비스가 없으면 추천이 죽지는 않고 의미 검색 없이 필터 검색으로 내려간다
+  # (api/apps/chat/services/recommendation_pipeline.py 의 _retrieve_golden 참고).
+  #
+  # product-indexer와 **같은 이미지**를 쓴다 — bge-m3 의존성과 HF 캐시가 이미
+  # 그쪽에 있어 새 이미지를 만들 이유가 없다. 대신 프로세스는 나눈다: drain이
+  # GPU를 길게 잡는 동안 질의 임베딩까지 밀리면 채팅 전체가 느려진다.
+  # (같은 태그를 공유하므로 한 번 빌드하면 두 서비스에 함께 적용된다.)
+  text-embedding-api:
+    build:
+      context: ./indexer
+      dockerfile: product_indexer/Dockerfile.product-indexer
+    image: skn28-product-indexer
+    container_name: skn28-text-embedding-api
+    restart: unless-stopped
+    env_file:
+      - .env                  # TEXT_EMBEDDING_*, HF_* 등
+    environment:
+      TZ: Asia/Seoul
+      HF_HOME: /app/.cache/huggingface
+      TEXT_EMBEDDING_API_HOST: 0.0.0.0
+      TEXT_EMBEDDING_API_PORT: "8081"
+    command: python -m product_indexer.text_embedding_api
+    ports:
+      # 운영에서는 HTTPS reverse proxy 뒤에 두고 API 서버에서만 접근시킨다.
+      - "${TEXT_EMBEDDING_API_HOST_PORT:-8081}:8081"
+    volumes:
+      # bge-m3(~2.3GB)를 product-indexer와 공유한다.
+      - hf_cache:/app/.cache/huggingface
+    healthcheck:
+      # 모델을 다 올리기 전에는 /health가 503이라 그대로 unhealthy로 잡힌다.
+      test:
+        - CMD-SHELL
+        - >-
+          python -c "import urllib.request,sys;
+          sys.exit(0 if urllib.request.urlopen(
+          'http://127.0.0.1:8081/health', timeout=5).status == 200 else 1)"
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      # 모델 로드가 끝나야 준비된다. 캐시가 비어 있으면 내려받는 시간도 든다.
+      start_period: 180s
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  # 옷장 이미지 프로세서 워커.
+  # Redis 큐(BLMOVE)를 상시 폴링하므로 포트를 열지 않는다.
+  # REDIS_URL / WARDROBE_CALLBACK_URL은 AWS 쪽 원격 주소를 .env에 넣는다
+  # (GPU 서버에는 redis·api 컨테이너가 없어 서비스명으로 접근할 수 없다).
+  image-processor:
+    build:
+      context: ./image-processor
+    image: skn28-image-processor
+    container_name: skn28-image-processor
+    restart: unless-stopped
+    env_file:
+      - .env                  # GEMINI_*, REDIS_*, WARDROBE_*, WORKER_*, AWS_* 등
+    environment:
+      TZ: Asia/Seoul
+      # Dockerfile에는 HF_HOME이 없어 기본값이 /root/.cache/huggingface다.
+      # product-indexer와 캐시를 공유하려고 여기서 고정한다.
+      HF_HOME: /app/.cache/huggingface
+      WARDROBE_JOB_QUEUE: ${WARDROBE_JOB_QUEUE:-wardrobe:jobs}
+      WORKER_PIPELINE: gemini-edit
+      WORKER_PIPELINE_VERSION: gemini-edit-v1
+    volumes:
+      - hf_cache:/app/.cache/huggingface
+    healthcheck:
+      # 워커는 HTTP 엔드포인트가 없어 Redis 연결만 확인한다.
+      test:
+        - CMD-SHELL
+        - >-
+          python -c "import config, services.queue as q;
+          q._redis().ping()"
+      interval: 60s
+      timeout: 15s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  # 기존 옷장 크롭 이미지의 벡터만 다시 만드는 전용 워커.
+  # Gemini 열거·편집·태깅을 호출하지 않고 FashionSigLIP/BGE-M3만 사용한다.
+  wardrobe-reindex-worker:
+    build:
+      context: ./image-processor
+    image: skn28-image-processor
+    container_name: skn28-wardrobe-reindex-worker
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      TZ: Asia/Seoul
+      HF_HOME: /app/.cache/huggingface
+      WARDROBE_REINDEX_QUEUE: ${WARDROBE_REINDEX_QUEUE:-wardrobe:reindex}
+      WORKER_EMBED_ENABLED: "1"
+    command: python reindex_worker.py
+    volumes:
+      - hf_cache:/app/.cache/huggingface
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          python -c "import services.reindex_queue as q;
+          q._redis().ping()"
+      interval: 60s
+      timeout: 15s
+      retries: 3
+      start_period: 180s
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  # 골든셋 임베딩 워커.
+  # 기동하자마자 GOLDEN_S3_SOURCE_PREFIX를 훑어 아직 처리되지 않은 코디 원본을
+  # 찾아 코디 임베딩 → 아이템 분리·태깅·임베딩 → Qdrant 적재까지 진행한다.
+  # GOLDEN_SCAN_INTERVAL_SECONDS=0(기본)이면 1회 처리 후 종료하므로 배치 잡처럼
+  # `up golden-set` 으로 필요할 때만 돌리면 된다. 양수로 두면 상주 스캔이 된다.
+  golden-set:
+    build:
+      # indexer/ image-processor/ ml/ 을 모두 쓰므로 컨텍스트는 리포 루트다.
+      #
+      # 주의: 이 이미지는 image-processor 사본을 구워서 갖는다(옷장 워커 이미지와
+      # 별개다). image-processor를 고치면 이 이미지도 --build로 다시 만들어야
+      # 반영된다 — 안 그러면 옷장은 새 파이프라인, 골든셋은 옛 파이프라인으로
+      # 조용히 갈라진다.
+      context: .
+      dockerfile: ml/golden_set/Dockerfile
+    image: skn28-golden-set
+    container_name: skn28-golden-set
+    # 배치 성격이라 자동 재시작하지 않는다 (실패는 로그로 확인).
+    restart: "no"
+    env_file:
+      - .env                  # GOLDEN_*, GEMINI_*, QDRANT_*, AWS_* 등
+    environment:
+      TZ: Asia/Seoul
+      HF_HOME: /app/.cache/huggingface
+      GOLDEN_RUN_ROOT: /app/runs
+
+      # ── image-processor와 공유되는 무접두 변수 고정 ──
+      # 이 이미지는 아이템 분리를 위해 image-processor를 함께 담고 있고,
+      # image-processor의 config.py는 DEVICE·WORKER_* 를 접두사 없이 읽는다.
+      # 루트 .env를 옷장 워커와 공유하므로 그쪽 설정이 골든셋으로 새지 않게
+      # 컨테이너 안에서 못 박는다 (environment는 env_file보다 우선한다).
+      #
+      # GPU 스택이라 값은 '자동'이다. 다만 두 규약이 반대라는 점에 주의:
+      # golden은 GOLDEN_DEVICE=auto가 자동, image-processor는 DEVICE가 빈 값일
+      # 때 자동이고 값이 있으면 torch 디바이스 문자열로 그대로 쓴다.
+      GOLDEN_DEVICE: auto
+      DEVICE: ""
+      # 아이템 파이프라인 선택의 단일 출처. 옷장이 sam3-crop으로 전환해도
+      # 골든셋은 GOLDEN_ITEM_PIPELINE만 따른다.
+      WORKER_PIPELINE: ${GOLDEN_ITEM_PIPELINE:-gemini-edit}
+      # 0이면 goldenset_items에 조용히 0건이 들어간다 — 에러가 안 나서 늦게
+      # 발견된다. 옷장 튜닝으로 꺼두더라도 골든셋은 항상 켠다.
+      WORKER_EMBED_ENABLED: "1"
+      WORKER_IMAGE_EMBED_MODEL: ${GOLDEN_FASHION_EMBED_MODEL:-hf-hub:Marqo/marqo-fashionSigLIP}
+      WORKER_TEXT_EMBED_MODEL: ${GOLDEN_TEXT_EMBED_MODEL:-BAAI/bge-m3}
+    volumes:
+      - hf_cache:/app/.cache/huggingface
+      # run 산출물(코디 임베딩 캐시 등)을 컨테이너 재생성 후에도 유지한다.
+      # 아이템 결과는 S3가 기준이라 이 볼륨이 없어도 재처리되지는 않는다.
+      - golden_runs:/app/runs
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+  wardrobe-item-tagger:
+    build:
+      context: ./image-processor
+      dockerfile: Dockerfile.qwen
+    image: skn28-wardrobe-item-tagger
+    container_name: skn28-wardrobe-item-tagger
+    restart: unless-stopped
+    env_file: [.env]
+    environment:
+      TZ: Asia/Seoul
+      HF_HOME: /app/.cache/huggingface
+      WARDROBE_JOB_QUEUE: ${WARDROBE_ITEM_JOB_QUEUE:-wardrobe:item-jobs}
+      WORKER_PIPELINE: qwen-tag
+      WORKER_PIPELINE_VERSION: qwen-tag-v1
+    volumes:
+      - hf_cache:/app/.cache/huggingface
+    healthcheck:
+      test: [CMD-SHELL, 'python -c "import services.queue as q; q._redis().ping()"']
+      interval: 60s
+      timeout: 15s
+      retries: 3
+      start_period: 300s
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+volumes:
+  # 세 서비스가 같은 임베딩 모델(FashionSigLIP / bge-m3)을 쓰므로 캐시를 공유한다.
+  hf_cache:
+  # 골든셋 run 디렉터리 (manifest·임베딩 npz·클러스터).
+  golden_runs:

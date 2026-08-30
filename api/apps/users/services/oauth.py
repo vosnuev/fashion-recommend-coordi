@@ -43,7 +43,7 @@ class SocialProfile:
 _SECRET_REQUIRED = {"naver", "google"}
 
 
-def _generate_apple_client_secret(config: Dict[str, str]) -> str:
+def _generate_apple_client_secret(config: Dict[str, Any]) -> str:
     """
     Apple Sign In용 client_secret JWT를 동적으로 생성한다.
 
@@ -73,7 +73,7 @@ def _generate_apple_client_secret(config: Dict[str, str]) -> str:
     )
 
 
-def _provider_config(provider: str) -> Dict[str, str]:
+def _provider_config(provider: str) -> Dict[str, Any]:
     config = settings.OAUTH_PROVIDERS.get(provider)
     if not config:
         raise OAuthError(f"지원하지 않는 provider: {provider}")
@@ -236,7 +236,7 @@ def fetch_profile(
 
 
 def _fetch_apple_profile(
-    config: Dict[str, str],
+    config: Dict[str, Any],
     id_token: str,
     user_name: Optional[str] = None,
 ) -> SocialProfile:
@@ -320,7 +320,7 @@ def authenticate(
 #             다른 값인지 실증되면 기존 계정 탈취 위험은 해소된다.
 
 
-def _verify_kakao_token(config: Dict[str, str], access_token: str) -> None:
+def _verify_kakao_token(config: Dict[str, Any], access_token: str) -> None:
     """
     access_token이 '우리 앱'에서 발급된 것인지 검증한다.
 
@@ -339,7 +339,7 @@ def _verify_kakao_token(config: Dict[str, str], access_token: str) -> None:
         )
 
 
-def _verify_google_token(config: Dict[str, str], access_token: str) -> None:
+def _verify_google_token(config: Dict[str, Any], access_token: str) -> None:
     """
     access_token의 aud(발급 대상 client_id)가 우리 앱인지 검증한다.
 
@@ -356,13 +356,14 @@ def _verify_google_token(config: Dict[str, str], access_token: str) -> None:
         raise OAuthError(f"구글 tokeninfo 요청 실패: {exc}") from exc
 
     info = _json_or_error(response)
-    if info.get("aud") != config["client_id"]:
+    allowed = config.get("allowed_client_ids") or [config["client_id"]]
+    if info.get("aud") not in allowed:
         raise OAuthError(
             f"access_token의 aud가 서비스 앱과 일치하지 않습니다: {info.get('aud')}"
         )
 
 
-def _verify_naver_token(config: Dict[str, str], access_token: str) -> None:
+def _verify_naver_token(config: Dict[str, Any], access_token: str) -> None:
     """
     네이버는 발급 앱 검증이 불가능하다 — 의도적으로 아무것도 하지 않는다.
 

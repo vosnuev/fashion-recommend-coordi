@@ -20,7 +20,10 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "output": "single",
@@ -52,7 +55,8 @@
             "handleKakaoOpenUrl": true
           },
           "android": {
-            "authCodeHandlerActivity": true
+            "authCodeHandlerActivity": true,
+            "forwardKakaoLinkIntentFilterToMainActivity": true
           }
         }
       ],
@@ -89,6 +93,12 @@
       "eas": {
         "projectId": "9b95bedd-1211-478f-b12d-b284b4ab235a"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/9b95bedd-1211-478f-b12d-b284b4ab235a"
     }
   }
 }

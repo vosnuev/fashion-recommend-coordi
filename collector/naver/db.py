@@ -14,9 +14,15 @@
 
 from __future__ import annotations
 
-from typing import Any, Sequence, Tuple
+from collections.abc import Sequence
+from typing import Any
 
 from config import DATABASE_URL, DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER, logger
+from util.embedding_jobs import (
+    enqueue_new_products,
+    find_new_external_ids,
+    requeue_existing_products,
+)
 
 try:
     import psycopg2
@@ -44,16 +50,22 @@ def get_connection():
 
 
 def ensure_schema(conn) -> None:
-    """naver_product 테이블 존재 확인. 없으면 migrate 안내와 함께 실패한다."""
+    """상품·임베딩 작업 테이블 존재 확인."""
     with conn.cursor() as cur:
-        cur.execute("SELECT to_regclass('public.naver_product')")
-        exists = cur.fetchone()[0] is not None
-    if not exists:
+        cur.execute(
+            """
+            SELECT to_regclass('public.naver_product'),
+                   to_regclass('public.product_embedding_job')
+            """
+        )
+        product_table, job_table = cur.fetchone()
+    if product_table is None or job_table is None:
         raise RuntimeError(
-            "naver_product 테이블이 없습니다. 스키마는 Django migration이 관리합니다. "
+            "naver_product 또는 product_embedding_job 테이블이 없습니다. "
+            "스키마는 Django migration이 관리합니다. "
             "api 컨테이너(또는 api/에서 `python manage.py migrate`)를 먼저 실행하세요."
         )
-    logger.info("스키마 확인 완료 (naver_product 존재)")
+    logger.info("스키마 확인 완료 (naver_product, product_embedding_job 존재)")
 
 
 PRODUCT_COLUMNS = [
@@ -68,13 +80,15 @@ PRODUCT_COLUMNS = [
 ]
 
 
-def upsert_products(conn, rows: Sequence[Tuple[Any, ...]]) -> int:
+def upsert_products(conn, rows: Sequence[tuple[Any, ...]]) -> int:
     """
     naver_product upsert. naver_product_id 충돌 시 가격/태그/메타를 갱신한다.
     rows의 각 원소는 PRODUCT_COLUMNS 순서의 튜플이어야 한다.
     """
     if not rows:
         return 0
+    external_ids = [str(row[0]) for row in rows if row and row[0]]
+    new_external_ids = find_new_external_ids(conn, "naver", external_ids)
     columns = ", ".join(PRODUCT_COLUMNS)
     sql = f"""
     INSERT INTO naver_product ({columns}) VALUES %s
@@ -120,6 +134,7 @@ def upsert_products(conn, rows: Sequence[Tuple[Any, ...]]) -> int:
     """
     with conn.cursor() as cur:
         execute_values(cur, sql, rows)
+    enqueue_new_products(conn, "naver", new_external_ids)
     conn.commit()
     return len(rows)
 
@@ -265,6 +280,7 @@ def update_product_tags(conn, product_id: int, tags: dict, meta: dict) -> None:
         tag_source = %s, tagging_status = %s, tagging_model = %s,
         tagging_used_image = %s, tagged_at = NOW(), updated_at = NOW()
     WHERE id = %s
+    RETURNING naver_product_id
     """
     with conn.cursor() as cur:
         cur.execute(sql, (
@@ -277,4 +293,7 @@ def update_product_tags(conn, product_id: int, tags: dict, meta: dict) -> None:
             meta.get("tagging_model"), meta.get("tagging_used_image", False),
             product_id,
         ))
+        row = cur.fetchone()
+    if row and meta.get("tagging_status", "tagged") == "tagged":
+        requeue_existing_products(conn, "naver", [str(row[0])])
     conn.commit()

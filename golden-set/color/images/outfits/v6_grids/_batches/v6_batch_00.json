@@ -1,0 +1,96 @@
+{
+  "batch_index": 0,
+  "count": 10,
+  "requests": [
+    {
+      "prompt": "Top-down flat-lay product photo on pure white background. Crew-neck T-shirt in Black (#000000) placed on top, below it 12 folded pants arranged in a 3x4 grid showing: Denim, White, Black, Beige, Ivory, Brown, Khaki, Navy, Medium Gray, Light Denim, Dark Denim, Olive. Even soft studio lighting, no shadows, no text, no model. Style like Pinterest fashion flat-lay, 1:1 square.",
+      "output_file_path": "golden-set/color/images/outfits/v6_grids/outfit_v6_black.png",
+      "input_file_paths": [
+        "golden-set/color/images/reference/pinterest_ref.jpg"
+      ],
+      "aspect_ratio": "1:1",
+      "resolution": "2K"
+    },
+    {
+      "prompt": "Top-down flat-lay product photo on pure white background. Crew-neck T-shirt in White (#FFFFFF) placed on top, below it 12 folded pants arranged in a 3x4 grid showing: Denim, White, Black, Beige, Ivory, Brown, Khaki, Navy, Medium Gray, Light Denim, Dark Denim, Olive. Even soft studio lighting, no shadows, no text, no model. Style like Pinterest fashion flat-lay, 1:1 square.",
+      "output_file_path": "golden-set/color/images/outfits/v6_grids/outfit_v6_white.png",
+      "input_file_paths": [
+        "golden-set/color/images/reference/pinterest_ref.jpg"
+      ],
+      "aspect_ratio": "1:1",
+      "resolution": "2K"
+    },
+    {
+      "prompt": "Top-down flat-lay product photo on pure white background. Crew-neck T-shirt in Charcoal (#36454F) placed on top, below it 12 folded pants arranged in a 3x4 grid showing: Denim, White, Black, Beige, Ivory, Brown, Khaki, Navy, Medium Gray, Light Denim, Dark Denim, Olive. Even soft studio lighting, no shadows, no text, no model. Style like Pinterest fashion flat-lay, 1:1 square.",
+      "output_file_path": "golden-set/color/images/outfits/v6_grids/outfit_v6_charcoal.png",
+      "input_file_paths": [
+        "golden-set/color/images/reference/pinterest_ref.jpg"
+      ],
+      "aspect_ratio": "1:1",
+      "resolution": "2K"
+    },
+    {
+      "prompt": "Top-down flat-lay product photo on pure white background. Crew-neck T-shirt in Navy (#1B2444) placed on top, below it 12 folded pants arranged in a 3x4 grid showing: Denim, White, Black, Beige, Ivory, Brown, Khaki, Navy, Medium Gray, Light Denim, Dark Denim, Olive. Even soft studio lighting, no shadows, no text, no model. Style like Pinterest fashion flat-lay, 1:1 square.",
+      "output_file_path": "golden-set/color/images/outfits/v6_grids/outfit_v6_navy.png",
+      "input_file_paths": [
+        "golden-set/color/images/reference/pinterest_ref.jpg"
+      ],
+      "aspect_ratio": "1:1",
+      "resolution": "2K"
+    },
+    {
+      "prompt": "Top-down flat-lay product photo on pure white background. Crew-neck T-shirt in Beige (#E8DCC4) placed on top, below it 12 folded pants arranged in a 3x4 grid showing: Denim, White, Black, Beige, Ivory, Brown, Khaki, Navy, Medium Gray, Light Denim, Dark Denim, Olive. Even soft studio lighting, no shadows, no text, no model. Style like Pinterest fashion flat-lay, 1:1 square.",
+      "output_file_path": "golden-set/color/images/outfits/v6_grids/outfit_v6_beige.png",
+      "input_file_paths": [
+        "golden-set/color/images/reference/pinterest_ref.jpg"
+      ],
+      "aspect_ratio": "1:1",
+      "resolution": "2K"
+    },
+    {
+      "prompt": "Top-down flat-lay product photo on pure white background. Crew-neck T-shirt in Olive (#6B6B45) placed on top, below it 12 folded pants arranged in a 3x4 grid showing: Denim, White, Black, Beige, Ivory, Brown, Khaki, Navy, Medium Gray, Light Denim, Dark Denim, Olive. Even soft studio lighting, no shadows, no text, no model. Style like Pinterest fashion flat-lay, 1:1 square.",
+      "output_file_path": "golden-set/color/images/outfits/v6_grids/outfit_v6_olive.png",
+      "input_file_paths": [
+        "golden-set/color/images/reference/pinterest_ref.jpg"
+      ],
+      "aspect_ratio": "1:1",
+      "resolution": "2K"
+    },
+    {
+      "prompt": "Top-down flat-lay product photo on pure white background. Crew-neck T-shirt in Brown (#6B4A2F) placed on top, below it 12 folded pants arranged in a 3x4 grid showing: Denim, White, Black, Beige, Ivory, Brown, Khaki, Navy, Medium Gray, Light Denim, Dark Denim, Olive. Even soft studio lighting, no shadows, no text, no model. Style like Pinterest fashion flat-lay, 1:1 square.",
+      "output_file_path": "golden-set/color/images/outfits/v6_grids/outfit_v6_brown.png",
+      "input_file_paths": [
+        "golden-set/color/images/reference/pinterest_ref.jpg"
+      ],
+      "aspect_ratio": "1:1",
+      "resolution": "2K"
+    },
+    {
+      "prompt": "Top-down flat-lay product photo on pure white background. Crew-neck T-shirt in Burgundy (#800020) placed on top, below it 12 folded pants arranged in a 3x4 grid showing: Denim, White, Black, Beige, Ivory, Brown, Khaki, Navy, Medium Gray, Light Denim, Dark Denim, Olive. Even soft studio lighting, no shadows, no text, no model. Style like Pinterest fashion flat-lay, 1:1 square.",
+      "output_file_path": "golden-set/color/images/outfits/v6_grids/outfit_v6_burgundy.png",
+      "input_file_paths": [
+        "golden-set/color/images/reference/pinterest_ref.jpg"
+      ],
+      "aspect_ratio": "1:1",
+      "resolution": "2K"
+    },
+    {
+      "prompt": "Top-down flat-lay product photo on pure white background. Crew-neck T-shirt in Mustard (#D4A017) placed on top, below it 12 folded pants arranged in a 3x4 grid showing: Denim, White, Black, Beige, Ivory, Brown, Khaki, Navy, Medium Gray, Light Denim, Dark Denim, Olive. Even soft studio lighting, no shadows, no text, no model. Style like Pinterest fashion flat-lay, 1:1 square.",
+      "output_file_path": "golden-set/color/images/outfits/v6_grids/outfit_v6_mustard.png",
+      "input_file_paths": [
+        "golden-set/color/images/reference/pinterest_ref.jpg"
+      ],
+      "aspect_ratio": "1:1",
+      "resolution": "2K"
+    },
+    {
+      "prompt": "Top-down flat-lay product photo on pure white background. Crew-neck T-shirt in Teal (#008080) placed on top, below it 12 folded pants arranged in a 3x4 grid showing: Denim, White, Black, Beige, Ivory, Brown, Khaki, Navy, Medium Gray, Light Denim, Dark Denim, Olive. Even soft studio lighting, no shadows, no text, no model. Style like Pinterest fashion flat-lay, 1:1 square.",
+      "output_file_path": "golden-set/color/images/outfits/v6_grids/outfit_v6_teal.png",
+      "input_file_paths": [
+        "golden-set/color/images/reference/pinterest_ref.jpg"
+      ],
+      "aspect_ratio": "1:1",
+      "resolution": "2K"
+    }
+  ]
+}

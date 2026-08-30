@@ -1,0 +1,6 @@
+openai>=1.60
+google-genai>=1.10
+dashscope>=1.22
+requests>=2.31
+pillow>=10.0
+python-dotenv>=1.0

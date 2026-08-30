@@ -22,7 +22,13 @@ export function useMultiSelectFilter(initial: string[] = []) {
   const reset = useCallback(() => setSelected([]), []);
 
   const prune = useCallback((valid: string[]) => {
-    setSelected((prev) => prev.filter((x) => valid.includes(x)));
+    setSelected((prev) => {
+      const next = prev.filter((x) => valid.includes(x));
+
+      // 유효한 선택값이 그대로라면 기존 참조를 유지한다. 호출부의 유효 목록이
+      // 렌더마다 새 배열이어도 불필요한 상태 갱신과 effect 반복이 발생하지 않는다.
+      return next.length === prev.length ? prev : next;
+    });
   }, []);
 
   const isActive = useCallback(

@@ -7,6 +7,7 @@
     "@expo/vector-icons": "^15.0.2",
     "@react-native-google-signin/google-signin": "^16.1.2",
     "@react-native-kakao/core": "^2.4.6",
+    "@react-native-kakao/share": "^2.4.6",
     "@react-native-kakao/user": "^2.4.6",
     "@react-native-seoul/naver-login": "^4.2.4",
     "eslint-config-expo": "~57.0.0",
@@ -14,8 +15,11 @@
     "expo-apple-authentication": "~57.0.0",
     "expo-auth-session": "~57.0.2",
     "expo-build-properties": "~57.0.3",
+    "expo-clipboard": "~57.0.1",
     "expo-constants": "~57.0.2",
+    "expo-dev-client": "~57.0.11",
     "expo-device": "~57.0.0",
+    "expo-file-system": "~57.0.1",
     "expo-font": "~57.0.0",
     "expo-glass-effect": "~57.0.0",
     "expo-image": "~57.0.0",
@@ -27,6 +31,7 @@
     "expo-status-bar": "~57.0.0",
     "expo-symbols": "~57.0.0",
     "expo-system-ui": "~57.0.0",
+    "expo-updates": "~57.0.11",
     "expo-web-browser": "~57.0.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
@@ -51,7 +56,14 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "test:chat-input": "node ./scripts/test-chat-input-keypress.mjs",
+    "test:recommendation-presentation": "node ./scripts/test-recommendation-presentation.mjs",
+    "test:discovery-look": "node ./scripts/test-discovery-look-presentation.mjs",
+    "test:shared-reference": "node ./scripts/test-shared-reference-regression.mjs",
+    "test:kakao-invite-link": "node ./scripts/test-kakao-invite-link.mjs",
+    "test:body-measurement-result": "node ./scripts/test-body-measurement-result.mjs",
+    "test:wardrobe-sections": "node ./scripts/test-wardrobe-sections.mjs"
   },
   "private": true
 }

@@ -39,7 +39,7 @@ SKN28-FINAL-1Team/
 ├── README.md              # 프로젝트 소개·실행법
 ├── .env.example           # 환경변수 템플릿 (실제 .env는 커밋 금지, 루트 .env 하나로 통합 관리)
 ├── .gitignore
-├── docker-compose.yml     # 통합 compose: db + migrate + api + collector 2종 (profiles로 선택 실행)
+├── docker-compose.yml     # 통합 compose: db + qdrant + migrate + api + collector 2종 (profiles로 선택 실행)
 ├── api/                   # Django REST API 서버
 │   ├── manage.py
 │   ├── requirements.txt
@@ -49,11 +49,14 @@ SKN28-FINAL-1Team/
 │       ├── users/         # 사용자·인증 (naver/kakao/google OAuth + JWT)
 │       ├── catalog/       # 상품 (naver_product 등, collector/naver가 사용)
 │       ├── weather/       # 날씨 (weather_* 테이블, collector/weather가 사용)
-│       └── recommend/     # 추천 API·로직 (예정)
+│       ├── recommend/     # 추천: Qdrant 클라이언트·컬렉션 스키마 소유 (manage.py init_qdrant)
+│       ├── style_calendar/ # 착장 캘린더 (하루 한 건, 사진→옷장 job 재사용)
+│       └── lookbook/      # 룩북 (날짜 없이 여러 건, 겹치는 부위는 사진 등록 제외)
 ├── collector/             # 독립 실행 데이터 수집기 (스키마는 Django migration이 소유)
 │   ├── weather/           # 기상청 APIHub 수집
 │   └── naver/             # 네이버 쇼핑 상품 수집 + LLM 태깅
-├── indexer/               # S3 패션아이템 → Marqo FashionSigLIP 임베딩 → Qdrant 적재 (GPU 배치)
+├── indexer/               # 임베딩 → Qdrant 적재 GPU worker (util/ 공용 · product_indexer/ 운영 · old/ 레거시)
+│                          # product_indexer/text_embedding_api.py: 채팅 질의문 → BGE-M3 벡터 HTTP API
 ├── ml/                    # 모델 학습·추론 코드 (예정)
 ├── scripts/               # 배포·데이터 처리 스크립트
 └── docs/                  # 설계·아키텍처 문서
@@ -94,6 +97,11 @@ python manage.py runserver
 - **명명**: 변수·함수 `snake_case`, 클래스 `PascalCase`, 상수 `UPPER_SNAKE_CASE`.
 - **타입 힌트**: 함수 시그니처에 타입 힌트를 작성한다.
 - **Django 관례**: fat model / thin view 지향, 비즈니스 로직은 서비스 계층 또는 모델 메서드로.
+- **DB 테이블 명명**: 새 Django 모델에는 반드시 `Meta.db_table`을 명시한다 (기존 예: `users`, `naver_product`, `weather_area`, `wardrobe_item`). 기본 규칙(`<앱라벨>_<모델명소문자>`)에 맡기면 모델명에 도메인 접두사가 있는 경우 `wardrobe_wardrobeitem`처럼 문구가 중복된다. migrate 전에 `python manage.py sqlmigrate <앱> <번호>`로 실제 생성될 테이블 이름을 확인한다.
+- **DB comment 필수**: 새 모델(테이블)에는 `Meta.db_table_comment`, 새 필드(컬럼)에는 `db_comment`를 **반드시** 작성한다 — DB 툴에서 스키마만 봐도 의미가 읽히게 하는 것이 목적이며, 전 테이블·컬럼 comment는 users 0009·0010 / catalog 0003 / weather 0002 / wardrobe 0003 마이그레이션으로 일괄 적용돼 있다.
+  - comment는 한글로, "무엇인지 + 단위/코드값/제약"을 담는다. 예) `db_comment="허리둘레(cm)"`, `db_comment="측정 상태 (in_progress/succeeded/failed)"`.
+  - 모델로 커버되지 않는 컬럼(자동 `id` PK, 자동 생성 M2M through 테이블 등)을 만들면 해당 마이그레이션에 `migrations.RunSQL`로 `COMMENT ON` 구문을 함께 추가한다 (`reverse_sql`은 `IS NULL`). 기존 예: `apps/users/migrations/0010_system_table_comments.py`.
+  - ⚠️ comment 문자열에 `%` 문자를 쓰지 않는다 (psycopg 파라미터 보간과 충돌 — "백분율"로 풀어 쓴다). migrate 전 `sqlmigrate`로 COMMENT 구문 생성 여부를 확인한다.
 - **설정 분리**: `settings/base.py`를 공통으로 두고 `dev`/`prod`로 분리. 시크릿은 설정 파일에 직접 쓰지 않는다.
 - **주석/문서화**: 왜(why) 그렇게 했는지 위주로 작성. 자명한 코드에 불필요한 주석 금지.
 
@@ -118,6 +126,8 @@ python manage.py runserver
 - 모델 코드는 `ml/`에 두고, Django 앱은 추론 인터페이스를 통해 호출한다(웹 계층과 ML 계층 분리).
 - **재현성**: 랜덤 시드 고정, 데이터 버전·하이퍼파라미터를 기록한다.
 - **모델 가중치**: Git에 커밋하지 않는다. S3 등 오브젝트 스토리지에 저장하고 경로/버전으로 참조한다.
+  - **예외**: `ml/body_measurement/artifacts/models/*.joblib`. 신체치수 추정 API(`/body/estimate`, `/body/photos`)가 서빙 시 직접 읽어야 해서 `.gitignore`에 예외 규칙을 뒀다. 서빙에 쓰는 건 `hist_gradient_boosting.joblib`(7.6MB) 하나이며, `random_forest.joblib`은 51MB라 커밋하면 저장소가 무거워진다. 배포 환경에서는 `BODY_MODEL_PATH`로 S3에서 받은 경로를 주입할 수 있다.
+  - ⚠️ 이 아티팩트는 scikit-learn 1.8.0으로 저장돼 있어 **실행 환경도 1.8.0이어야 한다** (1.9.0에서 언피클 실패). 재학습하면 `api/requirements.txt`의 핀도 함께 올린다.
 - **RunPod ↔ AWS 이식성**: 경로·디바이스(`cuda`/`cpu`)·자격증명을 환경변수로 추상화한다. RunPod 전용 하드코딩 금지.
 - **추론 성능**: 배치 처리·캐싱(Redis)·모델 워밍업을 고려한다.
 
@@ -153,4 +163,4 @@ python manage.py runserver
 
 ---
 
-_마지막 업데이트: 2026-07-12_
+_마지막 업데이트: 2026-08-07_

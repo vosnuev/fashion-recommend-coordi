@@ -1,8 +1,19 @@
 import { useSyncExternalStore } from 'react';
 
-/** 사용자가 선택할 수 있는 해시태그 (관리자 정의 목록) */
-export const ALLOWED_HASHTAGS = ['출근', '데이트', '나들이', '여행', '미니멀', '캐주얼'] as const;
+import { getDiscoveryLooks, type LookGender, type LookGenderFilter } from '@/lib/discoveryLookApi';
+import { listPublicLookbooks, type LookbookPostDto } from '@/lib/lookbookApi';
 
+/**
+ * 룩북 필터 태그 어휘.
+ *
+ * ⚠️ **단일 정의는 백엔드에 있다** — api/apps/lookbook/contracts.py 의 LOOKBOOK_TAGS.
+ * 오늘의 룩이 같은 어휘로 태그를 만들려면 서버 쪽에 기준이 있어야 해서 옮겼다.
+ * 여기는 필터 칩을 그리기 위한 사본이므로, 어휘를 바꿀 때는 **양쪽을 같이** 고친다
+ * (순서도 맞춘다 — 두 화면의 나열이 달라지면 같은 어휘인데 다른 목록처럼 보인다).
+ */
+export const ALLOWED_HASHTAGS = [
+  '출근', '데이트', '나들이', '여행', '미니멀', '캐주얼', '빈티지', '스트릿', '하객룩',
+] as const;
 export type AllowedHashtag = (typeof ALLOWED_HASHTAGS)[number];
 
 export type LookPost = {
@@ -10,79 +21,123 @@ export type LookPost = {
   image: string;
   tags: AllowedHashtag[];
   price?: string;
+  variantId?: string;
+  gender?: LookGender;
   createdAt: number;
 };
 
-const SEED_LOOKS: LookPost[] = [
-  {
-    id: '1',
-    image: 'https://i.pinimg.com/736x/c1/ae/c8/c1aec88282cee841eca0f6e0da5d1174.jpg',
-    tags: ['출근', '미니멀'],
-    price: '₩189,000',
-    createdAt: 1,
-  },
-  {
-    id: '2',
-    image: 'https://i.pinimg.com/736x/55/26/0d/55260de328aec1e50740655fd4b5fdc5.jpg',
-    tags: ['데이트', '캐주얼'],
-    price: '₩97,000',
-    createdAt: 2,
-  },
-  {
-    id: '3',
-    image: 'https://i.pinimg.com/736x/32/7a/f3/327af326d108881015d4eea726f1cb51.jpg',
-    tags: ['출근'],
-    price: '₩245,000',
-    createdAt: 3,
-  },
-  {
-    id: '4',
-    image: 'https://i.pinimg.com/736x/b4/cd/22/b4cd22015add333e10cd2ba06067406b.jpg',
-    tags: ['나들이', '캐주얼'],
-    price: '₩132,000',
-    createdAt: 4,
-  },
-  {
-    id: '5',
-    image: 'https://i.pinimg.com/736x/ec/96/f3/ec96f39eb800d19290736c17f0253ed9.jpg',
-    tags: ['여행', '캐주얼'],
-    price: '₩88,000',
-    createdAt: 5,
-  },
-  {
-    id: '6',
-    image: 'https://i.pinimg.com/736x/91/06/91/910691d6e2034af20a8667c7d8781f24.jpg',
-    tags: ['데이트'],
-    price: '₩156,000',
-    createdAt: 6,
-  },
-];
-
-let looks: LookPost[] = [...SEED_LOOKS];
+let curatedLooks: LookPost[] = [];
+let publicLooks: LookPost[] = [];
+let looks: LookPost[] = [];
 const listeners = new Set<() => void>();
+let loadSequence = 0;
+type LoadState = { loading: boolean; error: string | null; loaded: boolean; progress: number };
+let loadState: LoadState = { loading: false, error: null, loaded: false, progress: 0 };
 
 function notify() {
-  listeners.forEach((l) => l());
+  looks = [...curatedLooks, ...publicLooks];
+  listeners.forEach((listener) => listener());
 }
 
 export function isAllowedHashtag(value: string): value is AllowedHashtag {
   return (ALLOWED_HASHTAGS as readonly string[]).includes(value);
 }
 
+function toPublicLook(dto: LookbookPostDto): LookPost {
+  return {
+    id: dto.id,
+    image: dto.image_url,
+    tags: (dto.hashtags ?? []).filter(isAllowedHashtag),
+    createdAt: Date.parse(dto.created_at) || 0,
+  };
+}
+
 export const lookbookStore = {
   getLooks: () => looks,
-  addLook(input: { image: string; tags: AllowedHashtag[]; price?: string }) {
-    const post: LookPost = {
-      id: String(Date.now()),
-      image: input.image,
-      tags: input.tags,
-      price: input.price,
-      createdAt: Date.now(),
-    };
-    looks = [post, ...looks];
+  getLoadState: () => loadState,
+
+  async load(gender: LookGenderFilter = 'ALL', selectedTags: string[] = []): Promise<void> {
+    const sequence = ++loadSequence;
+    loadState = { ...loadState, loading: true, error: null, progress: 8 };
     notify();
-    return post;
+
+    const loadCurated = async () => {
+      if (selectedTags.length > 0) {
+        let completed = 0;
+        const pages = await Promise.all(
+          selectedTags.map(async (tag) => {
+            const page = await getDiscoveryLooks('', tag, gender, 50);
+            completed += 1;
+            loadState = {
+              ...loadState,
+              progress: Math.min(92, 8 + Math.round((completed / selectedTags.length) * 84)),
+            };
+            notify();
+            return page;
+          }),
+        );
+        const unique = new Map(pages.flatMap((page) => page.results).map((look) => [look.id, look]));
+        return [...unique.values()];
+      }
+
+      const accumulated = new Map<string, Awaited<ReturnType<typeof getDiscoveryLooks>>['results'][number]>();
+      let offset = 0;
+      while (true) {
+        const page = await getDiscoveryLooks('', '', gender, 20, offset);
+        if (sequence !== loadSequence) return [...accumulated.values()];
+        page.results.forEach((look) => accumulated.set(look.id, look));
+        loadState = {
+          ...loadState,
+          progress: Math.min(
+            92,
+            Math.max(8, Math.round((accumulated.size / Math.max(page.count, 1)) * 92)),
+          ),
+        };
+        curatedLooks = [...accumulated.values()].map((look) => ({
+          id: look.id,
+          variantId: look.id,
+          image: look.image,
+          tags: look.tags.filter(isAllowedHashtag),
+          price: `₩${look.total_price.toLocaleString('ko-KR')}`,
+          gender: look.gender,
+          createdAt: 0,
+        }));
+        notify();
+        if (page.next_offset == null) return [...accumulated.values()];
+        offset = page.next_offset;
+      }
+    };
+
+    const [curatedResult, publicResult] = await Promise.allSettled([
+      loadCurated(),
+      listPublicLookbooks({ limit: 60 }),
+    ]);
+    if (sequence !== loadSequence) return;
+
+    if (curatedResult.status === 'fulfilled') {
+      curatedLooks = curatedResult.value.map((look) => ({
+        id: look.id,
+        variantId: look.id,
+        image: look.image,
+        tags: look.tags.filter(isAllowedHashtag),
+        price: `₩${look.total_price.toLocaleString('ko-KR')}`,
+        gender: look.gender,
+        createdAt: 0,
+      }));
+    }
+    if (publicResult.status === 'fulfilled') {
+      publicLooks = gender === 'ALL' ? publicResult.value.results.map(toPublicLook) : [];
+    }
+    const failureCount = [curatedResult, publicResult].filter((result) => result.status === 'rejected').length;
+    loadState = {
+      loading: false,
+      error: failureCount === 2 ? '둘러보기를 불러오지 못했어요.' : failureCount === 1 ? '일부 룩을 불러오지 못했어요.' : null,
+      loaded: curatedResult.status === 'fulfilled' || publicResult.status === 'fulfilled',
+      progress: 100,
+    };
+    notify();
   },
+
   subscribe(listener: () => void) {
     listeners.add(listener);
     return () => listeners.delete(listener);
@@ -93,5 +148,12 @@ export function useLookbook() {
   return useSyncExternalStore(lookbookStore.subscribe, lookbookStore.getLooks, lookbookStore.getLooks);
 }
 
-/** 필터 칩용 — '전체' + 허용 해시태그 */
+export function useLookbookLoadState() {
+  return useSyncExternalStore(
+    lookbookStore.subscribe,
+    lookbookStore.getLoadState,
+    lookbookStore.getLoadState,
+  );
+}
+
 export const LOOKBOOK_FILTER_OPTIONS = ['전체', ...ALLOWED_HASHTAGS];

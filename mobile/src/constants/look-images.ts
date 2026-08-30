@@ -9,3 +9,9 @@ export const TODAY_LOOK_IMAGE = require('../../assets/images/mock/today-look.jpg
 
 /** 가상 착장 결과 — 원본 룩이 아니라 '내 체형에 입힌 결과'라 다른 사진을 쓴다. */
 export const FITTING_RESULT_IMAGE = require('../../assets/images/mock/fitting-result.png');
+
+/**
+ * 프로필 사진 목업 — 사진 업로드가 붙기 전까지 쓰는 기본 아바타.
+ * 실제 인물 사진 대신 수채 일러스트를 쓴다(모르는 사람 얼굴을 기본값으로 두지 않으려고).
+ */
+export const PROFILE_IMAGE = require('../../assets/images/mock/profile.jpg');

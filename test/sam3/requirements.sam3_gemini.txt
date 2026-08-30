@@ -1,7 +1,0 @@
-# SAM 3 + Gemini 태깅 테스트 전용 의존성
-# (torch/torchvision은 베이스 이미지 pytorch/pytorch에 포함)
-ultralytics>=8.3.237      # SAM3SemanticPredictor 지원 최소 버전
-google-genai>=1.0.0
-opencv-python-headless>=4.9
-pillow>=10.0
-numpy>=1.26

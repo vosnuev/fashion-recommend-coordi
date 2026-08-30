@@ -2,8 +2,14 @@
 // import { EmptyState, useToast, useConfirm } from '@/components/ui';
 export { EmptyState } from './empty-state';
 export { LoadingState, ErrorState, Skeleton } from './state-views';
+export { ErrorBoundary } from './error-boundary';
 export { SmartImage } from './smart-image';
-export { SearchFilterBar, InlineDropdown } from './search-filter-bar';
+export { Avatar } from './avatar';
+export { SearchFilterBar } from './search-filter-bar';
+export { SegmentedToggle } from './segmented-toggle';
 export { CategoryEditSheet } from './category-edit-sheet';
+export { LookbookFilterSheet } from './lookbook-filter-sheet';
 export { ToastProvider, useToast } from './toast';
 export { ConfirmProvider, useConfirm } from './confirm-dialog';
+export { ModalShell } from './modal-shell';
+export { LoginGate } from './login-gate';

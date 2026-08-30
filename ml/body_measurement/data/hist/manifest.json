@@ -1,0 +1,33 @@
+{
+  "features": [
+    "gender",
+    "height",
+    "weight"
+  ],
+  "targets": [
+    "shoulder",
+    "chest",
+    "waist",
+    "hip",
+    "thigh_length",
+    "calf_length",
+    "torso_length",
+    "leg_length",
+    "neck_length",
+    "thigh_calf_ratio",
+    "torso_leg_ratio"
+  ],
+  "source_workbook": "C:\\Users\\Playdata\\Desktop\\SKN28-FINAL-1Team\\ml\\body_measurement\\data\\raw\\sizekorea_8th.xlsx",
+  "source_sheet": "(1~2차년도) 3D 측정",
+  "raw_csv": "C:\\Users\\Playdata\\Desktop\\SKN28-FINAL-1Team\\ml\\body_measurement\\data\\raw\\sizekorea_8th_3d_source.csv",
+  "rows": {
+    "source": 4545,
+    "cleaned": 4485,
+    "train": 3588,
+    "validation": 448,
+    "test": 449
+  },
+  "seed": 42,
+  "model": "HistGradientBoostingRegressor via MultiOutputRegressor",
+  "model_sha256": "d3e933bc240e0b0e8b505043c65fd56038537efcf1014cd8efb0532d468aed77"
+}

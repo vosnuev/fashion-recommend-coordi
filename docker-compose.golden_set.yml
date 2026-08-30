@@ -1,0 +1,103 @@
+# ============================================================
+# 골든셋 스택 (API 서버 동거용).
+#
+#   ./run_goldenset.sh                 # 시크릿 내보내기 + 웹 기동
+#   SCAN=1 ./run_goldenset.sh          # 스캔 1회도 함께 실행
+#   docker compose -f docker-compose.golden_set.yml logs -f
+#   docker compose -f docker-compose.golden_set.yml down
+#
+# 이 스택은 물리적으로 api 컨테이너와 같은 호스트에서 돈다. 그래서 두 가지를
+# 특히 조심한다.
+#
+# 1) 포트. 호스트에서 이미 8000(api) / 8080(product-indexer) / 5432 / 6333·6334 /
+#    6379를 쓰고 있으므로 골든셋 웹은 8081을 기본으로 잡는다. 겹치면 .env의
+#    GOLDEN_WEB_HOST_PORT만 바꾸면 된다(컨테이너 내부 포트는 8081 고정).
+#
+# 2) 무접두 환경변수. 이 이미지는 아이템 분리를 위해 image-processor를 함께
+#    담고 있고, image-processor의 config.py는 DEVICE / WORKER_* 같은 접두사 없는
+#    변수를 읽는다. 루트 .env 하나를 옷장 워커와 공유하므로 같은 이름이 다른
+#    의미로 해석될 수 있다. 아래 environment 블록이 골든셋 컨테이너 안에서만
+#    값을 못 박아 그 충돌을 끊는다 (environment는 env_file보다 우선한다).
+# ============================================================
+name: skn28-goldenset
+
+x-golden-common: &golden-common
+  build:
+    # indexer/ image-processor/ ml/ 을 모두 쓰므로 컨텍스트는 리포 루트다.
+    #
+    # 주의: 이 이미지는 image-processor 사본을 구워서 갖는다(옷장 워커 이미지와
+    # 별개다). image-processor를 고치면 이 이미지도 --build로 다시 만들어야 한다.
+    context: .
+    dockerfile: ml/golden_set/Dockerfile
+  image: skn28-golden-set
+  env_file:
+    - .env                    # GOLDEN_*, GEMINI_*, QDRANT_*, AWS_* 등
+  environment: &golden-env
+    TZ: Asia/Seoul
+    HF_HOME: /app/.cache/huggingface
+    GOLDEN_RUN_ROOT: /app/runs
+
+    # ── image-processor와 공유되는 무접두 변수 고정 ──
+    # 이 스택은 API 서버(GPU 없음)에서 돈다. 게다가 두 규약이 다르다:
+    # golden은 GOLDEN_DEVICE=auto가 "자동", image-processor는 DEVICE가 빈 값일
+    # 때 "자동"이고 값이 있으면 torch 디바이스 문자열로 그대로 쓴다. "auto"를
+    # 그대로 넘기면 .to("auto")로 죽으므로 양쪽 다 cpu로 못 박는다.
+    # CUDA 임베딩은 docker-compose.gpu.yml의 golden-set이 담당한다.
+    GOLDEN_DEVICE: cpu
+    DEVICE: cpu
+    # 아이템 파이프라인 선택의 단일 출처. 옷장 워커의 WORKER_PIPELINE이 무엇이든
+    # 골든셋 컨테이너 안에서는 GOLDEN_ITEM_PIPELINE만 따른다.
+    WORKER_PIPELINE: ${GOLDEN_ITEM_PIPELINE:-gemini-edit}
+    # 골든셋은 아이템 벡터가 없으면 goldenset_items에 아무것도 못 넣는다.
+    # 옷장 쪽에서 0으로 꺼두더라도 여기서는 항상 켠다.
+    WORKER_EMBED_ENABLED: "1"
+    WORKER_IMAGE_EMBED_MODEL: ${GOLDEN_FASHION_EMBED_MODEL:-hf-hub:Marqo/marqo-fashionSigLIP}
+    WORKER_TEXT_EMBED_MODEL: ${GOLDEN_TEXT_EMBED_MODEL:-BAAI/bge-m3}
+    # 참고: REDIS_URL·WARDROBE_* 도 image-processor config가 읽지만, 이 컨테이너는
+    # worker.py를 실행하지 않아 큐·콜백 경로를 타지 않는다. 값이 있어도 무해하다.
+  volumes:
+    # 임베딩 모델 캐시. GPU 스택과 호스트가 다르면 각자 받는다.
+    - hf_cache:/app/.cache/huggingface
+    # run 산출물(코디 임베딩 sha 캐시 등). 아이템 완료 판정은 S3가 기준이라
+    # 이 볼륨이 비어도 재처리가 폭발하지는 않는다.
+    - golden_runs:/app/runs
+
+services:
+  # 임베딩 진행 상황 확인용 웹 + 읽기 API. 기본은 읽기 전용이다.
+  golden-set-web:
+    <<: *golden-common
+    container_name: skn28-golden-set-web
+    restart: unless-stopped
+    command: ["python", "-m", "ml.golden_set.web"]
+    environment:
+      <<: *golden-env
+      # 컨테이너 내부 bind는 항상 전 인터페이스. 외부 노출은 ports가 통제한다.
+      GOLDEN_WEB_HOST: 0.0.0.0
+      GOLDEN_WEB_PORT: "8081"
+    ports:
+      # 호스트 포트가 겹치면 .env의 GOLDEN_WEB_HOST_PORT를 바꾼다.
+      - "${GOLDEN_WEB_HOST_PORT:-8081}:8081"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          python -c "import urllib.request,sys;
+          sys.exit(0 if urllib.request.urlopen(
+          'http://127.0.0.1:8081/health', timeout=5).status == 200 else 1)"
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+  # S3 미처리분 스캔 1회. 기본으로는 뜨지 않는다 (SCAN=1 ./run_goldenset.sh).
+  # GPU가 없는 호스트라 코디 임베딩이 CPU로 돌아 느리다 — 상시 처리는 GPU 스택 몫.
+  golden-set-scan:
+    <<: *golden-common
+    container_name: skn28-golden-set-scan
+    profiles: ["scan"]
+    restart: "no"
+    command: ["python", "-m", "ml.golden_set.runner", "--once"]
+
+volumes:
+  hf_cache:
+  golden_runs:

@@ -14,7 +14,30 @@
   → title 규칙 추출: color/fit/sleeve/pattern/material/length (attribute_extractor.py)
   → LLM 태깅: season/style/usage/layer_* + 누락 속성
   → naver_product upsert
+  → 신규 INSERT 상품만 product_embedding_job 등록
+  → 태깅 완료 후 외부 GPU product-indexer API에 drain 시작 신호
+  → GPU worker가 S3 → FashionSigLIP+BGE-M3 → Qdrant 처리
 ```
+
+원격 GPU trigger는 다음 환경변수로 설정한다.
+
+```dotenv
+PRODUCT_INDEXER_TRIGGER_URL=https://<gpu-host>/v1/product-indexer/drain
+PRODUCT_INDEXER_TRIGGER_TOKEN=<shared-secret>
+PRODUCT_INDEXER_TRIGGER_TIMEOUT_SECONDS=10
+PRODUCT_INDEXER_TRIGGER_MAX_RETRIES=2
+```
+
+태깅이 끝나면 `trigger_product_indexer(source="naver", ...)`가 위 URL로 drain
+시작 신호만 보낸다(상품 데이터·이미지는 보내지 않는다). GPU worker는 payload의
+`source=naver`를 보고 네이버 작업만 선점하므로 11번가 drain과 동시에 실행된다.
+임베딩 결과는 네이버 전용 Qdrant 컬렉션(`PRODUCT_NAVER_QDRANT_COLLECTION`,
+기본 `products_naver_v1`)에 적재되고, 상품 이미지는
+`PRODUCT_NAVER_IMAGE_S3_PREFIX`(기본 `products/naver`) 아래에 보존된다.
+상세는 `indexer/product_indexer/PRODUCTS_README.md`를 참고한다.
+
+URL이 없으면 trigger만 비활성화된다. sync 수집·재태깅 완료 후와 Batch 결과 반영
+후에 호출하며, GPU API 장애가 상품 저장을 롤백하지 않는다.
 
 ## 태깅 provider (`NAVER_TAGGING_PROVIDER`)
 
@@ -52,6 +75,7 @@ batch 모드 상태 흐름: `pending → queued(제출됨) → tagged / failed`.
 | --- | --- |
 | `naver_product` | 상품 원본 + 문서 분류/태그. `naver_product_id` unique upsert |
 | `naver_product_size` | 사이즈별 치수/측정값 하위 테이블 (`product_id` FK). 네이버 검색 API는 치수를 제공하지 않으므로 상세페이지 수집·수동 입력 등 별도 경로로 채운다 |
+| `product_embedding_job` | 신규 네이버·11번가 상품의 비동기 임베딩 작업. 기존 DB 상품은 자동 등록하지 않음 |
 
 **스키마 소유권**: 테이블 DDL은 Django migration(`api/apps/catalog`)이 관리한다.
 collector는 raw SQL upsert만 수행하며, 시작 시 테이블 존재를 확인하고 없으면 migrate 안내와 함께 종료한다.
@@ -59,6 +83,11 @@ collector는 raw SQL upsert만 수행하며, 시작 시 테이블 존재를 확�
 
 태깅 메타: `tag_source`(필드별 rule/llm 출처), `tagging_status`(pending/tagged/failed),
 `tagging_used_image`(이미지 태깅 여부).
+
+임베딩 메타: `embedding_status`, `embedding_version`, `embedding_retry_count`,
+`embedding_error`, `image_s3_key`, `image_checksum`, `image_embedded_at`,
+`text_embedded_at`, `embedded_at`. Batch 태깅 완료 시 작업 행이 있는 신규 상품만
+generation을 증가시켜 텍스트를 다시 색인한다.
 
 ## 실행
 

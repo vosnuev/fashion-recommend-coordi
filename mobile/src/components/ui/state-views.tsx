@@ -79,7 +79,8 @@ export function Skeleton({
   style,
 }: {
   width?: DimensionValue;
-  height?: number;
+  /** 숫자 외에 '100%' 도 받는다 — 사진 자리처럼 비율(aspectRatio)로 잡힌 칸을 채울 때 필요하다. */
+  height?: DimensionValue;
   radius?: number;
   style?: ViewStyle;
 }) {
@@ -108,7 +109,7 @@ export function Skeleton({
 
 const styles = StyleSheet.create({
   center: { alignItems: 'center', justifyContent: 'center', paddingHorizontal: 32, paddingVertical: 48 },
-  loadingText: { marginTop: 14, fontSize: Type.footnote, color: ink(0.5) },
+  loadingText: { marginTop: 14, fontSize: Type.footnote, color: Editorial.textCaption },
 
   errIcon: {
     width: 60,
@@ -119,10 +120,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 16,
   },
-  errTitle: { fontSize: Type.label, fontWeight: '600', color: ink(0.85) },
+  errTitle: { fontSize: Type.label, fontWeight: '600', color: Editorial.ink },
   errDesc: {
     fontSize: Type.footnote,
-    color: ink(0.45),
+    color: Editorial.textCaption,
     textAlign: 'center',
     marginTop: 7,
     lineHeight: 20,

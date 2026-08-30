@@ -1,0 +1,23 @@
+# RunPod 또는 CUDA GPU 호스트용 쇼핑 상품 임베딩 worker.
+#
+# 빌드 컨텍스트는 indexer/ 다 (util/ 공유 모듈을 함께 COPY 해야 하므로).
+#   docker build -f indexer/product_indexer/Dockerfile.product-indexer \
+#       -t skn28-product-indexer indexer/
+#   docker run --gpus all --env-file .env -p 8080:8080 skn28-product-indexer
+FROM pytorch/pytorch:2.3.1-cuda12.1-cudnn8-runtime
+
+WORKDIR /app
+
+COPY util/requirements.txt ./util/requirements.txt
+COPY product_indexer/requirements.txt ./product_indexer/requirements.txt
+RUN pip install --no-cache-dir -r product_indexer/requirements.txt
+
+COPY util/ ./util/
+COPY product_indexer/ ./product_indexer/
+
+ENV HF_HOME=/app/.cache/huggingface
+ENV PYTHONPATH=/app
+
+EXPOSE 8080
+
+CMD ["python", "-m", "product_indexer.product_indexer_api"]

@@ -1,0 +1,17 @@
+# product-indexer(쇼핑 상품 임베딩 worker) 의존성.
+# 공용 이미지 임베더(util/embedder.py) 의존성은 util/requirements.txt에 있다.
+-r ../util/requirements.txt
+
+# BGE-M3 한국어 텍스트 임베딩.
+# transformers 상한(<4.52)은 util/requirements.txt가 소유한다 — bge-m3가
+# .bin 체크포인트만 제공해 torch 2.3.1에서 로드하려면 필요하다.
+sentence-transformers>=3.0,<4
+# Qdrant 적재
+qdrant-client>=1.9
+# S3 상품 이미지 보존
+boto3>=1.34
+# 이미지 검증·정규화
+Pillow>=10.0
+# catalog 내부 API 호출 / 외부 이미지 다운로드
+requests>=2.31
+python-dotenv>=1.0

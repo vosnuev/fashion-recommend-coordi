@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>골든셋 임베딩 현황</title>
+<style>
+  :root {
+    --bg: #0f1115; --panel: #171a21; --panel-2: #1e222b; --line: #2a2f3a;
+    --text: #e6e8ee; --muted: #98a0b0; --accent: #6ea8fe; --ok: #5fd39a;
+    --warn: #e7b96b; --bad: #f08a8a; --radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 14px/1.55 system-ui, -apple-system, "Segoe UI", "Noto Sans KR", sans-serif;
+  }
+  header {
+    display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap;
+    padding: 18px 24px; border-bottom: 1px solid var(--line); background: var(--panel);
+  }
+  header h1 { font-size: 17px; margin: 0; font-weight: 650; }
+  .chip {
+    font-size: 12px; color: var(--muted); background: var(--panel-2);
+    border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px;
+  }
+  .spacer { flex: 1; }
+  button {
+    font: inherit; color: var(--text); background: var(--panel-2);
+    border: 1px solid var(--line); border-radius: 8px; padding: 6px 14px; cursor: pointer;
+  }
+  button:hover:not(:disabled) { border-color: var(--accent); }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  main { padding: 20px 24px 64px; display: grid; gap: 18px; }
+  .cards { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; }
+  .card h2 { margin: 0 0 12px; font-size: 12px; letter-spacing: .04em; color: var(--muted); font-weight: 600; text-transform: uppercase; }
+  .stat { display: flex; align-items: baseline; gap: 8px; }
+  .stat b { font-size: 26px; font-weight: 650; font-variant-numeric: tabular-nums; }
+  .stat span { color: var(--muted); font-size: 12px; }
+  .kv { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; font-size: 13px; }
+  .kv dt { color: var(--muted); white-space: nowrap; }
+  .kv dd { margin: 0; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+  .bar { height: 7px; border-radius: 4px; background: var(--panel-2); overflow: hidden; margin-top: 12px; }
+  .bar > i { display: block; height: 100%; background: var(--ok); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  th { color: var(--muted); font-weight: 600; font-size: 12px; position: sticky; top: 0; background: var(--panel); }
+  tbody tr { cursor: pointer; }
+  tbody tr:hover { background: var(--panel-2); }
+  tbody tr.selected { background: #1d2633; }
+  .tag { display: inline-block; font-size: 11px; color: var(--muted); background: var(--panel-2);
+         border: 1px solid var(--line); border-radius: 5px; padding: 1px 7px; margin: 1px 3px 1px 0; }
+  .ok { color: var(--ok); } .warn { color: var(--warn); } .bad { color: var(--bad); }
+  .muted { color: var(--muted); }
+  .items { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+  .item { background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .item img { width: 100%; aspect-ratio: 1; object-fit: contain; background: #fff; display: block; }
+  .item .meta { padding: 8px 10px; font-size: 12px; }
+  .item .meta strong { display: block; font-weight: 600; margin-bottom: 3px; }
+  .preview { max-width: 260px; border-radius: 8px; border: 1px solid var(--line); display: block; }
+  .err { color: var(--bad); font-size: 12px; margin-top: 8px; overflow-wrap: anywhere; }
+  .split { display: grid; gap: 18px; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 1100px) { .split { grid-template-columns: minmax(0, 420px) minmax(0, 1fr); } }
+  .scroll { max-height: 520px; overflow: auto; }
+  pre { white-space: pre-wrap; font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+</style>
+</head>
+<body>
+<header>
+  <h1>골든셋 임베딩 현황</h1>
+  <span class="chip" id="dataset">…</span>
+  <span class="chip" id="pipeline">…</span>
+  <div class="spacer"></div>
+  <span class="chip" id="updated">—</span>
+  <button id="refresh">새로고침</button>
+  <button id="scan" hidden>지금 스캔</button>
+</header>
+
+<main>
+  <section class="cards">
+    <div class="card">
+      <h2>원본 처리 진행률</h2>
+      <div class="stat"><b id="p-done">–</b><span>/ <i id="p-total">–</i>장 완료</span></div>
+      <div class="bar"><i id="p-bar" style="width:0%"></i></div>
+      <dl class="kv" style="margin-top:12px">
+        <dt>대기</dt><dd id="p-pending">–</dd>
+        <dt>스키마 구버전</dt><dd id="p-stale">–</dd>
+        <dt>버킷</dt><dd id="p-bucket" class="muted">–</dd>
+      </dl>
+      <div class="err" id="p-err" hidden></div>
+    </div>
+
+    <div class="card">
+      <h2>Qdrant 포인트</h2>
+      <dl class="kv">
+        <dt>코디</dt><dd id="q-outfit">–</dd>
+        <dt>아이템</dt><dd id="q-item">–</dd>
+        <dt>원칙</dt><dd id="q-knowledge">–</dd>
+        <dt>주소</dt><dd id="q-url" class="muted">–</dd>
+      </dl>
+      <div class="err" id="q-err" hidden></div>
+    </div>
+
+    <div class="card">
+      <h2>마지막 실행</h2>
+      <dl class="kv">
+        <dt>종료</dt><dd id="r-finished">–</dd>
+        <dt>코디 임베딩</dt><dd id="r-embed">–</dd>
+        <dt>모델</dt><dd id="r-model" class="muted">–</dd>
+        <dt>아이템</dt><dd id="r-items">–</dd>
+        <dt>Qdrant 적재</dt><dd id="r-indexed">–</dd>
+      </dl>
+      <div class="err" id="r-err" hidden></div>
+    </div>
+
+    <div class="card">
+      <h2>스캔</h2>
+      <dl class="kv">
+        <dt>상태</dt><dd id="s-status">IDLE</dd>
+        <dt>허용</dt><dd id="s-allowed">–</dd>
+      </dl>
+      <pre id="s-detail" hidden></pre>
+    </div>
+  </section>
+
+  <section class="split">
+    <div class="card">
+      <h2>코디 목록 <span class="muted" id="o-count"></span></h2>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>golden_id</th><th>아이템</th><th>구성</th><th>상태</th></tr></thead>
+          <tbody id="o-body"><tr><td colspan="4" class="muted">불러오는 중…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card" id="detail">
+      <h2>코디 상세</h2>
+      <p class="muted">왼쪽 목록에서 코디를 선택하세요.</p>
+    </div>
+  </section>
+</main>
+
+<script>
+const token = new URLSearchParams(location.search).get("token") || "";
+const api = (path) => fetch(path + (token ? (path.includes("?") ? "&" : "?") + "token=" + encodeURIComponent(token) : ""))
+  .then(async (res) => {
+    const body = await res.json().catch(() => ({ detail: res.statusText }));
+    if (!res.ok) throw new Error(body.detail || res.statusText);
+    return body;
+  });
+
+const $ = (id) => document.getElementById(id);
+const num = (value) => (value === null || value === undefined ? "–" : Number(value).toLocaleString("ko-KR"));
+const show = (el, message) => { el.hidden = !message; el.textContent = message || ""; };
+const esc = (value) => String(value ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const tags = (list) => (list || []).map((v) => '<span class="tag">' + esc(v) + "</span>").join("") || '<span class="muted">–</span>';
+
+let selected = null;
+
+async function loadStatus() {
+  const data = await api("/api/status");
+  const d = data.dataset || {};
+  $("dataset").textContent = (d.name || "?") + " · " + (d.version || "?");
+  $("pipeline").textContent = "pipeline: " + (d.item_pipeline || "?");
+  $("updated").textContent = "갱신 " + new Date().toLocaleTimeString("ko-KR");
+
+  const s = data.source || {};
+  show($("p-err"), s.error);
+  const total = s.source_count ?? 0, done = s.processed_count ?? 0;
+  $("p-done").textContent = num(done);
+  $("p-total").textContent = num(total);
+  $("p-pending").textContent = num(s.pending_count);
+  $("p-stale").textContent = num(s.stale_schema_count);
+  $("p-bucket").textContent = s.bucket ? s.bucket + "/" + (s.source_prefix || "") : "–";
+  $("p-bar").style.width = (total ? Math.round((done / total) * 100) : 0) + "%";
+
+  const q = data.qdrant || {};
+  show($("q-err"), q.error);
+  const fmt = (v) => (v === null || v === undefined ? '<span class="warn">컬렉션 없음</span>' : num(v));
+  $("q-outfit").innerHTML = fmt(q.outfit_goldenset);
+  $("q-item").innerHTML = fmt(q.goldenset_items);
+  $("q-knowledge").innerHTML = fmt(q.knowledge);
+  $("q-url").textContent = q.url || "–";
+
+  const r = data.run || {};
+  show($("r-err"), r.error);
+  const embed = r.image_embedding || {};
+  $("r-finished").textContent = r.finished_at ? new Date(r.finished_at).toLocaleString("ko-KR") : "기록 없음";
+  $("r-embed").textContent = embed.embedded === undefined ? "–" : "신규 " + num(embed.embedded) + " / 재사용 " + num(embed.reused);
+  $("r-model").textContent = embed.model || "–";
+  $("r-items").textContent = r.num_items === undefined ? "–" : num(r.num_items) + "건";
+  $("r-indexed").innerHTML = r.indexed === undefined ? "–"
+    : (r.indexed ? '<span class="ok">완료</span>' : '<span class="warn">미적재</span>');
+}
+
+async function loadScan() {
+  const data = await api("/api/scan");
+  $("s-allowed").innerHTML = data.allowed ? '<span class="ok">켜짐</span>' : '<span class="muted">꺼짐</span>';
+  $("s-status").textContent = data.status || "IDLE";
+  $("scan").hidden = !data.allowed;
+  $("scan").disabled = data.status === "RUNNING";
+  const detail = data.error || (data.summary ? JSON.stringify(data.summary, null, 2) : "");
+  show($("s-detail"), detail);
+  return data.status;
+}
+
+async function loadOutfits() {
+  const { outfits } = await api("/api/outfits");
+  $("o-count").textContent = "(" + outfits.length + ")";
+  $("o-body").innerHTML = outfits.length ? outfits.map((row) => {
+    const state = !row.processed ? '<span class="warn">대기</span>'
+      : row.stale_schema ? '<span class="warn">구버전</span>'
+      : row.failed_count ? '<span class="bad">실패 ' + row.failed_count + "</span>"
+      : '<span class="ok">완료</span>';
+    return '<tr data-id="' + esc(row.golden_id) + '"' + (row.golden_id === selected ? ' class="selected"' : "") + ">"
+      + "<td>" + esc(row.golden_id) + "</td>"
+      + "<td>" + (row.processed ? row.item_count : "–") + "</td>"
+      + "<td>" + tags(row.layer_roles) + "</td>"
+      + "<td>" + state + "</td></tr>";
+  }).join("") : '<tr><td colspan="4" class="muted">원본이 없습니다.</td></tr>';
+
+  for (const tr of $("o-body").querySelectorAll("tr[data-id]")) {
+    tr.addEventListener("click", () => loadDetail(tr.dataset.id));
+  }
+}
+
+async function loadDetail(goldenId) {
+  selected = goldenId;
+  for (const tr of $("o-body").querySelectorAll("tr[data-id]")) {
+    tr.classList.toggle("selected", tr.dataset.id === goldenId);
+  }
+  const panel = $("detail");
+  panel.innerHTML = "<h2>코디 상세</h2><p class='muted'>불러오는 중…</p>";
+  let data;
+  try {
+    data = await api("/api/outfits/" + encodeURIComponent(goldenId));
+  } catch (error) {
+    panel.innerHTML = "<h2>코디 상세</h2><div class='err'>" + esc(error.message) + "</div>";
+    return;
+  }
+  if (!data.found) {
+    panel.innerHTML = "<h2>코디 상세</h2><p class='muted'>" + esc(goldenId)
+      + " 은(는) 아직 처리되지 않았습니다.</p>";
+    return;
+  }
+  const items = (data.items || []).map((item) =>
+    '<div class="item">'
+    + (item.preview_url ? '<img loading="lazy" src="' + esc(item.preview_url) + '" alt="">' : "")
+    + '<div class="meta"><strong>' + esc(item.label_ko || item.item_name || item.item_key) + "</strong>"
+    + tags([item.layer_role, item.category_large, item.category_small, item.color].filter(Boolean))
+    + (item.status !== "SUCCEEDED" ? '<div class="err">' + esc(item.error_message || item.status) + "</div>" : "")
+    + "</div></div>").join("");
+
+  panel.innerHTML = "<h2>코디 상세 · " + esc(data.golden_id) + "</h2>"
+    + (data.source_preview_url ? '<img class="preview" src="' + esc(data.source_preview_url) + '" alt="원본 코디">' : "")
+    + '<dl class="kv" style="margin:14px 0">'
+    + "<dt>파이프라인</dt><dd>" + esc(data.pipeline_key || "–") + "</dd>"
+    + "<dt>임베딩 버전</dt><dd>" + esc(data.embedding_version || "–") + "</dd>"
+    + "<dt>처리 시간</dt><dd>" + (data.latency_seconds ?? "–") + "s</dd>"
+    + "<dt>코디 point</dt><dd class='muted'>" + esc(data.outfit_point_id || "–") + "</dd>"
+    + "</dl>"
+    + '<div class="items">' + (items || '<span class="muted">아이템이 없습니다.</span>') + "</div>";
+}
+
+async function refresh() {
+  $("refresh").disabled = true;
+  try {
+    await Promise.allSettled([loadStatus(), loadScan(), loadOutfits()]);
+    if (selected) await loadDetail(selected);
+  } finally {
+    $("refresh").disabled = false;
+  }
+}
+
+$("refresh").addEventListener("click", refresh);
+$("scan").addEventListener("click", async () => {
+  $("scan").disabled = true;
+  try {
+    await fetch("/api/scan" + (token ? "?token=" + encodeURIComponent(token) : ""), { method: "POST" });
+  } catch (error) {
+    show($("s-detail"), String(error));
+  }
+  // 스캔이 끝날 때까지 짧은 주기로 상태만 따라간다.
+  const timer = setInterval(async () => {
+    const status = await loadScan().catch(() => null);
+    if (status !== "RUNNING") { clearInterval(timer); refresh(); }
+  }, 3000);
+});
+
+refresh();
+setInterval(refresh, 30000);
+</script>
+</body>
+</html>

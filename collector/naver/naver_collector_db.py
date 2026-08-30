@@ -64,6 +64,7 @@ from config import (
     logger,
 )
 from keywords import KeywordEntry, iter_keywords
+from util.product_indexer_trigger import trigger_product_indexer
 
 try:
     from psycopg2.extras import Json
@@ -298,7 +299,13 @@ def run_collect_job(
 
             batch_tagger.submit_pending(conn)
     else:
-        collect(conn, entries, limit_per_keyword, skip_llm, dry_run)
+        saved = collect(conn, entries, limit_per_keyword, skip_llm, dry_run)
+        if not dry_run and not skip_llm:
+            trigger_product_indexer(
+                source="naver",
+                reason="sync_completed",
+                tagged_count=saved,
+            )
 
 
 def retag(conn, limit: int = 500) -> int:
@@ -327,6 +334,12 @@ def retag(conn, limit: int = 500) -> int:
             db.update_product_tags(conn, product["id"], tags, meta)
             done += 1
     logger.info("재태깅 완료: %s/%s건", done, len(products))
+    if done:
+        trigger_product_indexer(
+            source="naver",
+            reason="retag_completed",
+            tagged_count=done,
+        )
     return done
 
 

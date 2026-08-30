@@ -1,0 +1,13 @@
+# GPU 이미지 임베딩. CUDA 환경에서는 호스트에 맞는 torch를 먼저 설치한다.
+-r ../../indexer/util/requirements.txt
+
+# 한국어 판단 원칙 임베딩과 파일럿 클러스터링
+sentence-transformers>=3.0,<4
+scikit-learn>=1.5,<2
+Pillow>=10.0
+requests>=2.31
+qdrant-client>=1.12
+python-dotenv>=1.0
+
+# 골든셋 원본·파생물 S3 입출력
+boto3>=1.34

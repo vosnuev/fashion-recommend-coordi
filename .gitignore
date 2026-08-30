@@ -6,6 +6,7 @@ local/
 *.env
 .env.*
 !.env.example
+!.env.gpu.example
 
 # Apple Sign In 개인키 (.p8 다운로드 파일)
 *.p8
@@ -49,6 +50,9 @@ ENV/
 db.sqlite3
 staticfiles/
 static/
+# 골든셋 확인용 웹의 단일 페이지는 소스다 (Django collectstatic 산출물이 아님).
+!ml/golden_set/web/static/
+!ml/golden_set/web/static/**
 media/
 
 # ============================================================
@@ -85,8 +89,20 @@ test-results/
 *.safetensors
 *.bin
 *.h5
+*.onnx
+*.gguf
+*.tflite
 *.pkl
 *.joblib
+# 신체치수 추정 모델 중 서빙(API)에 직접 쓰이는 것은 hist_gradient_boosting 하나뿐.
+# knn/baseline/random_forest는 학습·벤치마크용이므로 추적 제외한다 (random_forest는 50MB로 저장소 비대화 방지).
+!ml/body_measurement/artifacts/models/hist_gradient_boosting.joblib
+ml/body_measurement/artifacts/models/knn.joblib
+ml/body_measurement/artifacts/models/baseline.joblib
+ml/body_measurement/artifacts/models/random_forest.joblib
+# Hugging Face / PyTorch 등이 만드는 로컬 모델 다운로드 캐시
+.cache/
+.huggingface/
 # 학습 로그 / 실험 결과
 runs/
 outputs/
@@ -97,8 +113,10 @@ mlruns/
 # ============================================================
 # 데이터 파일
 # ============================================================
-data/
-datasets/
+# data/는 루트만 무시. 하위 디렉토리(예: ml/body_measurement/data/)는
+# 각 모듈의 .gitignore에서 별도로 관리한다.
+/data/
+/datasets/
 
 # 테스트 산출물 - 출력 폴더
 collector/output/
@@ -170,6 +188,13 @@ desktop.ini
 logs/
 *.tmp
 *.bak
+
+# Codex 작업 복구용 로컬 백업
+codex_backup_*/
+
+# PowerShell에서 따옴표 없는 pip 버전 조건이 만든 루트 임시 파일
+/=[0-9]*
+
 feature/front
 
 mobile/package-lock.json
@@ -179,5 +204,27 @@ mobile/package-lock.json
 
 output
 # Local docs/artifacts
-docs/
+docs/*
+!docs/wardrobe-product-import-investigation.md
+!docs/lookbook-admin-csv-guide.md
+!docs/lookbook-api-design.md
+!docs/wardrobe-custom-category-contract.md
+!docs/wardrobe-custom-category-chat-followup.md
+!docs/wardrobe-category-order-preference-chat-contract.md
+!docs/wardrobe-hashtag-contract.md
+!docs/shared-wardrobe-category-api-retirement.md
+!docs/reference-recommendation-operations.md
 main
+input
+nohup.out
+
+collector/eleven/tests/test_category_mapping.py
+
+_parse_*.py
+
+_to_delete/
+
+# 개인별 SizeKorea 실측치는 생성 과정에서만 로컬에 두고 Git에는 집계 artifact만 보관한다.
+/ml/body_measurement/data/preprocessed/sizekorea_172_clean.csv
+/ml/body_measurement/data/preprocessed/sizekorea_8th_exact_lengths_v2.csv
+/ml/body_measurement/data/hist/predictions/cv_predictions_exact_lengths_v2.csv

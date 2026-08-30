@@ -1,0 +1,15 @@
+boto3>=1.34
+joblib>=1.4
+numpy>=1.26
+openpyxl>=3.1
+pandas>=2.2
+scikit-learn>=1.5
+google-genai
+Jinja2
+requests
+
+# Hugging Face 후보는 선택 설치한다. 패키지 크기와 라이선스를 확인한 뒤 사용한다.
+# tabpfn>=2.0
+# huggingface-hub>=0.34
+# synthefy-nori
+# autogluon.tabular[tabpfnmix]

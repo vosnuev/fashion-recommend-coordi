@@ -1,0 +1,728 @@
+subject_id,predicted_shoulder_cm,predicted_chest_cm,predicted_waist_cm,predicted_hip_cm,predicted_thigh_length_cm,predicted_calf_length_cm,predicted_neck_length_cm,predicted_thigh_calf_ratio,predicted_torso_leg_ratio,latency_seconds,prompt_tokens,completion_tokens,total_tokens,actual_cost_usd,raw_response,error_message,created_at_utc,front_image_path,side_image_path,model,run_name,prompt_set,status
+sizkorea_f010,38.0,82.5,64.0,88.0,42.0,38.0,10.5,1.11,0.78,14.236,8803,98,8901,0.00529701,"{""chest_cm"": 82.5, ""waist_cm"": 64.0, ""hip_cm"": 88.0, ""shoulder_cm"": 38.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 10.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:27:55.422896+00:00,ml/body_measurement/data/people/sizkorea_f010_front.jpg,ml/body_measurement/data/people/sizkorea_f010_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f017,40.0,92.0,82.0,98.0,42.0,38.0,9.0,1.11,0.75,11.305,8803,84,8887,0.00498042,"{""chest_cm"": 92, ""waist_cm"": 82, ""hip_cm"": 98, ""shoulder_cm"": 40, ""thigh_length_cm"": 42, ""calf_length_cm"": 38, ""neck_length_cm"": 9, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.75}",,2026-08-11T13:28:09.674151+00:00,ml/body_measurement/data/people/sizkorea_f017_front.jpg,ml/body_measurement/data/people/sizkorea_f017_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f020,38.0,92.0,84.0,98.0,42.0,38.0,8.5,1.11,0.78,8.633,8814,96,8910,0.00529758,"{""chest_cm"": 92.0, ""waist_cm"": 84.0, ""hip_cm"": 98.0, ""shoulder_cm"": 38.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 8.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:28:20.986325+00:00,ml/body_measurement/data/people/sizkorea_f020_front.jpg,ml/body_measurement/data/people/sizkorea_f020_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f041,38.0,82.5,68.0,91.5,42.0,38.5,9.5,1.09,0.75,10.136,8814,96,8910,0.00529758,"{""chest_cm"": 82.5, ""waist_cm"": 68.0, ""hip_cm"": 91.5, ""shoulder_cm"": 38.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.5, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.09, ""torso_leg_ratio"": 0.75}",,2026-08-11T13:28:29.626172+00:00,ml/body_measurement/data/people/sizkorea_f041_front.jpg,ml/body_measurement/data/people/sizkorea_f041_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f043,38.0,85.0,72.0,90.0,42.0,38.0,9.5,1.11,0.78,11.468,8803,113,8916,0.00505872,"```json
+{
+  ""chest_cm"": 85.0,
+  ""waist_cm"": 72.0,
+  ""hip_cm"": 90.0,
+  ""shoulder_cm"": 38.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 9.5,
+  ""thigh_calf_ratio"": 1.11,
+  ""torso_leg_ratio"": 0.78
+}
+```",,2026-08-11T13:28:39.769076+00:00,ml/body_measurement/data/people/sizkorea_f043_front.jpg,ml/body_measurement/data/people/sizkorea_f043_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f051,40.0,86.5,76.0,96.0,42.0,38.0,10.5,1.11,0.72,8.201,8803,98,8901,0.00501822,"{""chest_cm"": 86.5, ""waist_cm"": 76.0, ""hip_cm"": 96.0, ""shoulder_cm"": 40.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 10.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:28:51.242205+00:00,ml/body_measurement/data/people/sizkorea_f051_front.jpg,ml/body_measurement/data/people/sizkorea_f051_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f057,38.0,92.0,78.0,98.0,42.0,38.0,9.5,1.11,0.78,11.332,8803,98,8901,0.00501822,"{""chest_cm"": 92.0, ""waist_cm"": 78.0, ""hip_cm"": 98.0, ""shoulder_cm"": 38.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:28:59.447963+00:00,ml/body_measurement/data/people/sizkorea_f057_front.jpg,ml/body_measurement/data/people/sizkorea_f057_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f061,38.5,82.5,68.0,94.0,42.0,38.0,9.5,1.11,0.78,11.31,8803,98,8901,0.00501822,"{""chest_cm"": 82.5, ""waist_cm"": 68.0, ""hip_cm"": 94.0, ""shoulder_cm"": 38.5, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:29:10.785806+00:00,ml/body_measurement/data/people/sizkorea_f061_front.jpg,ml/body_measurement/data/people/sizkorea_f061_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f072,38.2,86.5,72.3,94.8,42.5,38.0,9.5,1.12,0.78,11.27,8814,96,8910,0.00529758,"{""chest_cm"": 86.5, ""waist_cm"": 72.3, ""hip_cm"": 94.8, ""shoulder_cm"": 38.2, ""thigh_length_cm"": 42.5, ""calf_length_cm"": 38.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.12, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:29:22.102150+00:00,ml/body_measurement/data/people/sizkorea_f072_front.jpg,ml/body_measurement/data/people/sizkorea_f072_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f075,39.0,96.5,89.0,102.0,42.0,38.0,10.5,1.11,0.78,11.273,8803,113,8916,0.00505872,"```json
+{
+  ""chest_cm"": 96.5,
+  ""waist_cm"": 89.0,
+  ""hip_cm"": 102.0,
+  ""shoulder_cm"": 39.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 10.5,
+  ""thigh_calf_ratio"": 1.11,
+  ""torso_leg_ratio"": 0.78
+}
+```",,2026-08-11T13:29:33.377466+00:00,ml/body_measurement/data/people/sizkorea_f075_front.jpg,ml/body_measurement/data/people/sizkorea_f075_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f090,38.0,82.5,65.0,88.0,42.0,38.0,9.5,1.11,0.75,6.845,8803,98,8901,0.0055758,"{""chest_cm"": 82.5, ""waist_cm"": 65.0, ""hip_cm"": 88.0, ""shoulder_cm"": 38.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.75}",,2026-08-11T13:29:44.656242+00:00,ml/body_measurement/data/people/sizkorea_f090_front.jpg,ml/body_measurement/data/people/sizkorea_f090_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f093,38.4,84.5,68.2,93.6,41.2,38.5,9.8,1.07,0.72,25.736,8803,113,8916,0.00505872,"```json
+{
+  ""chest_cm"": 84.5,
+  ""waist_cm"": 68.2,
+  ""hip_cm"": 93.6,
+  ""shoulder_cm"": 38.4,
+  ""thigh_length_cm"": 41.2,
+  ""calf_length_cm"": 38.5,
+  ""neck_length_cm"": 9.8,
+  ""thigh_calf_ratio"": 1.07,
+  ""torso_leg_ratio"": 0.72
+}
+```",,2026-08-11T13:29:51.507309+00:00,ml/body_measurement/data/people/sizkorea_f093_front.jpg,ml/body_measurement/data/people/sizkorea_f093_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f098,38.0,82.0,64.0,88.0,42.0,38.0,9.5,1.11,0.78,10.506,8814,107,8921,0.00532893,"{
+  ""chest_cm"": 82.0,
+  ""waist_cm"": 64.0,
+  ""hip_cm"": 88.0,
+  ""shoulder_cm"": 38.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 9.5,
+  ""thigh_calf_ratio"": 1.11,
+  ""torso_leg_ratio"": 0.78
+}",,2026-08-11T13:30:17.250154+00:00,ml/body_measurement/data/people/sizkorea_f098_front.jpg,ml/body_measurement/data/people/sizkorea_f098_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f099,38.5,96.5,88.0,102.0,42.0,38.0,8.5,1.105,0.78,25.822,8803,113,8916,0.00505872,"```json
+{
+  ""chest_cm"": 96.5,
+  ""waist_cm"": 88.0,
+  ""hip_cm"": 102.0,
+  ""shoulder_cm"": 38.5,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 8.5,
+  ""thigh_calf_ratio"": 1.105,
+  ""torso_leg_ratio"": 0.78
+}
+```",,2026-08-11T13:30:27.762210+00:00,ml/body_measurement/data/people/sizkorea_f099_front.jpg,ml/body_measurement/data/people/sizkorea_f099_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f111,38.0,86.0,72.0,94.0,42.0,38.0,10.5,1.11,0.72,8.326,8803,98,8901,0.00501822,"{""chest_cm"": 86.0, ""waist_cm"": 72.0, ""hip_cm"": 94.0, ""shoulder_cm"": 38.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 10.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:30:53.590060+00:00,ml/body_measurement/data/people/sizkorea_f111_front.jpg,ml/body_measurement/data/people/sizkorea_f111_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f115,38.5,84.5,71.0,94.0,41.0,37.5,9.5,1.09,0.78,8.144,8803,98,8901,0.00501822,"{""chest_cm"": 84.5, ""waist_cm"": 71.0, ""hip_cm"": 94.0, ""shoulder_cm"": 38.5, ""thigh_length_cm"": 41.0, ""calf_length_cm"": 37.5, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.09, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:31:01.921075+00:00,ml/body_measurement/data/people/sizkorea_f115_front.jpg,ml/body_measurement/data/people/sizkorea_f115_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f117,41.0,98.5,92.0,104.0,42.0,40.0,9.5,1.05,0.78,23.611,8803,98,8901,0.00501822,"{""chest_cm"": 98.5, ""waist_cm"": 92.0, ""hip_cm"": 104.0, ""shoulder_cm"": 41.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 40.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.05, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:31:10.070729+00:00,ml/body_measurement/data/people/sizkorea_f117_front.jpg,ml/body_measurement/data/people/sizkorea_f117_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f120,38.5,84.5,68.0,89.0,42.0,38.0,10.5,1.11,0.72,10.463,8803,113,8916,0.0056208,"```json
+{
+  ""chest_cm"": 84.5,
+  ""waist_cm"": 68.0,
+  ""hip_cm"": 89.0,
+  ""shoulder_cm"": 38.5,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 10.5,
+  ""thigh_calf_ratio"": 1.11,
+  ""torso_leg_ratio"": 0.72
+}
+```",,2026-08-11T13:31:33.687758+00:00,ml/body_measurement/data/people/sizkorea_f120_front.jpg,ml/body_measurement/data/people/sizkorea_f120_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f123,38.0,92.0,78.0,98.0,42.0,38.0,9.5,1.11,0.78,10.501,8814,107,8921,0.00532893,"{
+  ""chest_cm"": 92.0,
+  ""waist_cm"": 78.0,
+  ""hip_cm"": 98.0,
+  ""shoulder_cm"": 38.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 9.5,
+  ""thigh_calf_ratio"": 1.11,
+  ""torso_leg_ratio"": 0.78
+}",,2026-08-11T13:31:44.156506+00:00,ml/body_measurement/data/people/sizkorea_f123_front.jpg,ml/body_measurement/data/people/sizkorea_f123_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f125,38.5,86.5,68.0,94.0,42.0,38.0,9.5,1.11,0.73,10.235,8803,98,8901,0.00501822,"{""chest_cm"": 86.5, ""waist_cm"": 68.0, ""hip_cm"": 94.0, ""shoulder_cm"": 38.5, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.73}",,2026-08-11T13:31:54.664620+00:00,ml/body_measurement/data/people/sizkorea_f125_front.jpg,ml/body_measurement/data/people/sizkorea_f125_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f128,38.6,86.5,71.2,94.8,42.3,38.7,10.2,1.09,0.78,9.771,8814,96,8910,0.00529758,"{""chest_cm"": 86.5, ""waist_cm"": 71.2, ""hip_cm"": 94.8, ""shoulder_cm"": 38.6, ""thigh_length_cm"": 42.3, ""calf_length_cm"": 38.7, ""neck_length_cm"": 10.2, ""thigh_calf_ratio"": 1.09, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:32:04.904788+00:00,ml/body_measurement/data/people/sizkorea_f128_front.jpg,ml/body_measurement/data/people/sizkorea_f128_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f148,38.0,82.5,64.0,88.0,42.0,38.0,9.5,1.11,0.78,21.534,8814,96,8910,0.00529758,"{""chest_cm"": 82.5, ""waist_cm"": 64.0, ""hip_cm"": 88.0, ""shoulder_cm"": 38.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:32:14.682965+00:00,ml/body_measurement/data/people/sizkorea_f148_front.jpg,ml/body_measurement/data/people/sizkorea_f148_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f153,36.0,78.5,62.0,84.0,42.0,38.0,9.5,1.11,0.78,11.036,8803,113,8916,0.00505872,"```json
+{
+  ""chest_cm"": 78.5,
+  ""waist_cm"": 62.0,
+  ""hip_cm"": 84.0,
+  ""shoulder_cm"": 36.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 9.5,
+  ""thigh_calf_ratio"": 1.11,
+  ""torso_leg_ratio"": 0.78
+}
+```",,2026-08-11T13:32:36.224115+00:00,ml/body_measurement/data/people/sizkorea_f153_front.jpg,ml/body_measurement/data/people/sizkorea_f153_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f156,38.0,88.5,78.0,95.0,42.0,38.0,9.5,1.11,0.78,8.371,8803,98,8901,0.00501822,"{""chest_cm"": 88.5, ""waist_cm"": 78.0, ""hip_cm"": 95.0, ""shoulder_cm"": 38.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:32:47.265584+00:00,ml/body_measurement/data/people/sizkorea_f156_front.jpg,ml/body_measurement/data/people/sizkorea_f156_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f169,40.0,98.5,85.0,102.0,42.0,38.0,10.5,1.11,0.75,10.32,8803,113,8916,0.0056208,"```json
+{
+  ""chest_cm"": 98.5,
+  ""waist_cm"": 85.0,
+  ""hip_cm"": 102.0,
+  ""shoulder_cm"": 40.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 10.5,
+  ""thigh_calf_ratio"": 1.11,
+  ""torso_leg_ratio"": 0.75
+}
+```",,2026-08-11T13:32:55.642050+00:00,ml/body_measurement/data/people/sizkorea_f169_front.jpg,ml/body_measurement/data/people/sizkorea_f169_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f178,39.0,95.0,86.0,102.0,42.0,38.0,9.5,1.11,0.78,8.906,8803,98,8901,0.00501822,"{""chest_cm"": 95.0, ""waist_cm"": 86.0, ""hip_cm"": 102.0, ""shoulder_cm"": 39.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:33:05.969065+00:00,ml/body_measurement/data/people/sizkorea_f178_front.jpg,ml/body_measurement/data/people/sizkorea_f178_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f187,38.0,82.5,68.0,91.0,42.0,38.0,8.5,1.11,0.78,4.855,8807,110,8917,0.00418633,"```json
+{
+  ""chest_cm"": 82.5,
+  ""waist_cm"": 68.0,
+  ""hip_cm"": 91.0,
+  ""shoulder_cm"": 38.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 8.5,
+  ""thigh_calf_ratio"": 1.11,
+  ""torso_leg_ratio"": 0.78
+}
+```",,2026-08-11T13:33:14.880488+00:00,ml/body_measurement/data/people/sizkorea_f187_front.jpg,ml/body_measurement/data/people/sizkorea_f187_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f193,38.0,82.5,64.0,88.0,42.0,38.0,9.5,1.11,0.72,9.458,8814,107,8921,0.00532893,"{
+  ""chest_cm"": 82.5,
+  ""waist_cm"": 64.0,
+  ""hip_cm"": 88.0,
+  ""shoulder_cm"": 38.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 9.5,
+  ""thigh_calf_ratio"": 1.11,
+  ""torso_leg_ratio"": 0.72
+}",,2026-08-11T13:33:19.742901+00:00,ml/body_measurement/data/people/sizkorea_f193_front.jpg,ml/body_measurement/data/people/sizkorea_f193_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f194,38.0,84.0,66.0,90.0,42.0,38.0,10.5,1.11,0.78,9.564,8814,107,8921,0.00532893,"{
+  ""chest_cm"": 84.0,
+  ""waist_cm"": 66.0,
+  ""hip_cm"": 90.0,
+  ""shoulder_cm"": 38.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 10.5,
+  ""thigh_calf_ratio"": 1.11,
+  ""torso_leg_ratio"": 0.78
+}",,2026-08-11T13:33:29.207045+00:00,ml/body_measurement/data/people/sizkorea_f194_front.jpg,ml/body_measurement/data/people/sizkorea_f194_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f199,38.0,82.5,64.0,88.0,42.0,38.0,9.5,1.11,0.75,9.827,8814,107,8921,0.00532893,"{
+  ""chest_cm"": 82.5,
+  ""waist_cm"": 64.0,
+  ""hip_cm"": 88.0,
+  ""shoulder_cm"": 38.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 9.5,
+  ""thigh_calf_ratio"": 1.11,
+  ""torso_leg_ratio"": 0.75
+}",,2026-08-11T13:33:38.777626+00:00,ml/body_measurement/data/people/sizkorea_f199_front.jpg,ml/body_measurement/data/people/sizkorea_f199_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f203,39.0,88.5,72.0,94.0,42.0,38.0,9.5,1.105,0.78,8.599,8803,98,8901,0.00501822,"{""chest_cm"": 88.5, ""waist_cm"": 72.0, ""hip_cm"": 94.0, ""shoulder_cm"": 39.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.105, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:33:48.609704+00:00,ml/body_measurement/data/people/sizkorea_f203_front.jpg,ml/body_measurement/data/people/sizkorea_f203_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f220,38.5,84.5,71.0,91.0,42.0,38.0,9.5,1.105,0.72,9.823,8803,98,8901,0.00501822,"{""chest_cm"": 84.5, ""waist_cm"": 71.0, ""hip_cm"": 91.0, ""shoulder_cm"": 38.5, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.105, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:33:57.212890+00:00,ml/body_measurement/data/people/sizkorea_f220_front.jpg,ml/body_measurement/data/people/sizkorea_f220_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f221,38.0,78.5,64.0,85.0,42.0,38.0,9.5,1.11,0.78,9.783,8803,98,8901,0.00501822,"{""chest_cm"": 78.5, ""waist_cm"": 64.0, ""hip_cm"": 85.0, ""shoulder_cm"": 38.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:34:07.040360+00:00,ml/body_measurement/data/people/sizkorea_f221_front.jpg,ml/body_measurement/data/people/sizkorea_f221_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f223,39.0,95.0,92.0,103.0,42.0,38.0,9.5,1.11,0.78,9.275,8803,113,8916,0.0056208,"```json
+{
+  ""chest_cm"": 95.0,
+  ""waist_cm"": 92.0,
+  ""hip_cm"": 103.0,
+  ""shoulder_cm"": 39.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 9.5,
+  ""thigh_calf_ratio"": 1.11,
+  ""torso_leg_ratio"": 0.78
+}
+```",,2026-08-11T13:34:16.830567+00:00,ml/body_measurement/data/people/sizkorea_f223_front.jpg,ml/body_measurement/data/people/sizkorea_f223_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f234,37.0,82.0,68.0,88.0,42.0,38.0,9.5,1.11,0.75,13.369,8803,113,8916,0.00533976,"```json
+{
+  ""chest_cm"": 82.0,
+  ""waist_cm"": 68.0,
+  ""hip_cm"": 88.0,
+  ""shoulder_cm"": 37.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 9.5,
+  ""thigh_calf_ratio"": 1.11,
+  ""torso_leg_ratio"": 0.75
+}
+```",,2026-08-11T13:34:26.111517+00:00,ml/body_measurement/data/people/sizkorea_f234_front.jpg,ml/body_measurement/data/people/sizkorea_f234_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f241,38.7,88.5,84.2,95.3,42.1,38.4,8.9,1.1,0.78,22.451,8803,98,8901,0.00501822,"{""chest_cm"": 88.5, ""waist_cm"": 84.2, ""hip_cm"": 95.3, ""shoulder_cm"": 38.7, ""thigh_length_cm"": 42.1, ""calf_length_cm"": 38.4, ""neck_length_cm"": 8.9, ""thigh_calf_ratio"": 1.1, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:34:39.485942+00:00,ml/body_measurement/data/people/sizkorea_f241_front.jpg,ml/body_measurement/data/people/sizkorea_f241_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f246,38.7,88.5,76.2,98.3,42.1,38.4,9.8,1.1,0.78,9.142,8814,96,8910,0.00529758,"{""chest_cm"": 88.5, ""waist_cm"": 76.2, ""hip_cm"": 98.3, ""shoulder_cm"": 38.7, ""thigh_length_cm"": 42.1, ""calf_length_cm"": 38.4, ""neck_length_cm"": 9.8, ""thigh_calf_ratio"": 1.1, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:35:01.943952+00:00,ml/body_measurement/data/people/sizkorea_f246_front.jpg,ml/body_measurement/data/people/sizkorea_f246_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f251,37.0,79.0,62.0,85.0,41.0,38.0,9.5,1.08,0.78,9.772,8803,98,8901,0.00501822,"{""chest_cm"": 79.0, ""waist_cm"": 62.0, ""hip_cm"": 85.0, ""shoulder_cm"": 37.0, ""thigh_length_cm"": 41.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.08, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:35:11.092168+00:00,ml/body_measurement/data/people/sizkorea_f251_front.jpg,ml/body_measurement/data/people/sizkorea_f251_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f259,38.7,96.5,84.2,102.3,42.8,38.5,9.2,1.11,0.72,3.669,8807,110,8917,0.00418633,"```json
+{
+  ""chest_cm"": 96.5,
+  ""waist_cm"": 84.2,
+  ""hip_cm"": 102.3,
+  ""shoulder_cm"": 38.7,
+  ""thigh_length_cm"": 42.8,
+  ""calf_length_cm"": 38.5,
+  ""neck_length_cm"": 9.2,
+  ""thigh_calf_ratio"": 1.11,
+  ""torso_leg_ratio"": 0.72
+}
+```",,2026-08-11T13:35:20.871048+00:00,ml/body_measurement/data/people/sizkorea_f259_front.jpg,ml/body_measurement/data/people/sizkorea_f259_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f265,38.0,88.0,76.0,98.0,42.0,38.0,9.0,1.11,0.73,10.044,8803,84,8887,0.00498042,"{""chest_cm"": 88, ""waist_cm"": 76, ""hip_cm"": 98, ""shoulder_cm"": 38, ""thigh_length_cm"": 42, ""calf_length_cm"": 38, ""neck_length_cm"": 9, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.73}",,2026-08-11T13:35:24.547018+00:00,ml/body_measurement/data/people/sizkorea_f265_front.jpg,ml/body_measurement/data/people/sizkorea_f265_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f274,38.5,84.5,66.0,91.0,42.0,38.0,9.5,1.11,0.78,8.92,8814,96,8910,0.00529758,"{""chest_cm"": 84.5, ""waist_cm"": 66.0, ""hip_cm"": 91.0, ""shoulder_cm"": 38.5, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:35:34.598921+00:00,ml/body_measurement/data/people/sizkorea_f274_front.jpg,ml/body_measurement/data/people/sizkorea_f274_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f275,42.0,98.5,92.0,106.5,38.0,36.5,8.5,1.04,0.82,10.024,8813,98,8911,0.00456337,"{""chest_cm"": 98.5, ""waist_cm"": 92.0, ""hip_cm"": 106.5, ""shoulder_cm"": 42.0, ""thigh_length_cm"": 38.0, ""calf_length_cm"": 36.5, ""neck_length_cm"": 8.5, ""thigh_calf_ratio"": 1.04, ""torso_leg_ratio"": 0.82}",,2026-08-11T13:35:43.525735+00:00,ml/body_measurement/data/people/sizkorea_f275_front.jpg,ml/body_measurement/data/people/sizkorea_f275_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f285,38.5,88.5,72.0,94.5,42.0,38.5,9.5,1.09,0.78,6.716,8803,98,8901,0.0055758,"{""chest_cm"": 88.5, ""waist_cm"": 72.0, ""hip_cm"": 94.5, ""shoulder_cm"": 38.5, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.5, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.09, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:35:53.555416+00:00,ml/body_measurement/data/people/sizkorea_f285_front.jpg,ml/body_measurement/data/people/sizkorea_f285_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f292,38.5,85.5,71.0,94.0,42.0,38.0,9.5,1.11,0.78,8.562,8803,98,8901,0.00501822,"{""chest_cm"": 85.5, ""waist_cm"": 71.0, ""hip_cm"": 94.0, ""shoulder_cm"": 38.5, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:36:00.279210+00:00,ml/body_measurement/data/people/sizkorea_f292_front.jpg,ml/body_measurement/data/people/sizkorea_f292_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f293,38.0,85.0,71.0,93.0,42.0,38.0,9.5,1.11,0.72,6.672,8803,98,8901,0.0055758,"{""chest_cm"": 85.0, ""waist_cm"": 71.0, ""hip_cm"": 93.0, ""shoulder_cm"": 38.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:36:08.847311+00:00,ml/body_measurement/data/people/sizkorea_f293_front.jpg,ml/body_measurement/data/people/sizkorea_f293_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f301,38.0,85.0,72.0,94.0,42.0,38.0,9.0,1.11,0.72,9.341,8803,84,8887,0.00498042,"{""chest_cm"": 85, ""waist_cm"": 72, ""hip_cm"": 94, ""shoulder_cm"": 38, ""thigh_length_cm"": 42, ""calf_length_cm"": 38, ""neck_length_cm"": 9, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:36:15.525606+00:00,ml/body_measurement/data/people/sizkorea_f301_front.jpg,ml/body_measurement/data/people/sizkorea_f301_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f312,38.0,82.5,66.0,88.0,42.0,38.0,9.5,1.105,0.78,8.641,8803,98,8901,0.00501822,"{""chest_cm"": 82.5, ""waist_cm"": 66.0, ""hip_cm"": 88.0, ""shoulder_cm"": 38.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.105, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:36:24.874816+00:00,ml/body_measurement/data/people/sizkorea_f312_front.jpg,ml/body_measurement/data/people/sizkorea_f312_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f313,40.5,88.5,72.0,96.0,42.0,38.0,10.5,1.11,0.72,10.2,8814,96,8910,0.00529758,"{""chest_cm"": 88.5, ""waist_cm"": 72.0, ""hip_cm"": 96.0, ""shoulder_cm"": 40.5, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 10.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:36:33.521951+00:00,ml/body_measurement/data/people/sizkorea_f313_front.jpg,ml/body_measurement/data/people/sizkorea_f313_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f317,37.0,82.5,68.0,91.0,42.0,38.0,9.5,1.11,0.78,9.712,8803,98,8901,0.00501822,"{""chest_cm"": 82.5, ""waist_cm"": 68.0, ""hip_cm"": 91.0, ""shoulder_cm"": 37.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:36:43.729000+00:00,ml/body_measurement/data/people/sizkorea_f317_front.jpg,ml/body_measurement/data/people/sizkorea_f317_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f342,38.6,85.5,74.2,94.8,42.5,38.2,9.3,1.11,0.72,10.37,8803,113,8916,0.0056208,"```json
+{
+  ""chest_cm"": 85.5,
+  ""waist_cm"": 74.2,
+  ""hip_cm"": 94.8,
+  ""shoulder_cm"": 38.6,
+  ""thigh_length_cm"": 42.5,
+  ""calf_length_cm"": 38.2,
+  ""neck_length_cm"": 9.3,
+  ""thigh_calf_ratio"": 1.11,
+  ""torso_leg_ratio"": 0.72
+}
+```",,2026-08-11T13:36:53.446970+00:00,ml/body_measurement/data/people/sizkorea_f342_front.jpg,ml/body_measurement/data/people/sizkorea_f342_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f343,40.0,86.0,74.0,96.0,44.0,38.0,10.0,1.16,0.72,11.051,8807,82,8889,0.00525369,"{""chest_cm"": 86, ""waist_cm"": 74, ""hip_cm"": 96, ""shoulder_cm"": 40, ""thigh_length_cm"": 44, ""calf_length_cm"": 38, ""neck_length_cm"": 10, ""thigh_calf_ratio"": 1.16, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:37:03.823609+00:00,ml/body_measurement/data/people/sizkorea_f343_front.jpg,ml/body_measurement/data/people/sizkorea_f343_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f346,38.5,84.5,68.0,92.5,42.0,38.5,9.5,1.09,0.78,9.735,8803,98,8901,0.00501822,"{""chest_cm"": 84.5, ""waist_cm"": 68.0, ""hip_cm"": 92.5, ""shoulder_cm"": 38.5, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.5, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.09, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:37:14.881030+00:00,ml/body_measurement/data/people/sizkorea_f346_front.jpg,ml/body_measurement/data/people/sizkorea_f346_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f349,38.5,84.5,68.0,92.0,42.0,38.0,9.5,1.11,0.78,8.638,8803,98,8901,0.00501822,"{""chest_cm"": 84.5, ""waist_cm"": 68.0, ""hip_cm"": 92.0, ""shoulder_cm"": 38.5, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:37:24.622098+00:00,ml/body_measurement/data/people/sizkorea_f349_front.jpg,ml/body_measurement/data/people/sizkorea_f349_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f352,38.7,82.5,68.3,91.2,42.8,38.5,9.2,1.11,0.78,11.249,8803,113,8916,0.00505872,"```json
+{
+  ""chest_cm"": 82.5,
+  ""waist_cm"": 68.3,
+  ""hip_cm"": 91.2,
+  ""shoulder_cm"": 38.7,
+  ""thigh_length_cm"": 42.8,
+  ""calf_length_cm"": 38.5,
+  ""neck_length_cm"": 9.2,
+  ""thigh_calf_ratio"": 1.11,
+  ""torso_leg_ratio"": 0.78
+}
+```",,2026-08-11T13:37:33.266604+00:00,ml/body_measurement/data/people/sizkorea_f352_front.jpg,ml/body_measurement/data/people/sizkorea_f352_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f354,40.5,102.5,98.0,108.5,38.0,37.5,8.5,1.01,0.78,13.237,8803,113,8916,0.00533976,"```json
+{
+  ""chest_cm"": 102.5,
+  ""waist_cm"": 98.0,
+  ""hip_cm"": 108.5,
+  ""shoulder_cm"": 40.5,
+  ""thigh_length_cm"": 38.0,
+  ""calf_length_cm"": 37.5,
+  ""neck_length_cm"": 8.5,
+  ""thigh_calf_ratio"": 1.01,
+  ""torso_leg_ratio"": 0.78
+}
+```",,2026-08-11T13:37:44.523529+00:00,ml/body_measurement/data/people/sizkorea_f354_front.jpg,ml/body_measurement/data/people/sizkorea_f354_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f357,38.5,82.5,66.0,91.0,42.0,38.0,9.5,1.105,0.82,9.853,8814,96,8910,0.00529758,"{""chest_cm"": 82.5, ""waist_cm"": 66.0, ""hip_cm"": 91.0, ""shoulder_cm"": 38.5, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.105, ""torso_leg_ratio"": 0.82}",,2026-08-11T13:37:57.766427+00:00,ml/body_measurement/data/people/sizkorea_f357_front.jpg,ml/body_measurement/data/people/sizkorea_f357_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f364,39.0,88.5,71.0,96.0,42.0,37.5,9.5,1.12,0.73,13.148,8807,96,8903,0.00529359,"{""chest_cm"": 88.5, ""waist_cm"": 71.0, ""hip_cm"": 96.0, ""shoulder_cm"": 39.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 37.5, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.12, ""torso_leg_ratio"": 0.73}",,2026-08-11T13:38:07.627803+00:00,ml/body_measurement/data/people/sizkorea_f364_front.jpg,ml/body_measurement/data/people/sizkorea_f364_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f368,36.0,82.5,68.0,90.5,42.0,38.0,9.5,1.11,0.78,9.126,8803,98,8901,0.00501822,"{""chest_cm"": 82.5, ""waist_cm"": 68.0, ""hip_cm"": 90.5, ""shoulder_cm"": 36.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:38:20.785593+00:00,ml/body_measurement/data/people/sizkorea_f368_front.jpg,ml/body_measurement/data/people/sizkorea_f368_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f369,38.5,82.5,66.0,91.0,42.0,38.0,9.5,1.11,0.78,12.191,8803,113,8916,0.00505872,"```json
+{
+  ""chest_cm"": 82.5,
+  ""waist_cm"": 66.0,
+  ""hip_cm"": 91.0,
+  ""shoulder_cm"": 38.5,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 9.5,
+  ""thigh_calf_ratio"": 1.11,
+  ""torso_leg_ratio"": 0.78
+}
+```",,2026-08-11T13:38:29.920237+00:00,ml/body_measurement/data/people/sizkorea_f369_front.jpg,ml/body_measurement/data/people/sizkorea_f369_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f385,38.5,88.5,78.0,98.5,42.0,38.5,9.5,1.09,0.78,20.629,8814,96,8910,0.00529758,"{""chest_cm"": 88.5, ""waist_cm"": 78.0, ""hip_cm"": 98.5, ""shoulder_cm"": 38.5, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.5, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.09, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:38:42.117794+00:00,ml/body_measurement/data/people/sizkorea_f385_front.jpg,ml/body_measurement/data/people/sizkorea_f385_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f394,38.4,86.5,71.2,94.8,42.6,38.9,9.8,1.095,0.78,7.842,8824,107,8931,0.00459126,"{
+  ""chest_cm"": 86.5,
+  ""waist_cm"": 71.2,
+  ""hip_cm"": 94.8,
+  ""shoulder_cm"": 38.4,
+  ""thigh_length_cm"": 42.6,
+  ""calf_length_cm"": 38.9,
+  ""neck_length_cm"": 9.8,
+  ""thigh_calf_ratio"": 1.095,
+  ""torso_leg_ratio"": 0.78
+}",,2026-08-11T13:39:02.755803+00:00,ml/body_measurement/data/people/sizkorea_f394_front.jpg,ml/body_measurement/data/people/sizkorea_f394_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f396,38.0,85.0,72.0,94.0,42.0,38.0,9.5,1.11,0.78,9.903,8803,98,8901,0.00501822,"{""chest_cm"": 85.0, ""waist_cm"": 72.0, ""hip_cm"": 94.0, ""shoulder_cm"": 38.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:39:10.604642+00:00,ml/body_measurement/data/people/sizkorea_f396_front.jpg,ml/body_measurement/data/people/sizkorea_f396_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f398,38.7,82.5,68.3,90.2,41.5,38.9,9.2,1.07,0.72,9.847,8803,102,8905,0.0055878,"```json
+{""chest_cm"": 82.5, ""waist_cm"": 68.3, ""hip_cm"": 90.2, ""shoulder_cm"": 38.7, ""thigh_length_cm"": 41.5, ""calf_length_cm"": 38.9, ""neck_length_cm"": 9.2, ""thigh_calf_ratio"": 1.07, ""torso_leg_ratio"": 0.72}
+```",,2026-08-11T13:39:20.516927+00:00,ml/body_measurement/data/people/sizkorea_f398_front.jpg,ml/body_measurement/data/people/sizkorea_f398_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f405,38.0,85.5,68.0,91.0,42.0,38.0,9.5,1.11,0.73,8.612,8803,98,8901,0.00501822,"{""chest_cm"": 85.5, ""waist_cm"": 68.0, ""hip_cm"": 91.0, ""shoulder_cm"": 38.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.73}",,2026-08-11T13:39:30.369202+00:00,ml/body_measurement/data/people/sizkorea_f405_front.jpg,ml/body_measurement/data/people/sizkorea_f405_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_f408,38.5,85.5,70.2,92.8,42.0,37.5,9.5,1.12,0.78,10.34,8803,98,8901,0.00501822,"{""chest_cm"": 85.5, ""waist_cm"": 70.2, ""hip_cm"": 92.8, ""shoulder_cm"": 38.5, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 37.5, ""neck_length_cm"": 9.5, ""thigh_calf_ratio"": 1.12, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:39:38.990769+00:00,ml/body_measurement/data/people/sizkorea_f408_front.jpg,ml/body_measurement/data/people/sizkorea_f408_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m012,43.2,96.5,82.3,94.8,48.6,42.1,11.8,1.15,0.78,7.137,8824,107,8931,0.00459126,"{
+  ""chest_cm"": 96.5,
+  ""waist_cm"": 82.3,
+  ""hip_cm"": 94.8,
+  ""shoulder_cm"": 43.2,
+  ""thigh_length_cm"": 48.6,
+  ""calf_length_cm"": 42.1,
+  ""neck_length_cm"": 11.8,
+  ""thigh_calf_ratio"": 1.15,
+  ""torso_leg_ratio"": 0.78
+}",,2026-08-11T13:39:49.337825+00:00,ml/body_measurement/data/people/sizkorea_m012_front.jpg,ml/body_measurement/data/people/sizkorea_m012_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m018,42.5,88.5,82.0,92.0,45.0,42.0,11.5,1.07,0.78,8.312,8803,98,8901,0.0055758,"{""chest_cm"": 88.5, ""waist_cm"": 82.0, ""hip_cm"": 92.0, ""shoulder_cm"": 42.5, ""thigh_length_cm"": 45.0, ""calf_length_cm"": 42.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.07, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:39:56.481610+00:00,ml/body_measurement/data/people/sizkorea_m018_front.jpg,ml/body_measurement/data/people/sizkorea_m018_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m019,42.0,96.5,89.0,94.0,45.0,38.0,12.0,1.18,0.72,10.326,8814,107,8921,0.00532893,"{
+  ""chest_cm"": 96.5,
+  ""waist_cm"": 89.0,
+  ""hip_cm"": 94.0,
+  ""shoulder_cm"": 42.0,
+  ""thigh_length_cm"": 45.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 12.0,
+  ""thigh_calf_ratio"": 1.18,
+  ""torso_leg_ratio"": 0.72
+}",,2026-08-11T13:40:04.800818+00:00,ml/body_measurement/data/people/sizkorea_m019_front.jpg,ml/body_measurement/data/people/sizkorea_m019_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m023,42.8,86.5,74.2,88.3,48.5,42.0,11.2,1.155,0.72,3.931,8807,110,8917,0.00418633,"```json
+{
+  ""chest_cm"": 86.5,
+  ""waist_cm"": 74.2,
+  ""hip_cm"": 88.3,
+  ""shoulder_cm"": 42.8,
+  ""thigh_length_cm"": 48.5,
+  ""calf_length_cm"": 42.0,
+  ""neck_length_cm"": 11.2,
+  ""thigh_calf_ratio"": 1.155,
+  ""torso_leg_ratio"": 0.72
+}
+```",,2026-08-11T13:40:15.133205+00:00,ml/body_measurement/data/people/sizkorea_m023_front.jpg,ml/body_measurement/data/people/sizkorea_m023_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m034,42.0,92.0,84.0,94.0,44.0,40.0,10.5,1.1,0.82,9.049,8803,98,8901,0.00501822,"{""chest_cm"": 92.0, ""waist_cm"": 84.0, ""hip_cm"": 94.0, ""shoulder_cm"": 42.0, ""thigh_length_cm"": 44.0, ""calf_length_cm"": 40.0, ""neck_length_cm"": 10.5, ""thigh_calf_ratio"": 1.1, ""torso_leg_ratio"": 0.82}",,2026-08-11T13:40:19.070438+00:00,ml/body_measurement/data/people/sizkorea_m034_front.jpg,ml/body_measurement/data/people/sizkorea_m034_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m035,40.0,78.5,68.0,82.0,42.0,38.0,12.0,1.105,0.78,9.671,8803,98,8901,0.00501822,"{""chest_cm"": 78.5, ""waist_cm"": 68.0, ""hip_cm"": 82.0, ""shoulder_cm"": 40.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 12.0, ""thigh_calf_ratio"": 1.105, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:40:28.128151+00:00,ml/body_measurement/data/people/sizkorea_m035_front.jpg,ml/body_measurement/data/people/sizkorea_m035_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m044,41.0,82.5,72.0,84.0,42.0,40.0,10.5,1.05,0.73,23.548,8803,98,8901,0.00501822,"{""chest_cm"": 82.5, ""waist_cm"": 72.0, ""hip_cm"": 84.0, ""shoulder_cm"": 41.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 40.0, ""neck_length_cm"": 10.5, ""thigh_calf_ratio"": 1.05, ""torso_leg_ratio"": 0.73}",,2026-08-11T13:40:37.805886+00:00,ml/body_measurement/data/people/sizkorea_m044_front.jpg,ml/body_measurement/data/people/sizkorea_m044_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m046,42.0,96.5,88.0,94.0,42.0,38.0,10.5,1.11,0.78,6.929,8824,107,8931,0.00459126,"{
+  ""chest_cm"": 96.5,
+  ""waist_cm"": 88.0,
+  ""hip_cm"": 94.0,
+  ""shoulder_cm"": 42.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 10.5,
+  ""thigh_calf_ratio"": 1.11,
+  ""torso_leg_ratio"": 0.78
+}",,2026-08-11T13:41:01.360933+00:00,ml/body_measurement/data/people/sizkorea_m046_front.jpg,ml/body_measurement/data/people/sizkorea_m046_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m050,42.0,90.5,78.0,91.0,48.5,42.0,11.5,1.15,0.82,10.477,8814,107,8921,0.00532893,"{
+  ""chest_cm"": 90.5,
+  ""waist_cm"": 78.0,
+  ""hip_cm"": 91.0,
+  ""shoulder_cm"": 42.0,
+  ""thigh_length_cm"": 48.5,
+  ""calf_length_cm"": 42.0,
+  ""neck_length_cm"": 11.5,
+  ""thigh_calf_ratio"": 1.15,
+  ""torso_leg_ratio"": 0.82
+}",,2026-08-11T13:41:08.297240+00:00,ml/body_measurement/data/people/sizkorea_m050_front.jpg,ml/body_measurement/data/people/sizkorea_m050_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m057,42.0,96.0,88.0,94.0,48.0,42.0,10.5,1.14,0.78,8.13,8803,98,8901,0.00501822,"{""chest_cm"": 96.0, ""waist_cm"": 88.0, ""hip_cm"": 94.0, ""shoulder_cm"": 42.0, ""thigh_length_cm"": 48.0, ""calf_length_cm"": 42.0, ""neck_length_cm"": 10.5, ""thigh_calf_ratio"": 1.14, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:41:18.780629+00:00,ml/body_measurement/data/people/sizkorea_m057_front.jpg,ml/body_measurement/data/people/sizkorea_m057_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m058,42.0,96.5,85.0,94.0,44.0,42.0,11.5,1.05,0.72,9.74,8803,98,8901,0.00501822,"{""chest_cm"": 96.5, ""waist_cm"": 85.0, ""hip_cm"": 94.0, ""shoulder_cm"": 42.0, ""thigh_length_cm"": 44.0, ""calf_length_cm"": 42.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.05, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:41:26.917778+00:00,ml/body_measurement/data/people/sizkorea_m058_front.jpg,ml/body_measurement/data/people/sizkorea_m058_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m060,42.0,90.5,78.0,92.0,44.0,42.0,11.5,1.05,0.75,10.201,8803,102,8905,0.00502902,"```json
+{""chest_cm"": 90.5, ""waist_cm"": 78.0, ""hip_cm"": 92.0, ""shoulder_cm"": 42.0, ""thigh_length_cm"": 44.0, ""calf_length_cm"": 42.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.05, ""torso_leg_ratio"": 0.75}
+```",,2026-08-11T13:41:36.666727+00:00,ml/body_measurement/data/people/sizkorea_m060_front.jpg,ml/body_measurement/data/people/sizkorea_m060_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m064,42.8,92.5,78.3,94.2,42.5,38.2,11.5,1.11,0.78,10.63,8814,107,8921,0.00532893,"{
+  ""chest_cm"": 92.5,
+  ""waist_cm"": 78.3,
+  ""hip_cm"": 94.2,
+  ""shoulder_cm"": 42.8,
+  ""thigh_length_cm"": 42.5,
+  ""calf_length_cm"": 38.2,
+  ""neck_length_cm"": 11.5,
+  ""thigh_calf_ratio"": 1.11,
+  ""torso_leg_ratio"": 0.78
+}",,2026-08-11T13:41:46.877768+00:00,ml/body_measurement/data/people/sizkorea_m064_front.jpg,ml/body_measurement/data/people/sizkorea_m064_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m071,43.0,92.5,78.0,94.0,47.0,40.0,11.5,1.175,0.88,8.983,8803,98,8901,0.00501822,"{""chest_cm"": 92.5, ""waist_cm"": 78.0, ""hip_cm"": 94.0, ""shoulder_cm"": 43.0, ""thigh_length_cm"": 47.0, ""calf_length_cm"": 40.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.175, ""torso_leg_ratio"": 0.88}",,2026-08-11T13:41:57.518236+00:00,ml/body_measurement/data/people/sizkorea_m071_front.jpg,ml/body_measurement/data/people/sizkorea_m071_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m072,42.0,92.5,87.0,94.0,42.5,40.0,11.5,1.06,0.72,10.771,8803,98,8901,0.00501822,"{""chest_cm"": 92.5, ""waist_cm"": 87.0, ""hip_cm"": 94.0, ""shoulder_cm"": 42.0, ""thigh_length_cm"": 42.5, ""calf_length_cm"": 40.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.06, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:42:06.506741+00:00,ml/body_measurement/data/people/sizkorea_m072_front.jpg,ml/body_measurement/data/people/sizkorea_m072_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m076,43.0,94.5,86.0,95.0,42.0,40.0,11.5,1.05,0.78,7.836,8803,98,8901,0.00501822,"{""chest_cm"": 94.5, ""waist_cm"": 86.0, ""hip_cm"": 95.0, ""shoulder_cm"": 43.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 40.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.05, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:42:17.285525+00:00,ml/body_measurement/data/people/sizkorea_m076_front.jpg,ml/body_measurement/data/people/sizkorea_m076_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m077,42.1,86.5,74.2,88.3,44.8,40.2,11.5,1.11,0.72,8.761,8807,96,8903,0.0055722," {""chest_cm"": 86.5, ""waist_cm"": 74.2, ""hip_cm"": 88.3, ""shoulder_cm"": 42.1, ""thigh_length_cm"": 44.8, ""calf_length_cm"": 40.2, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:42:25.127543+00:00,ml/body_measurement/data/people/sizkorea_m077_front.jpg,ml/body_measurement/data/people/sizkorea_m077_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m083,42.0,92.5,78.0,90.0,42.0,38.0,11.5,1.11,0.78,9.583,8803,98,8901,0.00501822,"{""chest_cm"": 92.5, ""waist_cm"": 78.0, ""hip_cm"": 90.0, ""shoulder_cm"": 42.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:42:33.897700+00:00,ml/body_measurement/data/people/sizkorea_m083_front.jpg,ml/body_measurement/data/people/sizkorea_m083_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m084,44.0,92.5,78.0,94.0,42.0,38.0,11.5,1.11,0.78,7.225,8807,110,8917,0.00418633,"```json
+{
+  ""chest_cm"": 92.5,
+  ""waist_cm"": 78.0,
+  ""hip_cm"": 94.0,
+  ""shoulder_cm"": 44.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 11.5,
+  ""thigh_calf_ratio"": 1.11,
+  ""torso_leg_ratio"": 0.78
+}
+```",,2026-08-11T13:42:43.488737+00:00,ml/body_measurement/data/people/sizkorea_m084_front.jpg,ml/body_measurement/data/people/sizkorea_m084_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m086,42.8,86.5,74.2,88.3,48.5,42.0,11.2,1.15,0.72,6.824,8824,96,8920,0.00456376,"{""chest_cm"": 86.5, ""waist_cm"": 74.2, ""hip_cm"": 88.3, ""shoulder_cm"": 42.8, ""thigh_length_cm"": 48.5, ""calf_length_cm"": 42.0, ""neck_length_cm"": 11.2, ""thigh_calf_ratio"": 1.15, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:42:50.722392+00:00,ml/body_measurement/data/people/sizkorea_m086_front.jpg,ml/body_measurement/data/people/sizkorea_m086_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m088,42.0,96.0,88.0,94.0,42.0,38.0,11.0,1.11,0.78,8.867,8803,98,8901,0.00501822,"{""chest_cm"": 96.0, ""waist_cm"": 88.0, ""hip_cm"": 94.0, ""shoulder_cm"": 42.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 11.0, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:42:57.556425+00:00,ml/body_measurement/data/people/sizkorea_m088_front.jpg,ml/body_measurement/data/people/sizkorea_m088_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m093,42.0,90.5,82.0,92.0,48.0,40.0,11.5,1.2,0.72,7.748,8803,98,8901,0.0055758,"{""chest_cm"": 90.5, ""waist_cm"": 82.0, ""hip_cm"": 92.0, ""shoulder_cm"": 42.0, ""thigh_length_cm"": 48.0, ""calf_length_cm"": 40.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.2, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:43:06.433106+00:00,ml/body_measurement/data/people/sizkorea_m093_front.jpg,ml/body_measurement/data/people/sizkorea_m093_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m094,42.0,92.5,84.0,90.0,46.0,42.0,11.5,1.095,0.78,11.323,8813,98,8911,0.00456337,"{""chest_cm"": 92.5, ""waist_cm"": 84.0, ""hip_cm"": 90.0, ""shoulder_cm"": 42.0, ""thigh_length_cm"": 46.0, ""calf_length_cm"": 42.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.095, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:43:14.189807+00:00,ml/body_measurement/data/people/sizkorea_m094_front.jpg,ml/body_measurement/data/people/sizkorea_m094_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m095,44.0,94.5,82.0,96.0,48.0,42.0,11.5,1.14,0.72,10.72,8814,96,8910,0.00529758,"{""chest_cm"": 94.5, ""waist_cm"": 82.0, ""hip_cm"": 96.0, ""shoulder_cm"": 44.0, ""thigh_length_cm"": 48.0, ""calf_length_cm"": 42.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.14, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:43:25.519287+00:00,ml/body_measurement/data/people/sizkorea_m095_front.jpg,ml/body_measurement/data/people/sizkorea_m095_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m099,42.0,82.5,71.0,84.0,42.5,38.5,11.5,1.1,0.72,12.265,8803,113,8916,0.00505872,"```json
+{
+  ""chest_cm"": 82.5,
+  ""waist_cm"": 71.0,
+  ""hip_cm"": 84.0,
+  ""shoulder_cm"": 42.0,
+  ""thigh_length_cm"": 42.5,
+  ""calf_length_cm"": 38.5,
+  ""neck_length_cm"": 11.5,
+  ""thigh_calf_ratio"": 1.10,
+  ""torso_leg_ratio"": 0.72
+}
+```",,2026-08-11T13:43:36.245939+00:00,ml/body_measurement/data/people/sizkorea_m099_front.jpg,ml/body_measurement/data/people/sizkorea_m099_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m133,43.8,96.5,84.2,98.3,42.5,38.7,11.2,1.1,0.78,10.045,8814,107,8921,0.00532893,"{
+  ""chest_cm"": 96.5,
+  ""waist_cm"": 84.2,
+  ""hip_cm"": 98.3,
+  ""shoulder_cm"": 43.8,
+  ""thigh_length_cm"": 42.5,
+  ""calf_length_cm"": 38.7,
+  ""neck_length_cm"": 11.2,
+  ""thigh_calf_ratio"": 1.10,
+  ""torso_leg_ratio"": 0.78
+}",,2026-08-11T13:43:48.520356+00:00,ml/body_measurement/data/people/sizkorea_m133_front.jpg,ml/body_measurement/data/people/sizkorea_m133_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m138,42.8,88.5,76.2,86.4,42.5,38.2,11.5,1.11,0.72,9.834,8803,98,8901,0.00501822,"{""chest_cm"": 88.5, ""waist_cm"": 76.2, ""hip_cm"": 86.4, ""shoulder_cm"": 42.8, ""thigh_length_cm"": 42.5, ""calf_length_cm"": 38.2, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:43:58.574944+00:00,ml/body_measurement/data/people/sizkorea_m138_front.jpg,ml/body_measurement/data/people/sizkorea_m138_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m143,42.0,86.5,76.0,88.0,42.5,38.0,11.5,1.12,0.72,12.105,8803,98,8901,0.00529701,"{""chest_cm"": 86.5, ""waist_cm"": 76.0, ""hip_cm"": 88.0, ""shoulder_cm"": 42.0, ""thigh_length_cm"": 42.5, ""calf_length_cm"": 38.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.12, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:44:08.416626+00:00,ml/body_measurement/data/people/sizkorea_m143_front.jpg,ml/body_measurement/data/people/sizkorea_m143_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m149,42.5,86.5,76.0,88.0,42.0,38.5,11.5,1.09,0.82,11.899,8803,113,8916,0.00505872,"```json
+{
+  ""chest_cm"": 86.5,
+  ""waist_cm"": 76.0,
+  ""hip_cm"": 88.0,
+  ""shoulder_cm"": 42.5,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.5,
+  ""neck_length_cm"": 11.5,
+  ""thigh_calf_ratio"": 1.09,
+  ""torso_leg_ratio"": 0.82
+}
+```",,2026-08-11T13:44:20.532412+00:00,ml/body_measurement/data/people/sizkorea_m149_front.jpg,ml/body_measurement/data/people/sizkorea_m149_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m151,43.2,94.5,82.3,96.8,42.5,38.7,11.2,1.1,0.72,4.79,8807,110,8917,0.00418633,"```json
+{
+  ""chest_cm"": 94.5,
+  ""waist_cm"": 82.3,
+  ""hip_cm"": 96.8,
+  ""shoulder_cm"": 43.2,
+  ""thigh_length_cm"": 42.5,
+  ""calf_length_cm"": 38.7,
+  ""neck_length_cm"": 11.2,
+  ""thigh_calf_ratio"": 1.10,
+  ""torso_leg_ratio"": 0.72
+}
+```",,2026-08-11T13:44:32.437658+00:00,ml/body_measurement/data/people/sizkorea_m151_front.jpg,ml/body_measurement/data/people/sizkorea_m151_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m158,43.0,96.5,84.0,95.0,48.0,42.0,12.5,1.14,0.72,8.586,8803,102,8905,0.0055878,"```json
+{""chest_cm"": 96.5, ""waist_cm"": 84.0, ""hip_cm"": 95.0, ""shoulder_cm"": 43.0, ""thigh_length_cm"": 48.0, ""calf_length_cm"": 42.0, ""neck_length_cm"": 12.5, ""thigh_calf_ratio"": 1.14, ""torso_leg_ratio"": 0.72}
+```",,2026-08-11T13:44:37.235144+00:00,ml/body_measurement/data/people/sizkorea_m158_front.jpg,ml/body_measurement/data/people/sizkorea_m158_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m160,44.0,92.0,78.0,94.0,48.0,42.0,12.0,1.14,0.78,10.127,8814,107,8921,0.00532893,"{
+  ""chest_cm"": 92.0,
+  ""waist_cm"": 78.0,
+  ""hip_cm"": 94.0,
+  ""shoulder_cm"": 44.0,
+  ""thigh_length_cm"": 48.0,
+  ""calf_length_cm"": 42.0,
+  ""neck_length_cm"": 12.0,
+  ""thigh_calf_ratio"": 1.14,
+  ""torso_leg_ratio"": 0.78
+}",,2026-08-11T13:44:45.830650+00:00,ml/body_measurement/data/people/sizkorea_m160_front.jpg,ml/body_measurement/data/people/sizkorea_m160_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m163,41.0,82.5,73.0,85.0,42.0,38.5,10.5,1.09,0.75,9.152,8803,98,8901,0.00501822,"{""chest_cm"": 82.5, ""waist_cm"": 73.0, ""hip_cm"": 85.0, ""shoulder_cm"": 41.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.5, ""neck_length_cm"": 10.5, ""thigh_calf_ratio"": 1.09, ""torso_leg_ratio"": 0.75}",,2026-08-11T13:44:55.964712+00:00,ml/body_measurement/data/people/sizkorea_m163_front.jpg,ml/body_measurement/data/people/sizkorea_m163_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m164,42.0,98.5,92.0,96.0,41.0,38.0,11.5,1.08,0.72,24.987,8803,113,8916,0.00505872,"```json
+{
+  ""chest_cm"": 98.5,
+  ""waist_cm"": 92.0,
+  ""hip_cm"": 96.0,
+  ""shoulder_cm"": 42.0,
+  ""thigh_length_cm"": 41.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 11.5,
+  ""thigh_calf_ratio"": 1.08,
+  ""torso_leg_ratio"": 0.72
+}
+```",,2026-08-11T13:45:05.124537+00:00,ml/body_measurement/data/people/sizkorea_m164_front.jpg,ml/body_measurement/data/people/sizkorea_m164_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m168,42.0,90.5,76.0,88.0,48.0,42.0,11.5,1.14,0.78,7.806,8803,98,8901,0.00501822,"{""chest_cm"": 90.5, ""waist_cm"": 76.0, ""hip_cm"": 88.0, ""shoulder_cm"": 42.0, ""thigh_length_cm"": 48.0, ""calf_length_cm"": 42.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.14, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:45:30.119683+00:00,ml/body_measurement/data/people/sizkorea_m168_front.jpg,ml/body_measurement/data/people/sizkorea_m168_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m170,43.0,91.5,78.0,88.5,42.0,40.5,11.5,1.04,0.72,12.141,8803,98,8901,0.00529701,"{""chest_cm"": 91.5, ""waist_cm"": 78.0, ""hip_cm"": 88.5, ""shoulder_cm"": 43.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 40.5, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.04, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:45:37.935632+00:00,ml/body_measurement/data/people/sizkorea_m170_front.jpg,ml/body_measurement/data/people/sizkorea_m170_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m173,42.0,92.5,78.0,94.0,48.0,42.0,11.5,1.14,0.78,6.884,8824,107,8931,0.00459126,"{
+  ""chest_cm"": 92.5,
+  ""waist_cm"": 78.0,
+  ""hip_cm"": 94.0,
+  ""shoulder_cm"": 42.0,
+  ""thigh_length_cm"": 48.0,
+  ""calf_length_cm"": 42.0,
+  ""neck_length_cm"": 11.5,
+  ""thigh_calf_ratio"": 1.14,
+  ""torso_leg_ratio"": 0.78
+}",,2026-08-11T13:45:50.085443+00:00,ml/body_measurement/data/people/sizkorea_m173_front.jpg,ml/body_measurement/data/people/sizkorea_m173_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m176,42.0,95.0,82.0,94.0,46.0,42.0,11.0,1.1,0.75,9.384,8803,98,8901,0.00501822,"{""chest_cm"": 95.0, ""waist_cm"": 82.0, ""hip_cm"": 94.0, ""shoulder_cm"": 42.0, ""thigh_length_cm"": 46.0, ""calf_length_cm"": 42.0, ""neck_length_cm"": 11.0, ""thigh_calf_ratio"": 1.1, ""torso_leg_ratio"": 0.75}",,2026-08-11T13:45:56.978994+00:00,ml/body_measurement/data/people/sizkorea_m176_front.jpg,ml/body_measurement/data/people/sizkorea_m176_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m178,42.0,88.5,75.0,86.0,46.0,40.0,10.5,1.15,0.78,8.492,8813,98,8911,0.00456337,"{""chest_cm"": 88.5, ""waist_cm"": 75.0, ""hip_cm"": 86.0, ""shoulder_cm"": 42.0, ""thigh_length_cm"": 46.0, ""calf_length_cm"": 40.0, ""neck_length_cm"": 10.5, ""thigh_calf_ratio"": 1.15, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:46:06.370336+00:00,ml/body_measurement/data/people/sizkorea_m178_front.jpg,ml/body_measurement/data/people/sizkorea_m178_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m181,42.0,86.5,76.0,88.0,42.5,40.0,10.5,1.06,0.82,10.591,8803,98,8901,0.00501822,"{""chest_cm"": 86.5, ""waist_cm"": 76.0, ""hip_cm"": 88.0, ""shoulder_cm"": 42.0, ""thigh_length_cm"": 42.5, ""calf_length_cm"": 40.0, ""neck_length_cm"": 10.5, ""thigh_calf_ratio"": 1.06, ""torso_leg_ratio"": 0.82}",,2026-08-11T13:46:14.869904+00:00,ml/body_measurement/data/people/sizkorea_m181_front.jpg,ml/body_measurement/data/people/sizkorea_m181_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m184,42.0,96.5,82.0,94.0,48.0,42.0,11.5,1.14,0.78,7.068,8824,107,8931,0.00459126,"{
+  ""chest_cm"": 96.5,
+  ""waist_cm"": 82.0,
+  ""hip_cm"": 94.0,
+  ""shoulder_cm"": 42.0,
+  ""thigh_length_cm"": 48.0,
+  ""calf_length_cm"": 42.0,
+  ""neck_length_cm"": 11.5,
+  ""thigh_calf_ratio"": 1.14,
+  ""torso_leg_ratio"": 0.78
+}",,2026-08-11T13:46:25.469531+00:00,ml/body_measurement/data/people/sizkorea_m184_front.jpg,ml/body_measurement/data/people/sizkorea_m184_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m187,42.0,88.5,76.0,86.0,42.0,40.0,10.5,1.05,0.72,13.423,8803,113,8916,0.00533976,"```json
+{
+  ""chest_cm"": 88.5,
+  ""waist_cm"": 76.0,
+  ""hip_cm"": 86.0,
+  ""shoulder_cm"": 42.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 40.0,
+  ""neck_length_cm"": 10.5,
+  ""thigh_calf_ratio"": 1.05,
+  ""torso_leg_ratio"": 0.72
+}
+```",,2026-08-11T13:46:32.544292+00:00,ml/body_measurement/data/people/sizkorea_m187_front.jpg,ml/body_measurement/data/people/sizkorea_m187_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m189,44.0,92.5,78.0,94.0,48.0,42.0,12.5,1.14,0.78,6.68,8824,107,8931,0.00459126,"{
+  ""chest_cm"": 92.5,
+  ""waist_cm"": 78.0,
+  ""hip_cm"": 94.0,
+  ""shoulder_cm"": 44.0,
+  ""thigh_length_cm"": 48.0,
+  ""calf_length_cm"": 42.0,
+  ""neck_length_cm"": 12.5,
+  ""thigh_calf_ratio"": 1.14,
+  ""torso_leg_ratio"": 0.78
+}",,2026-08-11T13:46:45.974514+00:00,ml/body_measurement/data/people/sizkorea_m189_front.jpg,ml/body_measurement/data/people/sizkorea_m189_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m195,40.0,86.5,84.0,90.5,42.0,38.5,10.5,1.09,0.78,12.505,8803,113,8916,0.00505872,"```json
+{
+  ""chest_cm"": 86.5,
+  ""waist_cm"": 84.0,
+  ""hip_cm"": 90.5,
+  ""shoulder_cm"": 40.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.5,
+  ""neck_length_cm"": 10.5,
+  ""thigh_calf_ratio"": 1.09,
+  ""torso_leg_ratio"": 0.78
+}
+```",,2026-08-11T13:46:52.661615+00:00,ml/body_measurement/data/people/sizkorea_m195_front.jpg,ml/body_measurement/data/people/sizkorea_m195_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m211,42.8,92.5,78.3,91.2,44.5,42.0,11.5,1.06,0.72,8.723,8813,98,8911,0.00456337,"{""chest_cm"": 92.5, ""waist_cm"": 78.3, ""hip_cm"": 91.2, ""shoulder_cm"": 42.8, ""thigh_length_cm"": 44.5, ""calf_length_cm"": 42.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.06, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:47:05.174962+00:00,ml/body_measurement/data/people/sizkorea_m211_front.jpg,ml/body_measurement/data/people/sizkorea_m211_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m215,43.0,92.5,78.0,91.0,45.0,42.0,11.5,1.07,0.82,6.77,8803,98,8901,0.0055758,"{""chest_cm"": 92.5, ""waist_cm"": 78.0, ""hip_cm"": 91.0, ""shoulder_cm"": 43.0, ""thigh_length_cm"": 45.0, ""calf_length_cm"": 42.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.07, ""torso_leg_ratio"": 0.82}",,2026-08-11T13:47:13.908214+00:00,ml/body_measurement/data/people/sizkorea_m215_front.jpg,ml/body_measurement/data/people/sizkorea_m215_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m216,45.0,102.0,92.0,98.0,48.0,42.0,12.0,1.14,0.82,10.298,8803,98,8901,0.00501822,"{""chest_cm"": 102.0, ""waist_cm"": 92.0, ""hip_cm"": 98.0, ""shoulder_cm"": 45.0, ""thigh_length_cm"": 48.0, ""calf_length_cm"": 42.0, ""neck_length_cm"": 12.0, ""thigh_calf_ratio"": 1.14, ""torso_leg_ratio"": 0.82}",,2026-08-11T13:47:20.687936+00:00,ml/body_measurement/data/people/sizkorea_m216_front.jpg,ml/body_measurement/data/people/sizkorea_m216_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m221,41.0,85.5,72.0,84.0,42.0,38.5,10.5,1.09,0.72,12.237,8803,113,8916,0.00505872,"```json
+{
+  ""chest_cm"": 85.5,
+  ""waist_cm"": 72.0,
+  ""hip_cm"": 84.0,
+  ""shoulder_cm"": 41.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.5,
+  ""neck_length_cm"": 10.5,
+  ""thigh_calf_ratio"": 1.09,
+  ""torso_leg_ratio"": 0.72
+}
+```",,2026-08-11T13:47:30.993926+00:00,ml/body_measurement/data/people/sizkorea_m221_front.jpg,ml/body_measurement/data/people/sizkorea_m221_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m225,42.0,92.5,82.0,94.0,48.0,40.0,12.0,1.2,0.78,10.914,8803,113,8916,0.0056208,"```json
+{
+  ""chest_cm"": 92.5,
+  ""waist_cm"": 82.0,
+  ""hip_cm"": 94.0,
+  ""shoulder_cm"": 42.0,
+  ""thigh_length_cm"": 48.0,
+  ""calf_length_cm"": 40.0,
+  ""neck_length_cm"": 12.0,
+  ""thigh_calf_ratio"": 1.2,
+  ""torso_leg_ratio"": 0.78
+}
+```",,2026-08-11T13:47:43.241685+00:00,ml/body_measurement/data/people/sizkorea_m225_front.jpg,ml/body_measurement/data/people/sizkorea_m225_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m226,42.0,96.5,91.0,98.0,42.5,38.0,11.5,1.12,0.78,10.413,8803,98,8901,0.00501822,"{""chest_cm"": 96.5, ""waist_cm"": 91.0, ""hip_cm"": 98.0, ""shoulder_cm"": 42.0, ""thigh_length_cm"": 42.5, ""calf_length_cm"": 38.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.12, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:47:54.164620+00:00,ml/body_measurement/data/people/sizkorea_m226_front.jpg,ml/body_measurement/data/people/sizkorea_m226_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m231,42.8,88.5,76.2,90.1,42.5,38.2,11.5,1.11,0.78,9.883,8803,98,8901,0.00501822,"{""chest_cm"": 88.5, ""waist_cm"": 76.2, ""hip_cm"": 90.1, ""shoulder_cm"": 42.8, ""thigh_length_cm"": 42.5, ""calf_length_cm"": 38.2, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:48:04.587703+00:00,ml/body_measurement/data/people/sizkorea_m231_front.jpg,ml/body_measurement/data/people/sizkorea_m231_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m265,42.5,89.5,76.0,88.0,48.0,42.0,11.5,1.14,0.72,11.551,8803,98,8901,0.00501822,"{""chest_cm"": 89.5, ""waist_cm"": 76.0, ""hip_cm"": 88.0, ""shoulder_cm"": 42.5, ""thigh_length_cm"": 48.0, ""calf_length_cm"": 42.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.14, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:48:14.481853+00:00,ml/body_measurement/data/people/sizkorea_m265_front.jpg,ml/body_measurement/data/people/sizkorea_m265_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m270,44.0,92.5,78.0,93.0,47.0,42.0,11.5,1.12,0.75,10.727,8813,98,8911,0.00456337,"{""chest_cm"": 92.5, ""waist_cm"": 78.0, ""hip_cm"": 93.0, ""shoulder_cm"": 44.0, ""thigh_length_cm"": 47.0, ""calf_length_cm"": 42.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.12, ""torso_leg_ratio"": 0.75}",,2026-08-11T13:48:26.043577+00:00,ml/body_measurement/data/people/sizkorea_m270_front.jpg,ml/body_measurement/data/people/sizkorea_m270_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m272,43.5,91.0,78.5,90.0,48.0,42.0,11.5,1.14,0.72,8.877,8803,98,8901,0.00501822,"{""chest_cm"": 91.0, ""waist_cm"": 78.5, ""hip_cm"": 90.0, ""shoulder_cm"": 43.5, ""thigh_length_cm"": 48.0, ""calf_length_cm"": 42.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.14, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:48:36.781892+00:00,ml/body_measurement/data/people/sizkorea_m272_front.jpg,ml/body_measurement/data/people/sizkorea_m272_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m279,42.0,90.5,81.0,91.0,48.0,40.0,11.5,1.2,0.78,24.619,8803,113,8916,0.00505872,"```json
+{
+  ""chest_cm"": 90.5,
+  ""waist_cm"": 81.0,
+  ""hip_cm"": 91.0,
+  ""shoulder_cm"": 42.0,
+  ""thigh_length_cm"": 48.0,
+  ""calf_length_cm"": 40.0,
+  ""neck_length_cm"": 11.5,
+  ""thigh_calf_ratio"": 1.2,
+  ""torso_leg_ratio"": 0.78
+}
+```",,2026-08-11T13:48:45.669456+00:00,ml/body_measurement/data/people/sizkorea_m279_front.jpg,ml/body_measurement/data/people/sizkorea_m279_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m284,42.0,92.5,78.0,90.0,42.0,38.0,11.5,1.105,0.72,9.806,8803,113,8916,0.0056208,"```json
+{
+  ""chest_cm"": 92.5,
+  ""waist_cm"": 78.0,
+  ""hip_cm"": 90.0,
+  ""shoulder_cm"": 42.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 11.5,
+  ""thigh_calf_ratio"": 1.105,
+  ""torso_leg_ratio"": 0.72
+}
+```",,2026-08-11T13:49:10.297484+00:00,ml/body_measurement/data/people/sizkorea_m284_front.jpg,ml/body_measurement/data/people/sizkorea_m284_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m288,41.5,96.5,88.0,94.0,42.0,40.0,11.5,1.05,0.78,22.616,8803,98,8901,0.00501822,"{""chest_cm"": 96.5, ""waist_cm"": 88.0, ""hip_cm"": 94.0, ""shoulder_cm"": 41.5, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 40.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.05, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:49:20.111177+00:00,ml/body_measurement/data/people/sizkorea_m288_front.jpg,ml/body_measurement/data/people/sizkorea_m288_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m290,42.5,85.5,73.0,86.0,42.0,38.5,11.0,1.09,0.72,23.445,8803,98,8901,0.00501822,"{""chest_cm"": 85.5, ""waist_cm"": 73.0, ""hip_cm"": 86.0, ""shoulder_cm"": 42.5, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.5, ""neck_length_cm"": 11.0, ""thigh_calf_ratio"": 1.09, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:49:42.738121+00:00,ml/body_measurement/data/people/sizkorea_m290_front.jpg,ml/body_measurement/data/people/sizkorea_m290_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m292,42.0,86.5,78.0,90.0,48.0,42.0,12.0,1.14,0.78,24.804,8803,113,8916,0.0056208,"```json
+{
+  ""chest_cm"": 86.5,
+  ""waist_cm"": 78.0,
+  ""hip_cm"": 90.0,
+  ""shoulder_cm"": 42.0,
+  ""thigh_length_cm"": 48.0,
+  ""calf_length_cm"": 42.0,
+  ""neck_length_cm"": 12.0,
+  ""thigh_calf_ratio"": 1.14,
+  ""torso_leg_ratio"": 0.78
+}
+```",,2026-08-11T13:50:06.191663+00:00,ml/body_measurement/data/people/sizkorea_m292_front.jpg,ml/body_measurement/data/people/sizkorea_m292_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m302,44.0,102.5,98.0,104.0,42.0,38.0,11.5,1.11,0.78,8.441,8803,98,8901,0.0055758,"{""chest_cm"": 102.5, ""waist_cm"": 98.0, ""hip_cm"": 104.0, ""shoulder_cm"": 44.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:50:31.003791+00:00,ml/body_measurement/data/people/sizkorea_m302_front.jpg,ml/body_measurement/data/people/sizkorea_m302_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m309,42.0,86.5,78.0,88.0,42.0,38.0,10.5,1.105,0.72,8.917,8803,113,8916,0.0056208,"```json
+{
+  ""chest_cm"": 86.5,
+  ""waist_cm"": 78.0,
+  ""hip_cm"": 88.0,
+  ""shoulder_cm"": 42.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 10.5,
+  ""thigh_calf_ratio"": 1.105,
+  ""torso_leg_ratio"": 0.72
+}
+```",,2026-08-11T13:50:39.452390+00:00,ml/body_measurement/data/people/sizkorea_m309_front.jpg,ml/body_measurement/data/people/sizkorea_m309_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m332,42.5,98.5,92.0,98.0,48.0,42.0,12.5,1.14,0.72,10.134,8814,107,8921,0.00532893,"{
+  ""chest_cm"": 98.5,
+  ""waist_cm"": 92.0,
+  ""hip_cm"": 98.0,
+  ""shoulder_cm"": 42.5,
+  ""thigh_length_cm"": 48.0,
+  ""calf_length_cm"": 42.0,
+  ""neck_length_cm"": 12.5,
+  ""thigh_calf_ratio"": 1.14,
+  ""torso_leg_ratio"": 0.72
+}",,2026-08-11T13:50:48.380558+00:00,ml/body_measurement/data/people/sizkorea_m332_front.jpg,ml/body_measurement/data/people/sizkorea_m332_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m336,41.5,90.5,82.0,91.0,42.0,38.0,11.5,1.105,0.78,10.616,8813,98,8911,0.00456337,"{""chest_cm"": 90.5, ""waist_cm"": 82.0, ""hip_cm"": 91.0, ""shoulder_cm"": 41.5, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.105, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:50:58.524679+00:00,ml/body_measurement/data/people/sizkorea_m336_front.jpg,ml/body_measurement/data/people/sizkorea_m336_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m346,43.0,96.5,94.0,98.0,42.0,40.0,11.5,1.05,0.78,10.235,8803,113,8916,0.0056208,"```json
+{
+  ""chest_cm"": 96.5,
+  ""waist_cm"": 94.0,
+  ""hip_cm"": 98.0,
+  ""shoulder_cm"": 43.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 40.0,
+  ""neck_length_cm"": 11.5,
+  ""thigh_calf_ratio"": 1.05,
+  ""torso_leg_ratio"": 0.78
+}
+```",,2026-08-11T13:51:09.148844+00:00,ml/body_measurement/data/people/sizkorea_m346_front.jpg,ml/body_measurement/data/people/sizkorea_m346_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m356,43.5,98.5,86.0,96.0,48.0,42.0,11.5,1.14,0.72,9.34,8803,98,8901,0.00501822,"{""chest_cm"": 98.5, ""waist_cm"": 86.0, ""hip_cm"": 96.0, ""shoulder_cm"": 43.5, ""thigh_length_cm"": 48.0, ""calf_length_cm"": 42.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.14, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:51:19.392813+00:00,ml/body_measurement/data/people/sizkorea_m356_front.jpg,ml/body_measurement/data/people/sizkorea_m356_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m360,46.0,112.5,118.0,108.5,42.0,38.5,11.5,1.09,0.72,22.556,8803,98,8901,0.00501822,"{""chest_cm"": 112.5, ""waist_cm"": 118.0, ""hip_cm"": 108.5, ""shoulder_cm"": 46.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.5, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.09, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:51:28.745030+00:00,ml/body_measurement/data/people/sizkorea_m360_front.jpg,ml/body_measurement/data/people/sizkorea_m360_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m385,41.8,89.5,82.3,91.2,41.5,38.2,10.5,1.09,0.78,8.946,8813,98,8911,0.00456337,"{""chest_cm"": 89.5, ""waist_cm"": 82.3, ""hip_cm"": 91.2, ""shoulder_cm"": 41.8, ""thigh_length_cm"": 41.5, ""calf_length_cm"": 38.2, ""neck_length_cm"": 10.5, ""thigh_calf_ratio"": 1.09, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:51:51.308734+00:00,ml/body_measurement/data/people/sizkorea_m385_front.jpg,ml/body_measurement/data/people/sizkorea_m385_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m404,44.0,98.5,89.0,96.0,42.0,40.0,11.5,1.05,0.72,8.947,8803,113,8916,0.0056208,"```json
+{
+  ""chest_cm"": 98.5,
+  ""waist_cm"": 89.0,
+  ""hip_cm"": 96.0,
+  ""shoulder_cm"": 44.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 40.0,
+  ""neck_length_cm"": 11.5,
+  ""thigh_calf_ratio"": 1.05,
+  ""torso_leg_ratio"": 0.72
+}
+```",,2026-08-11T13:52:00.266635+00:00,ml/body_measurement/data/people/sizkorea_m404_front.jpg,ml/body_measurement/data/people/sizkorea_m404_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m406,43.0,102.5,98.0,101.0,44.0,40.0,10.5,1.1,0.75,7.776,8803,98,8901,0.0055758,"{""chest_cm"": 102.5, ""waist_cm"": 98.0, ""hip_cm"": 101.0, ""shoulder_cm"": 43.0, ""thigh_length_cm"": 44.0, ""calf_length_cm"": 40.0, ""neck_length_cm"": 10.5, ""thigh_calf_ratio"": 1.1, ""torso_leg_ratio"": 0.75}",,2026-08-11T13:52:09.224607+00:00,ml/body_measurement/data/people/sizkorea_m406_front.jpg,ml/body_measurement/data/people/sizkorea_m406_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m407,41.0,91.5,79.0,88.5,48.0,41.0,10.5,1.17,0.72,8.472,8803,98,8901,0.00501822,"{""chest_cm"": 91.5, ""waist_cm"": 79.0, ""hip_cm"": 88.5, ""shoulder_cm"": 41.0, ""thigh_length_cm"": 48.0, ""calf_length_cm"": 41.0, ""neck_length_cm"": 10.5, ""thigh_calf_ratio"": 1.17, ""torso_leg_ratio"": 0.72}",,2026-08-11T13:52:17.012188+00:00,ml/body_measurement/data/people/sizkorea_m407_front.jpg,ml/body_measurement/data/people/sizkorea_m407_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m412,43.0,96.5,84.0,94.0,48.0,42.0,12.0,1.14,0.73,8.845,8803,98,8901,0.00501822,"{""chest_cm"": 96.5, ""waist_cm"": 84.0, ""hip_cm"": 94.0, ""shoulder_cm"": 43.0, ""thigh_length_cm"": 48.0, ""calf_length_cm"": 42.0, ""neck_length_cm"": 12.0, ""thigh_calf_ratio"": 1.14, ""torso_leg_ratio"": 0.73}",,2026-08-11T13:52:25.496192+00:00,ml/body_measurement/data/people/sizkorea_m412_front.jpg,ml/body_measurement/data/people/sizkorea_m412_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m417,42.0,88.5,85.0,92.0,42.0,38.0,11.5,1.11,0.78,17.56,8803,98,8901,0.0055758,"{""chest_cm"": 88.5, ""waist_cm"": 85.0, ""hip_cm"": 92.0, ""shoulder_cm"": 42.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:52:34.353547+00:00,ml/body_measurement/data/people/sizkorea_m417_front.jpg,ml/body_measurement/data/people/sizkorea_m417_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m424,42.0,94.5,88.0,95.0,42.0,38.0,10.5,1.105,0.78,8.324,8803,98,8901,0.0055758,"{""chest_cm"": 94.5, ""waist_cm"": 88.0, ""hip_cm"": 95.0, ""shoulder_cm"": 42.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 10.5, ""thigh_calf_ratio"": 1.105, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:52:51.924100+00:00,ml/body_measurement/data/people/sizkorea_m424_front.jpg,ml/body_measurement/data/people/sizkorea_m424_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m456,41.0,86.5,82.0,88.0,42.0,40.0,10.5,1.05,0.78,10.583,8813,98,8911,0.00456337,"{""chest_cm"": 86.5, ""waist_cm"": 82.0, ""hip_cm"": 88.0, ""shoulder_cm"": 41.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 40.0, ""neck_length_cm"": 10.5, ""thigh_calf_ratio"": 1.05, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:53:00.256389+00:00,ml/body_measurement/data/people/sizkorea_m456_front.jpg,ml/body_measurement/data/people/sizkorea_m456_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m463,40.5,82.5,74.0,84.0,42.0,38.0,10.5,1.105,0.82,10.018,8813,98,8911,0.00456337,"{""chest_cm"": 82.5, ""waist_cm"": 74.0, ""hip_cm"": 84.0, ""shoulder_cm"": 40.5, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 10.5, ""thigh_calf_ratio"": 1.105, ""torso_leg_ratio"": 0.82}",,2026-08-11T13:53:10.846984+00:00,ml/body_measurement/data/people/sizkorea_m463_front.jpg,ml/body_measurement/data/people/sizkorea_m463_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m465,42.0,95.0,92.0,98.0,42.0,38.0,10.5,1.11,0.78,10.203,8803,113,8916,0.00505872,"```json
+{
+  ""chest_cm"": 95.0,
+  ""waist_cm"": 92.0,
+  ""hip_cm"": 98.0,
+  ""shoulder_cm"": 42.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 10.5,
+  ""thigh_calf_ratio"": 1.11,
+  ""torso_leg_ratio"": 0.78
+}
+```",,2026-08-11T13:53:20.872761+00:00,ml/body_measurement/data/people/sizkorea_m465_front.jpg,ml/body_measurement/data/people/sizkorea_m465_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m468,42.0,98.5,92.0,96.0,42.5,38.5,11.5,1.1,0.78,7.059,8803,98,8901,0.0055758,"{""chest_cm"": 98.5, ""waist_cm"": 92.0, ""hip_cm"": 96.0, ""shoulder_cm"": 42.0, ""thigh_length_cm"": 42.5, ""calf_length_cm"": 38.5, ""neck_length_cm"": 11.5, ""thigh_calf_ratio"": 1.10, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:53:31.083701+00:00,ml/body_measurement/data/people/sizkorea_m468_front.jpg,ml/body_measurement/data/people/sizkorea_m468_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m470,42.0,85.0,72.0,86.0,42.0,38.0,10.5,1.11,0.73,10.856,8803,113,8916,0.00505872,"```json
+{
+  ""chest_cm"": 85.0,
+  ""waist_cm"": 72.0,
+  ""hip_cm"": 86.0,
+  ""shoulder_cm"": 42.0,
+  ""thigh_length_cm"": 42.0,
+  ""calf_length_cm"": 38.0,
+  ""neck_length_cm"": 10.5,
+  ""thigh_calf_ratio"": 1.11,
+  ""torso_leg_ratio"": 0.73
+}
+```",,2026-08-11T13:53:38.150664+00:00,ml/body_measurement/data/people/sizkorea_m470_front.jpg,ml/body_measurement/data/people/sizkorea_m470_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m472,42.0,96.5,88.0,94.0,48.0,42.0,12.5,1.14,0.78,9.133,8814,107,8921,0.00532893,"{
+  ""chest_cm"": 96.5,
+  ""waist_cm"": 88.0,
+  ""hip_cm"": 94.0,
+  ""shoulder_cm"": 42.0,
+  ""thigh_length_cm"": 48.0,
+  ""calf_length_cm"": 42.0,
+  ""neck_length_cm"": 12.5,
+  ""thigh_calf_ratio"": 1.14,
+  ""torso_leg_ratio"": 0.78
+}",,2026-08-11T13:53:49.015750+00:00,ml/body_measurement/data/people/sizkorea_m472_front.jpg,ml/body_measurement/data/people/sizkorea_m472_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success
+sizkorea_m481,42.0,95.0,88.0,96.0,42.0,38.0,11.0,1.11,0.78,8.413,8803,98,8901,0.00501822,"{""chest_cm"": 95.0, ""waist_cm"": 88.0, ""hip_cm"": 96.0, ""shoulder_cm"": 42.0, ""thigh_length_cm"": 42.0, ""calf_length_cm"": 38.0, ""neck_length_cm"": 11.0, ""thigh_calf_ratio"": 1.11, ""torso_leg_ratio"": 0.78}",,2026-08-11T13:53:58.157848+00:00,ml/body_measurement/data/people/sizkorea_m481_front.jpg,ml/body_measurement/data/people/sizkorea_m481_side.jpg,moonshotai/kimi-k2.5,redefined-9targets,full,success

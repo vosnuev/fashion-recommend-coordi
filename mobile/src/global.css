@@ -14,14 +14,15 @@
 @media screen and (min-width: 440px) {
   html,
   body {
-    /* 칙칙한 웜그레이 대신 최대한 밝은 오프화이트 */
-    background-color: #f6f6f5;
+    /* 프레임 '바깥'. 앱이 순백에 가까워졌으므로 여기만 한 톤 눌러야 폰 프레임이 읽힌다. */
+    background-color: #efebe4;
   }
   #root {
     max-width: 440px;
     margin-left: auto;
     margin-right: auto;
-    background-color: #ffffff;
+    /* Editorial.page 와 반드시 같아야 한다 (constants/theme.ts) */
+    background-color: var(--cozy-paper, #FAF7F2);
     /* 밝은 배경에서도 앱과 바깥 경계가 또렷하도록: 얇은 보더 + 부드러운 그림자 */
     border-left: 1px solid rgba(0, 0, 0, 0.09);
     border-right: 1px solid rgba(0, 0, 0, 0.09);
@@ -34,7 +35,8 @@
 @media screen and (min-width: 1024px) {
   html,
   body {
-    background-color: #ffffff;
+    /* Editorial.page 와 반드시 같아야 한다 (constants/theme.ts) */
+    background-color: var(--cozy-paper, #FAF7F2);
   }
   #root {
     max-width: none;
@@ -48,18 +50,18 @@
    DesktopLanding 컴포넌트가 마운트/언마운트 시 body 클래스를 토글한다.
    → /landing 만 풀와이드, '앱 둘러보기'로 진입하면 다시 폰 프레임으로 복귀. */
 body.cozy-landing-fullwidth {
-  background-color: #ffffff;
+  background-color: var(--cozy-paper, #FAF7F2);
 }
 body.cozy-landing-fullwidth #root {
   max-width: none;
   box-shadow: none;
-  background-color: #ffffff;
+  background-color: var(--cozy-paper, #FAF7F2);
 }
 
 /* 하단 탭바 글래스(프로스티드 유리) 효과 — 스크롤 콘텐츠가 반투명 바 뒤로 비쳐 흐려짐.
    탭바는 app-tabs.web.tsx에서 nativeID="cozy-tabbar" + position:absolute로 콘텐츠 위에 떠 있음. */
 #cozy-tabbar {
-  -webkit-backdrop-filter: saturate(180%) blur(24px);
-  backdrop-filter: saturate(180%) blur(24px);
-  box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.05);
+  /* 바가 불투명하고 본문과 밝기 1.6포인트 차이뿐이라, 이 그림자가 헤어라인과 함께
+     경계의 절반을 맡는다. 빼면 바가 본문에 녹아 사라진다. */
+  box-shadow: 0 -6px 20px rgba(28, 25, 23, 0.07);
 }

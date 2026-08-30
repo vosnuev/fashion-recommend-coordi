@@ -1,0 +1,29 @@
+{
+  "schema_version": 2,
+  "description": "기존 Wardrobe 이미지 프로세서 출력 계약 기준 Fashion VLM 상품 이미지 검수 데이터셋",
+  "samples": [
+    {
+      "id": "01_tshirt",
+      "input_mode": "catalog",
+      "file_name": "01_tshirt.jpg",
+      "product_name": "블랙 백 그래픽 반팔 티셔츠",
+      "expected": {
+        "item_name": "블랙 그래픽 반팔 티셔츠",
+        "category_large": "상의",
+        "category_small": "티셔츠",
+        "season": ["여름"],
+        "style": ["캐주얼", "스트릿"],
+        "color": "블랙",
+        "pattern": "그래픽/로고",
+        "fit": "레귤러핏",
+        "material": "코튼",
+        "sleeve": "반팔",
+        "length": "기본",
+        "usage": ["데일리", "외출"],
+        "layer_role": "기본 상의",
+        "layer_order": 1
+      },
+      "notes": "등판에 레터링과 그래픽 프린트가 있는 블랙 반팔 티셔츠"
+    }
+  ]
+}

@@ -1,12 +1,12 @@
 # ============================================================
-# 통합 compose: db + api + weather-collector + naver-collector
+# 통합 compose: db + qdrant + api + weather-collector + naver-collector + eleven-collector
 #
 # 모든 서비스는 profiles로 선택 실행한다. db는 어떤 스택을 켜도 함께 뜬다.
 #
-#   docker compose --profile api up -d                  # db + api
+#   docker compose --profile api up -d                  # db + qdrant + api
 #   docker compose --profile naver up -d                # db + naver collector
-#   docker compose --profile weather --profile api up -d
-#   docker compose --profile all up -d --build          # 4개 전부
+#   docker compose --profile qdrant up -d               # db + qdrant만
+#   docker compose --profile all up -d --build          # 전부
 #
 # .env에 COMPOSE_PROFILES=api,naver 처럼 지정하면 --profile 없이 up만으로 동작.
 # 환경변수는 프로젝트 루트 .env 하나로 관리한다 (이 파일이 루트에 있으므로
@@ -17,14 +17,17 @@
 #   config.settings.prod           운영 (기본값)
 #   config.settings.dev            로컬 개발
 #   config.settings.swagger        + Swagger UI (/api/docs/)
-#   config.settings.swagger_noauth + Swagger UI + 인증 우회 (로컬 전용, 프로덕션 금지)
+#
+# 값은 Infisical 주입이 원칙이다. db/migrate/api/outfit-worker 모두 동일하게
+# ${DJANGO_SETTINGS_MODULE:-config.settings.prod}로 받는다 — compose에 리터럴을
+# 박으면 주입값을 덮어써서 팀원 dev 환경이 통째로 깨진다.
 # ============================================================
 services:
   db:
     image: postgres:16-alpine
     container_name: skn28-postgres
     restart: unless-stopped
-    profiles: ["db", "api", "weather", "naver", "all"]
+    profiles: ["db", "api", "weather", "naver", "eleven", "all"]
     env_file:
       - .env                  # POSTGRES_DB / POSTGRES_USER / POSTGRES_PASSWORD
     environment:
@@ -42,14 +45,47 @@ services:
       timeout: 5s
       retries: 5
 
+  # 벡터 검색 (추천 RAG). 스키마(컬렉션)는 Django 커맨드가 소유:
+  #   docker compose exec api python manage.py init_qdrant
+  # 프로덕션(EC2)에서는 named volume 대신 EBS 마운트 경로를 바인드하고
+  # QDRANT_API_KEY를 반드시 설정한다 (미설정 시 무인증 — 로컬 전용).
+  qdrant:
+    image: qdrant/qdrant:v1.17.0
+    container_name: skn28-qdrant
+    restart: unless-stopped
+    profiles: ["qdrant", "api", "all"]
+    environment:
+      TZ: Asia/Seoul
+      # 비어 있으면 Qdrant가 인증 없이 뜬다. 외부 노출 시 필수.
+      QDRANT__SERVICE__API_KEY: ${QDRANT_API_KEY:-}
+    ports:
+      - "6333:6333"             # REST
+      - "6334:6334"             # gRPC
+    volumes:
+      - qdrant_data:/qdrant/storage
+    healthcheck:
+      # 이미지에 curl이 없어 bash TCP 소켓으로 포트 오픈만 확인
+      test: ["CMD-SHELL", "bash -c ':> /dev/tcp/127.0.0.1/6333' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   # one-shot 마이그레이션. 모든 스택(api/collector)이 이 서비스 완료 후 시작한다.
   # 스키마 소유권: Django migration (users/catalog/weather 앱)
   migrate:
+    # ./api를 빌드하는 네 서비스(migrate·api·outfit-worker·daily-look-worker)는
+    # **같은 이미지 태그**를 공유한다. 예전엔 각자 익명 이미지를 만들었는데,
+    # 그 탓에 `docker compose build api`가 api만 새로 만들고 워커는 옛 코드를
+    # 계속 물고 돌았다. restart: unless-stopped라 재시작으로도 안 바뀐다.
+    # 겉으로는 API 응답이 새 코드라 배포가 끝난 것처럼 보이는데, 실제로 추천을
+    # 만드는 워커만 과거에 남아 있어 원인을 찾는 데 오래 걸렸다.
+    # 태그를 공유하면 한 번 빌드가 네 서비스에 전부 적용된다.
+    image: skn28-api:local
     build:
       context: ./api
     container_name: skn28-migrate
     restart: "no"
-    profiles: ["api", "weather", "naver", "all"]
+    profiles: ["api", "weather", "naver", "eleven", "all"]
     depends_on:
       db:
         condition: service_healthy
@@ -60,9 +96,37 @@ services:
       POSTGRES_HOST: db
       POSTGRES_PORT: 5432
       DJANGO_SETTINGS_MODULE: ${DJANGO_SETTINGS_MODULE:-config.settings.prod}
+    volumes:
+      # settings/base.py가 BASE_DIR.parent/ml 을 sys.path에 올려
+      # `from body_measurement.src import inference` 를 import한다. 이미지 빌드
+      # 컨텍스트는 ./api 라서 ml/ 이 들어가지 않으므로 읽기 전용으로 붙인다.
+      - ./ml:/ml:ro
     command: python manage.py migrate --noinput
 
+  # 추천 검색 컬렉션 계약 초기화. 기존 데이터의 벡터 차원·인덱스 타입이
+  # 다르면 자동 삭제하지 않고 실패하며, 누락 payload index만 보완한다.
+  qdrant-init:
+    image: skn28-api:local
+    build:
+      context: ./api
+    container_name: skn28-qdrant-init
+    restart: "no"
+    profiles: ["api", "all"]
+    depends_on:
+      qdrant:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      TZ: Asia/Seoul
+      QDRANT_URL: http://qdrant:6333
+      DJANGO_SETTINGS_MODULE: ${DJANGO_SETTINGS_MODULE:-config.settings.prod}
+    volumes:
+      - ./ml:/ml:ro
+    command: python manage.py init_qdrant
+
   api:
+    image: skn28-api:local          # migrate와 같은 이미지 (위 주석 참고)
     build:
       context: ./api
     container_name: skn28-api
@@ -73,19 +137,189 @@ services:
         condition: service_healthy
       migrate:
         condition: service_completed_successfully
+      qdrant-init:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
     env_file:
       - .env                  # DJANGO_*, *_OAUTH_*, POSTGRES_* 등
     environment:
       TZ: Asia/Seoul
       POSTGRES_HOST: db
       POSTGRES_PORT: 5432
+      QDRANT_URL: http://qdrant:6333   # 컨테이너 네트워크 내부 주소
+      REDIS_URL: redis://redis:6379/0  # 컨테이너 네트워크 내부 주소 (비밀번호는 REDIS_PASSWORD로 주입)
       DJANGO_SETTINGS_MODULE: ${DJANGO_SETTINGS_MODULE:-config.settings.prod}
+      GUNICORN_TIMEOUT: ${GUNICORN_TIMEOUT:-660}
+      # 사진 기반 신체치수 추정(VLM)용 키. 값은 파일에 두지 않고 shell에서 주입한다
+      # (`infisical run --env=dev -- docker compose ...`). 미주입 시 빈 값이라
+      # 사진 경로만 실패하고 나머지 API는 정상 동작한다.
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-3.5-flash}
+    volumes:
+      # migrate와 같은 이유 — 신체치수 추론 모듈과 모델 joblib이 ml/ 아래에 있다.
+      - ./ml:/ml:ro
+      - ./data/lookbook:/data/lookbook:ro
     ports:
       - "8000:8000"
-    command: >
-      sh -c "python manage.py collectstatic --noinput &&
-             gunicorn config.wsgi:application --bind 0.0.0.0:8000
-             --workers ${GUNICORN_WORKERS:-3}"
+    # gunicorn 옵션(bind / workers / 액세스·에러 로그)은 api/gunicorn.conf.py가
+    # 담당한다. gunicorn이 WORKDIR(/app)의 gunicorn.conf.py를 자동으로 읽는다.
+    #
+    # 주의: 이 커맨드는 반드시 한 줄로 유지할 것. YAML 폴딩(`>`)에서 이어지는
+    # 줄을 첫 줄보다 더 들여쓰면 "more-indented" 규칙 때문에 줄바꿈이 접히지
+    # 않고 그대로 남고, sh가 그 뒤를 별개의 명령으로 실행해 버린다
+    # (예전에 --workers 옵션이 적용되지 않던 원인).
+    command: sh -c "python manage.py collectstatic --noinput && gunicorn config.wsgi:application"
+
+  # 코디 평가 워커 — api와 같은 이미지를 쓰고 DB를 ORM으로 직접 쓴다.
+  # (옷장 파이프라인의 image-processor는 GPU 별도 서버라 콜백을 쓰지만, 이 워커는
+  #  같은 코드·같은 네트워크라 콜백이라는 실패 지점을 둘 이유가 없다.)
+  #
+  # 주의: 이 서비스를 2대 이상으로 늘리지 말 것. 재시작 복구(recover_stale)가
+  # processing 큐를 통째로 되돌려서, 다른 워커가 처리 중인 작업까지 회수한다.
+  outfit-worker:
+    image: skn28-api:local          # migrate와 같은 이미지 (위 주석 참고)
+    build:
+      context: ./api
+    container_name: skn28-outfit-worker
+    restart: unless-stopped
+    profiles: ["api", "all"]
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+      qdrant-init:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      TZ: Asia/Seoul
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      REDIS_URL: redis://redis:6379/0  # 비밀번호는 REDIS_PASSWORD로 별도 주입
+      QDRANT_URL: http://qdrant:6333   # 컨테이너 네트워크 내부 주소
+      DJANGO_SETTINGS_MODULE: ${DJANGO_SETTINGS_MODULE:-config.settings.prod}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+    volumes:
+      # api와 같은 이미지·같은 urls.py를 로드하므로 동일하게 필요하다.
+      # Django system check가 config.urls → users.views → body_inference 를 import하고
+      # 그 안에서 `from body_measurement.src import inference` 가 실행되기 때문에,
+      # 이 마운트가 없으면 워커가 ModuleNotFoundError로 죽는다.
+      - ./ml:/ml:ro
+    command: python manage.py run_outfit_worker
+
+  # 대화 분석·OpenAI 응답·추천 조합을 처리하고 Redis Stream에 SSE 이벤트를 남긴다.
+  # processing 리스트 복구가 단일 소비자 전제이므로 현재는 한 인스턴스로 운영한다.
+  chat-worker:
+    image: skn28-api:local
+    build:
+      context: ./api
+    container_name: skn28-chat-worker
+    restart: unless-stopped
+    profiles: ["api", "all"]
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+      qdrant-init:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      TZ: Asia/Seoul
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      REDIS_URL: redis://redis:6379/0
+      QDRANT_URL: http://qdrant:6333
+      DJANGO_SETTINGS_MODULE: ${DJANGO_SETTINGS_MODULE:-config.settings.prod}
+      SERVICE_NAME: chat-worker
+      # env_file(.env)로도 들어오지만, infisical 등 셸 주입 값이 .env보다
+      # 우선하도록 compose 보간으로 명시한다 (redis 서버와 동일한 소스 보장)
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?REDIS_PASSWORD를 루트 .env에 설정해야 합니다}
+    volumes:
+      - ./ml:/ml:ro
+    command: python manage.py run_chat_worker
+    init: true
+    stop_grace_period: 3m
+
+  # 검증 완료 추천 카드의 옷장·상품 혼합 아이템으로 최종 코디 이미지를 생성한다.
+  outfit-render-worker:
+    image: skn28-api:local
+    build:
+      context: ./api
+    container_name: skn28-outfit-render-worker
+    restart: unless-stopped
+    profiles: ["api", "all"]
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+      qdrant-init:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      TZ: Asia/Seoul
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      REDIS_URL: redis://redis:6379/0
+      QDRANT_URL: http://qdrant:6333
+      DJANGO_SETTINGS_MODULE: ${DJANGO_SETTINGS_MODULE:-config.settings.prod}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      # 이미지 백엔드 키: OUTFIT_RENDER_BACKEND=gemini(기본)면 .env의 GEMINI_API_KEY를,
+      # openrouter면 위 OPENROUTER_API_KEY를 쓴다. 가상 착장은 항상 OpenRouter다.
+      SERVICE_NAME: outfit-render-worker
+    volumes:
+      - ./ml:/ml:ro
+    command: python manage.py run_outfit_render_worker
+    init: true
+    stop_grace_period: 5m
+
+  # 오늘의 룩 생성 워커. 평가 워커와 큐가 분리돼 있어 서로 밀리지 않는다.
+  #
+  # 워커는 1대만 띄운다. 기동 시 recover_stale()이 processing에 남은 작업을 전부
+  # pending으로 되돌리기 때문에, 2대 이상이면 다른 워커가 처리 중인 작업까지 회수한다.
+  daily-look-worker:
+    image: skn28-api:local          # migrate와 같은 이미지 (위 주석 참고)
+    build:
+      context: ./api
+    container_name: skn28-daily-look-worker
+    restart: unless-stopped
+    profiles: ["api", "all"]
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+      qdrant-init:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      TZ: Asia/Seoul          # look_date를 Asia/Seoul 기준으로 잡는다 (UTC면 날짜가 밀린다)
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      REDIS_URL: redis://redis:6379/0  # 비밀번호는 REDIS_PASSWORD로 별도 주입
+      QDRANT_URL: http://qdrant:6333   # 리트리버가 쓴다 — 없으면 후보 0건으로 EMPTY가 된다
+      DJANGO_SETTINGS_MODULE: ${DJANGO_SETTINGS_MODULE:-config.settings.prod}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+    volumes:
+      # outfit-worker와 같은 이유. Django system check가 config.urls를 import하고
+      # 그 경로에 body_measurement가 걸려 있어, 이 마운트가 없으면 워커가
+      # ModuleNotFoundError로 죽는다.
+      - ./ml:/ml:ro
+    command: python manage.py run_daily_look_worker
 
   weather-collector:
     build:
@@ -93,7 +327,7 @@ services:
       dockerfile: Dockerfile.weather
     container_name: weather-collector
     restart: unless-stopped
-    profiles: ["weather", "all"]
+    profiles: ["weather", "all", "api"]
     depends_on:
       db:
         condition: service_healthy
@@ -140,5 +374,50 @@ services:
     # 스키마는 migrate 서비스(Django migration)가 생성한다.
     command: python /app/naver/naver_collector_db.py --scheduler
 
+  eleven-collector:
+    build:
+      context: ./collector
+      dockerfile: eleven/Dockerfile.eleven
+      args:
+        # Claude provider 사용 시 true (Claude Code CLI 설치)
+        INSTALL_CLAUDE_CLI: ${INSTALL_CLAUDE_CLI:-false}
+    container_name: eleven-collector
+    restart: unless-stopped
+    profiles: ["eleven", "all"]
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    env_file:
+      - .env
+    environment:
+      TZ: Asia/Seoul
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+    command: python /app/eleven/eleven_collector_db.py --scheduler
+  
+  redis:
+    image: redis:7
+    container_name: redis
+    restart: always
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?REDIS_PASSWORD를 루트 .env에 설정해야 합니다}
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: >
+      redis-server
+      --appendonly yes
+      --requirepass "${REDIS_PASSWORD:?REDIS_PASSWORD를 루트 .env에 설정해야 합니다}"
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a \"$${REDIS_PASSWORD}\" ping | grep PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 volumes:
   postgres_data:
+  qdrant_data:
+  redis_data:

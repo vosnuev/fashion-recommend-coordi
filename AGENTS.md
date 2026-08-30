@@ -22,7 +22,7 @@
 | 언어 | Python 3.11+ |
 | 백엔드 | Django / Django REST Framework |
 | AI/ML | PyTorch (모델 학습·추론), 추천 모델 |
-| 데이터 | PostgreSQL (권장), Redis (캐시) |
+| 데이터 | PostgreSQL (권장), Redis (캐시), Qdrant (벡터 검색) |
 | GPU (임시) | RunPod |
 | 배포 | AWS (EC2 / ECS / S3 / RDS 등) |
 | 형상관리 | Git |
@@ -39,7 +39,7 @@ SKN28-FINAL-1Team/
 ├── README.md              # 프로젝트 소개·실행법
 ├── .env.example           # 환경변수 템플릿 (실제 .env는 커밋 금지, 루트 .env 하나로 통합 관리)
 ├── .gitignore
-├── docker-compose.yml     # 통합 compose: db + migrate + api + collector 2종 (profiles로 선택 실행)
+├── docker-compose.yml     # 통합 compose: db + migrate + api + collector
 ├── api/                   # Django REST API 서버
 │   ├── manage.py
 │   ├── requirements.txt
@@ -47,12 +47,20 @@ SKN28-FINAL-1Team/
 │   │   └── settings/      # base.py / dev.py / prod.py 분리
 │   └── apps/              # Django 앱 모음
 │       ├── users/         # 사용자·인증 (naver/kakao/google OAuth + JWT)
-│       ├── catalog/       # 상품 (naver_product 등, collector/naver가 사용)
+│       ├── catalog/       # 상품 (naver_product, eleven_product 등)
 │       ├── weather/       # 날씨 (weather_* 테이블, collector/weather가 사용)
+│       ├── home/          # 홈 화면 조합 API
+│       ├── wardrobe/      # 사용자 옷장·비동기 이미지 등록
+│       ├── style_calendar/ # 착장 캘린더 API·비동기 이미지 처리 연동 (골자)
 │       └── recommend/     # 추천 API·로직 (예정)
 ├── collector/             # 독립 실행 데이터 수집기 (스키마는 Django migration이 소유)
 │   ├── weather/           # 기상청 APIHub 수집
-│   └── naver/             # 네이버 쇼핑 상품 수집 + LLM 태깅
+│   ├── naver/             # 네이버 쇼핑 상품 수집 + LLM 태깅
+│   └── eleven/            # 11번가 ProductSearch 수집 + OpenAI Batch/동기·Claude 동기 태깅
+├── indexer/               # catalog API 클라이언트 + S3 이미지·상품 텍스트 임베딩 + Qdrant 적재 GPU worker
+│   ├── util/              # 컨테이너 공용 모듈 (FashionSigLIP 임베더)
+│   ├── product_indexer/   # 운영: 네이버·11번가 상품 임베딩 worker + drain HTTP API
+│   └── old/               # 레거시: ETRI 패션 코디 데이터셋 적재 (Dockerfile.indexer.old)
 ├── ml/                    # 모델 학습·추론 코드 (예정)
 ├── scripts/               # 배포·데이터 처리 스크립트
 └── docs/                  # 설계·아키텍처 문서
@@ -93,6 +101,11 @@ python manage.py runserver
 - **명명**: 변수·함수 `snake_case`, 클래스 `PascalCase`, 상수 `UPPER_SNAKE_CASE`.
 - **타입 힌트**: 함수 시그니처에 타입 힌트를 작성한다.
 - **Django 관례**: fat model / thin view 지향, 비즈니스 로직은 서비스 계층 또는 모델 메서드로.
+- **DB 테이블 명명**: 새 Django 모델에는 반드시 `Meta.db_table`을 명시한다 (기존 예: `users`, `naver_product`, `weather_area`, `wardrobe_item`). 기본 규칙(`<앱라벨>_<모델명소문자>`)에 맡기면 모델명에 도메인 접두사가 있는 경우 `wardrobe_wardrobeitem`처럼 문구가 중복된다. migrate 전에 `python manage.py sqlmigrate <앱> <번호>`로 실제 생성될 테이블 이름을 확인한다.
+- **DB comment 필수**: 새 모델(테이블)에는 `Meta.db_table_comment`, 새 필드(컬럼)에는 `db_comment`를 **반드시** 작성한다 — DB 툴에서 스키마만 봐도 의미가 읽히게 하는 것이 목적이며, 전 테이블·컬럼 comment는 users 0009·0010 / catalog 0003 / weather 0002 / wardrobe 0003 마이그레이션으로 일괄 적용돼 있다.
+  - comment는 한글로, "무엇인지 + 단위/코드값/제약"을 담는다. 예) `db_comment="허리둘레(cm)"`, `db_comment="측정 상태 (in_progress/succeeded/failed)"`.
+  - 모델로 커버되지 않는 컬럼(자동 `id` PK, 자동 생성 M2M through 테이블 등)을 만들면 해당 마이그레이션에 `migrations.RunSQL`로 `COMMENT ON` 구문을 함께 추가한다 (`reverse_sql`은 `IS NULL`). 기존 예: `apps/users/migrations/0010_system_table_comments.py`.
+  - ⚠️ comment 문자열에 `%` 문자를 쓰지 않는다 (psycopg 파라미터 보간과 충돌 — "백분율"로 풀어 쓴다). migrate 전 `sqlmigrate`로 COMMENT 구문 생성 여부를 확인한다.
 - **설정 분리**: `settings/base.py`를 공통으로 두고 `dev`/`prod`로 분리. 시크릿은 설정 파일에 직접 쓰지 않는다.
 - **주석/문서화**: 왜(why) 그렇게 했는지 위주로 작성. 자명한 코드에 불필요한 주석 금지.
 
@@ -152,4 +165,4 @@ python manage.py runserver
 
 ---
 
-_마지막 업데이트: 2026-07-12_
+_마지막 업데이트: 2026-07-29_

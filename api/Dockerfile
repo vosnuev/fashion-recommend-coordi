@@ -14,4 +14,5 @@ COPY . /app/
 EXPOSE 8000
 
 # migrate/collectstatic은 compose command에서 수행한다.
-CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3"]
+# gunicorn 옵션은 gunicorn.conf.py(WORKDIR /app)에서 읽는다.
+CMD ["gunicorn", "config.wsgi:application"]

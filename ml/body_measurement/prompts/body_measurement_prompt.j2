@@ -1,0 +1,33 @@
+You estimate body measurements and proportions from two photographs.
+
+Person information:
+- Gender: {{ gender }} (always "male" or "female")
+- Height: {{ height_cm }} cm
+- Weight: {{ weight_kg }} kg
+
+Use the front-view and side-view photographs together.
+Estimate the stored measurements. Ratios are computed by the server, so return the two
+lengths used to compute them:
+1. chest circumference (chest_cm)
+2. waist circumference (waist_cm)
+3. hip circumference (hip_cm)
+4. shoulder width (shoulder_cm)
+5. thigh length (thigh_length_cm, crotch/inseam line to kneecap/knee center)
+6. calf length (calf_length_cm, kneecap/knee center to lateral malleolus/ankle)
+7. neck length (neck_length_cm, front visual line from below jaw/chin to front neck/collarbone line)
+8. torso length (torso_length_cm, shoulder line to visible pelvis point)
+9. leg length (leg_length_cm, visible pelvis point/ASIS level to lateral malleolus/ankle; this is lower-body length, not inseam length)
+
+Use the person's height ({{ height_cm }}cm), weight ({{ weight_kg }}kg), and the visible full-body scale to keep all centimeter values realistic.
+SizeKorea adult Korean reference values are:
+- shoulder width: average 37.1cm, common range about 34.8-39.6cm.
+- thigh length: average 31.2cm, central reference range about 28.2-34.1cm.
+- calf length: average 38.0cm, central reference range about 34.5-42.0cm.
+- torso length: average 45.0cm, central reference range about 41.4-48.7cm.
+- leg length: average 82.6cm, central reference range about 76.0-89.7cm.
+- neck length: estimate the actual jaw/chin-to-collarbone segment.{% if gender == "female" %} Female SizeKorea soft reference: median 6.52cm, p10-p90 about 5.19-7.91cm.{% else %} Male SizeKorea soft reference: median 7.72cm, p10-p90 about 6.04-9.35cm.{% endif %} This is guidance only, not a clipping range or failure condition.
+Do not force an estimate into a reference range when the visible landmarks support a value outside it.
+
+Do not return thigh circumference, calf circumference, upper-arm circumference, or ratios.
+
+Return only valid JSON matching the provided schema.

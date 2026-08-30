@@ -1,0 +1,21 @@
+# [레거시] ETRI 패션 코디 데이터셋 적재용. 운영 파이프라인은 product_indexer 참고.
+#
+# 빌드 컨텍스트는 indexer/ 다 (util/ 공유 모듈을 함께 COPY 해야 하므로).
+#   docker build -f indexer/old/Dockerfile.indexer.old -t skn28-indexer-old indexer/
+#   docker run --gpus all --env-file .env skn28-indexer-old
+FROM pytorch/pytorch:2.3.1-cuda12.1-cudnn8-runtime
+
+WORKDIR /app
+
+COPY util/requirements.txt ./util/requirements.txt
+COPY old/requirements.txt ./old/requirements.txt
+RUN pip install --no-cache-dir -r old/requirements.txt
+
+COPY util/ ./util/
+COPY old/ ./old/
+
+# HuggingFace 모델 캐시 (볼륨 마운트로 재사용 가능)
+ENV HF_HOME=/app/.cache/huggingface
+ENV PYTHONPATH=/app
+
+ENTRYPOINT ["python", "-m", "old.fashion_indexer"]

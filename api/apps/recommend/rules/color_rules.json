@@ -1,0 +1,26 @@
+{
+  "schema_version": "color-rules-v1",
+  "note": "색상 조합 규칙. 지금은 상하 명도 대비와 무채색 안전 조합만 다룬다. 퍼스널 컬러(웜/쿨) 축은 사용자 데이터가 없어 넣지 않았다 — 넣는 순간 근거 없는 판정이 된다.",
+  "achromatic": ["블랙", "화이트", "그레이", "아이보리", "베이지"],
+  "value_group": {
+    "note": "명도 그룹. 상하 같은 그룹이면 분할선이 흐려진다.",
+    "dark": ["블랙", "네이비", "카키", "브라운", "퍼플"],
+    "mid": ["그레이", "블루", "레드", "그린", "오렌지"],
+    "light": ["화이트", "아이보리", "베이지", "스카이블루", "핑크", "옐로우"]
+  },
+  "combination": {
+    "prefer": [
+      {"rule": "achromatic_anchor", "reason": "한쪽이 무채색이면 어떤 색과도 충돌하지 않는다", "score": 10},
+      {"rule": "value_contrast", "reason": "상하 명도 차이가 허리선을 만든다", "score": 12}
+    ],
+    "avoid": [
+      {"rule": "three_or_more_chromatic", "reason": "유채색이 셋 이상이면 시선이 분산된다", "score": -15}
+    ]
+  },
+  "by_bmi_band": {
+    "obese": {
+      "prefer": [{"rule": "dark_bottom", "reason": "하의를 어둡게 두면 하체 부피가 덜 부각된다", "score": 8}],
+      "avoid": []
+    }
+  }
+}

@@ -1,0 +1,551 @@
+{
+  "source": "https://sizekorea.kr/human-info/body-shape-class/age-gender-body",
+  "fetched_at": "2026-08-10",
+  "classification_basis": "사이즈코리아는 의류 학회의 보편적 분류법인 Rasband(1994)에 의한 방법에 따라 어깨, 허리, 엉덩이의 크기에 따라 상반신의 형태를 8가지 항목으로 분류하고 있습니다.",
+  "caveat_verbatim": "신체의 두께를 나타내는 가슴둘레, 허리둘레, 엉덩이둘레, 넙다리둘레, 손목둘레 등의 대부분 둘레항목이 하나의 요소로 분류됨에 따라, 위의 분류법 중에서 모래시계형~튜브체형에 이르는 체형으로의 상세한 분류는 추가적인 분석이 필요합니다.",
+  "lower_body_note": "하반신은 상반신과의 비례가 중요한 특징으로 판단되어 이에 관한 분석결과를 첨가하고자 합니다.",
+  "method_note": "체형의 분류는 요인(factor)을 이용한 군집 분석(cluster analysis)을 이용. 상·하반신 길이 비율은 Z-검정(유의수준 5퍼센트)으로 표준체형과 비교.",
+  "rasband_8_types": [
+    {
+      "no": 1,
+      "ko": "이상체형(표준체형)",
+      "slug": "standard"
+    },
+    {
+      "no": 2,
+      "ko": "삼각체형",
+      "slug": "triangle"
+    },
+    {
+      "no": 3,
+      "ko": "역삼각형체형",
+      "slug": "inverted_triangle"
+    },
+    {
+      "no": 4,
+      "ko": "사각체형",
+      "slug": "rectangle"
+    },
+    {
+      "no": 5,
+      "ko": "모래시계형",
+      "slug": "hourglass"
+    },
+    {
+      "no": 6,
+      "ko": "마름모꼴체형",
+      "slug": "diamond"
+    },
+    {
+      "no": 7,
+      "ko": "둥근체형",
+      "slug": "round"
+    },
+    {
+      "no": 8,
+      "ko": "튜브체형",
+      "slug": "tube"
+    }
+  ],
+  "age_gender_clusters": {
+    "M20": {
+      "gender": "남자",
+      "age_band": "20대",
+      "n_patterns": 3,
+      "measurement_unit": "mm (몸무게는 kg)",
+      "patterns": [
+        {
+          "name": "작은 역삼각체형",
+          "share_pct": "30.8",
+          "features": "가는 몸통 넓고 처진 어깨 긴 팔 큰 머리 짧은 엉덩이길이 긴 지체",
+          "height": "1729",
+          "weight": "68.9",
+          "chest": "909",
+          "waist": "776",
+          "hip": "942",
+          "shoulder": "437"
+        },
+        {
+          "name": "큰 사각체형",
+          "share_pct": "33.2",
+          "features": "굵은 몸통 추켜진 보통의 어깨 폭 긴 팔 작은 머리 짧은 엉덩이길이",
+          "height": "1735",
+          "weight": "69.3",
+          "chest": "908",
+          "waist": "781",
+          "hip": "944",
+          "shoulder": "437"
+        },
+        {
+          "name": "사각체형",
+          "share_pct": "35.9",
+          "features": "같은 굵기의 몸통 보통의 어깨 폭 짧은 팔 작은 머리 긴 엉덩이길이",
+          "height": "1732",
+          "weight": "69",
+          "chest": "907",
+          "waist": "776",
+          "hip": "941",
+          "shoulder": "436"
+        }
+      ],
+      "warning": "⚠️ 20대 남자 3패턴의 둘레·몸무게 평균이 사실상 동일하다(젖가슴둘레 909/908/907, 몸무게 68.9/69.3/69.0). 이 표로는 패턴을 구분할 수 없으므로 임계값 산출의 근거로 쓰지 않는다."
+    },
+    "M30": {
+      "gender": "남자",
+      "age_band": "30대",
+      "n_patterns": 4,
+      "measurement_unit": "mm (몸무게는 kg)",
+      "patterns": [
+        {
+          "name": "작은 역삼각체형",
+          "share_pct": "26.2",
+          "features": "가는 몸통 보통의 어깨 폭 매우 긴 팔 작은 머리 보통 엉덩이길이 긴 지체",
+          "height": "1738",
+          "weight": "69.8",
+          "chest": "920",
+          "waist": "808",
+          "hip": "940",
+          "shoulder": "436"
+        },
+        {
+          "name": "큰 사각체형",
+          "share_pct": "24.2",
+          "features": "굵은 몸통 좁은 어깨 짧은 팔 보통의 머리크기 보통의 엉덩이길이 긴 지체",
+          "height": "1718",
+          "weight": "77.6",
+          "chest": "968",
+          "waist": "883",
+          "hip": "984",
+          "shoulder": "436"
+        },
+        {
+          "name": "역삼각체형",
+          "share_pct": "24.8",
+          "features": "같은 굵기의 몸통 매우 넓은 어깨 큰 머리 긴 엉덩이길이 매우 짧은 지체",
+          "height": "1686",
+          "weight": "72.3",
+          "chest": "948",
+          "waist": "847",
+          "hip": "962",
+          "shoulder": "450"
+        },
+        {
+          "name": "작은 사각체형",
+          "share_pct": "24.8",
+          "features": "가는 몸통 좁은 어깨 짧은 팔 큰 머리 긴 엉덩이길이",
+          "height": "1701",
+          "weight": "67.8",
+          "chest": "911",
+          "waist": "812",
+          "hip": "928",
+          "shoulder": "424"
+        }
+      ]
+    },
+    "M40": {
+      "gender": "남자",
+      "age_band": "40대",
+      "n_patterns": 4,
+      "measurement_unit": "mm (몸무게는 kg)",
+      "patterns": [
+        {
+          "name": "역삼각체형",
+          "share_pct": "27.7",
+          "features": "약간 굵은 몸통 넓은 어깨 작은 머리 짧은 엉덩이길이",
+          "height": "1708",
+          "weight": "75",
+          "chest": "964",
+          "waist": "885",
+          "hip": "974",
+          "shoulder": "445"
+        },
+        {
+          "name": "작은 사각체형",
+          "share_pct": "28.5",
+          "features": "가는 몸통 좁은 어깨 긴 팔 큰 머리 짧은 엉덩이길이 긴 지체",
+          "height": "1688",
+          "weight": "63",
+          "chest": "895",
+          "waist": "796",
+          "hip": "909",
+          "shoulder": "418"
+        },
+        {
+          "name": "삼각체형",
+          "share_pct": "20.8",
+          "features": "같은 굵기의 몸통 좁은 어깨 매우 짧은 팔 매우 작은 머리 긴 엉덩이길이 약간 짧은 지체",
+          "height": "1642",
+          "weight": "72.5",
+          "chest": "971",
+          "waist": "886",
+          "hip": "964",
+          "shoulder": "439"
+        },
+        {
+          "name": "큰 사각체형",
+          "share_pct": "23",
+          "features": "매우 굵은 몸통 넓은 어깨 매우 큰 머리 긴 엉덩이길이 매우 짧은 지체",
+          "height": "1701",
+          "weight": "72.5",
+          "chest": "940",
+          "waist": "851",
+          "hip": "951",
+          "shoulder": "422"
+        }
+      ]
+    },
+    "M50": {
+      "gender": "남자",
+      "age_band": "50대",
+      "n_patterns": 4,
+      "measurement_unit": "mm (몸무게는 kg)",
+      "patterns": [
+        {
+          "name": "작은 사각체형",
+          "share_pct": "27.4",
+          "features": "가는 몸통 좁고 추켜진 어깨 짧은 팔 긴 엉덩이길이 긴 지체",
+          "height": "1658",
+          "weight": "64.9",
+          "chest": "912",
+          "waist": "839",
+          "hip": "914",
+          "shoulder": "415"
+        },
+        {
+          "name": "큰 사각체형",
+          "share_pct": "23",
+          "features": "굵은 몸통 넓고 처진 어깨 매우 짧은 팔 긴 엉덩이길이 짧은 지체",
+          "height": "1662",
+          "weight": "73.5",
+          "chest": "971",
+          "waist": "903",
+          "hip": "964",
+          "shoulder": "444"
+        },
+        {
+          "name": "삼각체형",
+          "share_pct": "18.2",
+          "features": "같은 굵기의 몸통 좁은 어깨 매우 긴 팔 긴 엉덩이길이 매우 짧은 지체",
+          "height": "1665",
+          "weight": "70",
+          "chest": "957",
+          "waist": "886",
+          "hip": "952",
+          "shoulder": "415"
+        },
+        {
+          "name": "사각체형",
+          "share_pct": "31.4",
+          "features": "같은 굵기의 몸통 긴 팔 보통의 어깨 폭 매우 짧은 엉덩이길이 긴 지체",
+          "height": "1660",
+          "weight": "69.2",
+          "chest": "950",
+          "waist": "888",
+          "hip": "952",
+          "shoulder": "425"
+        }
+      ]
+    },
+    "M60": {
+      "gender": "남자",
+      "age_band": "60대",
+      "n_patterns": 4,
+      "measurement_unit": "mm (몸무게는 kg)",
+      "patterns": [
+        {
+          "name": "큰 역삼각체형",
+          "share_pct": "31.5",
+          "features": "같은 굵기의 몸통 매우 넓은 어깨 매우 짧은 엉덩이길이",
+          "height": "1650",
+          "weight": "67.9",
+          "chest": "952",
+          "waist": "895",
+          "hip": "948",
+          "shoulder": "428"
+        },
+        {
+          "name": "삼각체형",
+          "share_pct": "19.5",
+          "features": "같은 굵기의 몸통 매우 좁은 추켜진 어깨 긴 팔 작은 머리 긴 엉덩이길이 짧은 지체",
+          "height": "1629",
+          "weight": "64.7",
+          "chest": "935",
+          "waist": "875",
+          "hip": "928",
+          "shoulder": "396"
+        },
+        {
+          "name": "역삼각체형",
+          "share_pct": "25.9",
+          "features": "같은 굵기의 몸통 넓은 어깨 짧은 팔 큰 머리 매우 긴 엉덩이길이",
+          "height": "1643",
+          "weight": "66.5",
+          "chest": "939",
+          "waist": "872",
+          "hip": "937",
+          "shoulder": "418"
+        },
+        {
+          "name": "작은 사각체형",
+          "share_pct": "23.1",
+          "features": "가는 몸통 좁고 처진 어깨 보통의 엉덩이길이 긴 지체",
+          "height": "1662",
+          "weight": "64.1",
+          "chest": "916",
+          "waist": "850",
+          "hip": "916",
+          "shoulder": "393"
+        }
+      ]
+    },
+    "F20": {
+      "gender": "여자",
+      "age_band": "20대",
+      "n_patterns": 4,
+      "measurement_unit": "mm (몸무게는 kg)",
+      "patterns": [
+        {
+          "name": "작은 역삼각체형",
+          "share_pct": "29",
+          "features": "가는 몸통 보통 너비의 매우 처진 어깨 긴 팔 큰 머리 짧은 엉덩이길이 긴 지체",
+          "height": "1588",
+          "weight": "50.5",
+          "chest": "800",
+          "waist": "655",
+          "hip": "891",
+          "shoulder": "399"
+        },
+        {
+          "name": "큰 삼각체형",
+          "share_pct": "17.3",
+          "features": "굵은 몸통 보통의 어깨너비 긴 팔 긴 총길이 보통의 엉덩이길이",
+          "height": "1587",
+          "weight": "61.1",
+          "chest": "906",
+          "waist": "762",
+          "hip": "956",
+          "shoulder": "408"
+        },
+        {
+          "name": "역삼각체형",
+          "share_pct": "28.8",
+          "features": "같은 굵기의 몸통 매우 넓은 어깨 짧은 팔 보통의 엉덩이길이",
+          "height": "1604",
+          "weight": "53.5",
+          "chest": "817",
+          "waist": "672",
+          "hip": "914",
+          "shoulder": "411"
+        },
+        {
+          "name": "사각체형",
+          "share_pct": "25.0",
+          "features": "가는 몸통 매우 좁고 추켜진 어깨 짧은 팔 약간 긴 엉덩이길이 약간 짧은 지체",
+          "height": "1613",
+          "weight": "52",
+          "chest": "807",
+          "waist": "659",
+          "hip": "901",
+          "shoulder": "384"
+        }
+      ]
+    },
+    "F30": {
+      "gender": "여자",
+      "age_band": "30대",
+      "n_patterns": 4,
+      "measurement_unit": "mm (몸무게는 kg)",
+      "patterns": [
+        {
+          "name": "작은 사각체형 (긴 지체)",
+          "share_pct": "27.4",
+          "features": "가는 몸통 처진 어깨 긴 팔 작은 머리 짧은 엉덩이길이 긴 지체",
+          "height": "1598",
+          "weight": "53.8",
+          "chest": "830",
+          "waist": "700",
+          "hip": "902",
+          "shoulder": "400"
+        },
+        {
+          "name": "삼각체형",
+          "share_pct": "25.2",
+          "features": "같은 굵기의 몸통 추켜진 어깨 긴 팔 작은 머리 보통의 엉덩이길이",
+          "height": "1586",
+          "weight": "56.2",
+          "chest": "864",
+          "waist": "730",
+          "hip": "914",
+          "shoulder": "398"
+        },
+        {
+          "name": "큰 사각체형",
+          "share_pct": "18.2",
+          "features": "매우 굵은 몸통 처진 어깨 짧은 팔 보통의 엉덩이길이",
+          "height": "1550",
+          "weight": "62.9",
+          "chest": "938",
+          "waist": "811",
+          "hip": "964",
+          "shoulder": "406"
+        },
+        {
+          "name": "작은 사각체형 (짧은 지체)",
+          "share_pct": "29.1",
+          "features": "가는 몸통 짧은 팔 큰 머리 약간 긴 엉덩이길이 짧은 지체",
+          "height": "1556",
+          "weight": "52.4",
+          "chest": "832",
+          "waist": "698",
+          "hip": "895",
+          "shoulder": "388"
+        }
+      ]
+    },
+    "F40": {
+      "gender": "여자",
+      "age_band": "40대",
+      "n_patterns": 4,
+      "measurement_unit": "mm (몸무게는 kg)",
+      "patterns": [
+        {
+          "name": "사각체형",
+          "share_pct": "34.4",
+          "features": "같은 굵기의 몸통 처진 보통의 어깨 긴 팔 작은 머리 보통의 엉덩이길이 긴 지체",
+          "height": "1568",
+          "weight": "56.6",
+          "chest": "880",
+          "waist": "750",
+          "hip": "919",
+          "shoulder": "399"
+        },
+        {
+          "name": "작은 역삼각체형",
+          "share_pct": "23.5",
+          "features": "가는 몸통 처진 보통의 어깨 폭 긴 팔 약간 짧은 엉덩이길이",
+          "height": "1559",
+          "weight": "56.3",
+          "chest": "882",
+          "waist": "750",
+          "hip": "919",
+          "shoulder": "396"
+        },
+        {
+          "name": "역삼각체형",
+          "share_pct": "20.8",
+          "features": "같은 굵기의 몸통 매우 넓은 추켜진 어깨 큰 머리 보통의 엉덩이길이 짧은 지체",
+          "height": "1546",
+          "weight": "57.9",
+          "chest": "913",
+          "waist": "782",
+          "hip": "922",
+          "shoulder": "395"
+        },
+        {
+          "name": "큰 삼각체형",
+          "share_pct": "21.3",
+          "features": "굵은 몸통 매우 좁은 어깨 매우 짧은 팔 보통의 엉덩이길이",
+          "height": "1566",
+          "weight": "58.2",
+          "chest": "880",
+          "waist": "752",
+          "hip": "939",
+          "shoulder": "379"
+        }
+      ]
+    },
+    "F50": {
+      "gender": "여자",
+      "age_band": "50대",
+      "n_patterns": 3,
+      "measurement_unit": "mm (몸무게는 kg)",
+      "patterns": [
+        {
+          "name": "사각체형",
+          "share_pct": "35.9",
+          "features": "같은 굵기의 몸통 추켜진 보통의 어깨 폭 긴 엉덩이길이 짧은 지체",
+          "height": "1544",
+          "weight": "61.7",
+          "chest": "950",
+          "waist": "839",
+          "hip": "942",
+          "shoulder": "392"
+        },
+        {
+          "name": "삼각체형",
+          "share_pct": "32.6",
+          "features": "약간 굵은 몸통 보통너비의 처진 어깨 큰 머리 짧은 엉덩이길이 긴 지체",
+          "height": "1517",
+          "weight": "59.6",
+          "chest": "942",
+          "waist": "849",
+          "hip": "936",
+          "shoulder": "393"
+        },
+        {
+          "name": "작은 역삼각체형",
+          "share_pct": "31.5",
+          "features": "가는 몸통 보통의 처진 어깨 작은 머리 보통의 엉덩이길이",
+          "height": "1564",
+          "weight": "58.1",
+          "chest": "910",
+          "waist": "792",
+          "hip": "925",
+          "shoulder": "399"
+        }
+      ]
+    },
+    "F60": {
+      "gender": "여자",
+      "age_band": "60대",
+      "n_patterns": 4,
+      "measurement_unit": "mm (몸무게는 kg)",
+      "patterns": [
+        {
+          "name": "작은 역삼각체형",
+          "share_pct": "23.5",
+          "features": "가는 몸통 추켜진 보통너비의 어깨 긴 엉덩이길이 짧은 지체",
+          "height": "1532",
+          "weight": "57.9",
+          "chest": "916",
+          "waist": "825",
+          "hip": "921",
+          "shoulder": "387"
+        },
+        {
+          "name": "큰 사각체형",
+          "share_pct": "29",
+          "features": "굵은 몸통 넓은 어깨너비 처진 어깨 짧은 엉덩이길이",
+          "height": "1513",
+          "weight": "62.5",
+          "chest": "972",
+          "waist": "900",
+          "hip": "948",
+          "shoulder": "403"
+        },
+        {
+          "name": "사각체형",
+          "share_pct": "25.1",
+          "features": "같은 굵기의 몸통 보통너비의 처진 어깨 긴 팔 긴 엉덩이길이",
+          "height": "1506",
+          "weight": "57.2",
+          "chest": "935",
+          "waist": "846",
+          "hip": "911",
+          "shoulder": "381"
+        },
+        {
+          "name": "삼각체형",
+          "share_pct": "22.4",
+          "features": "같은 굵기의 몸통 좁고 추켜진 어깨 짧은 팔 큰 머리 짧은 엉덩이길이 긴 지체",
+          "height": "1516",
+          "weight": "56.1",
+          "chest": "926",
+          "waist": "841",
+          "hip": "915",
+          "shoulder": "372"
+        }
+      ]
+    }
+  }
+}

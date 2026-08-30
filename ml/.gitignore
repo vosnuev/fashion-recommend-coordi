@@ -1,0 +1,50 @@
+# ============================================================
+# ml/ 폴더 공통 .gitignore
+# 하위 디렉토리별 .gitignore는 모두 이 파일로 통합한다.
+# ============================================================
+
+# Python 캐시
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter 노트북 체크포인트
+.ipynb_checkpoints/
+ml/body_measurement/experiments/**/.ipynb_checkpoints/
+
+# ============================================================
+# 원본 데이터 (S3에서 재생성 가능, 19MB)
+# 재실행: python src/manual_test.py
+# 현재는 해당 디렉토리 없음. 재생성 시 아래 주석 해제.
+# ml/body_measurement/data/raw/
+# ml/body_measurement/data/raw_test_data/
+
+# ============================================================
+# 분석용 임시 스크립트
+ml/body_measurement/artifacts/csv/make_*.py
+
+# ============================================================
+# 외부 데이터셋 원본 이미지 — 얼굴 블러 미적용 상태라 커밋 금지
+# AI Hub 전신 데이터는 비식별 처리된 원천. 아래 두 디렉터리는 외부
+# (HuggingFace 등)에서 받은 미가공 인물 사진이라 식별 가능한 개인이 그대로 드러난다.
+# 재현이 필요하면 ml/scratch/의 download_front_samples.py / download_10_samples.py
+# 현재는 정리됨. 재생성 시 아래 주석 해제.
+# ml/body_measurement/data/samples_10_front/
+# ml/body_measurement/data/external_samples/
+# ml/body_measurement/data/test_subject_*.jpg
+
+# ============================================================
+# 모델 파일 — 서빙(API)에 직접 쓰이는 hist_gradient_boosting 만 추적
+# knn / baseline / random_forest 는 학습·벤치마크용이라 추적 제외
+# (루트 .gitignore에도 동일 규칙이 있으나, ml 폴더 규칙을 한곳에 모으기 위해 명시)
+# ============================================================
+*.joblib
+!ml/body_measurement/artifacts/models/hist_gradient_boosting.joblib
+ml/body_measurement/artifacts/models/knn.joblib
+ml/body_measurement/artifacts/models/baseline.joblib
+ml/body_measurement/artifacts/models/random_forest.joblib
+
+# 신체치수 서빙 모델 — 클론만으로 /body/estimate 가 뜨도록 추적한다.
+# (배포 환경에서는 BODY_MODEL_PATH 로 S3 경로를 주입해 덮어쓸 수 있다)
+!body_measurement/data/hist/models/*.joblib

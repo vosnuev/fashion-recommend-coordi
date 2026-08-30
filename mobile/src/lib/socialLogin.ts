@@ -14,8 +14,10 @@ import {
   NAVER_CONSUMER_KEY,
   NAVER_CONSUMER_SECRET,
   NAVER_URL_SCHEME,
+  type SocialProvider,
 } from '@/constants/config';
 import { api } from '@/lib/apiClient';
+import { redirectUri, startWebLogin } from '@/lib/webOAuth';
 import { authStore, type AuthUser } from '@/state/auth';
 
 /**
@@ -66,6 +68,35 @@ function isCancel(e: unknown): boolean {
 }
 
 /**
+ * 웹이면 제공사 인가 페이지로 보내고 여기서 흐름을 끊는다.
+ *
+ * 이동하면 페이지가 통째로 바뀌므로 이 함수는 **돌아오지 않는다** — 이어지는 네이티브 SDK
+ * 호출은 실행되지 않는다. 나머지 절반(코드 → JWT)은 /auth/callback 화면이 맡는다.
+ * 키가 없어 URL 을 못 만들면 false 를 돌려 호출부가 안내 문구를 띄우게 한다.
+ */
+function handOffToWeb(provider: SocialProvider): boolean {
+  if (Platform.OS !== 'web') return false;
+  if (startWebLogin(provider)) return true;
+  throw new Error('웹 로그인 설정이 아직 없습니다. (클라이언트 ID 대기 중)');
+}
+
+/**
+ * 웹 콜백에서 받은 인가 코드로 로그인을 마친다.
+ * `redirect_uri` 는 인가 요청 때와 **같은 값**이어야 해서 webOAuth 가 만든 것을 그대로 쓴다.
+ */
+export async function completeWebLogin(
+  provider: SocialProvider,
+  code: string,
+  state: string,
+): Promise<SocialLoginResult> {
+  return finishLogin(AuthEndpoints.socialLogin(provider), {
+    code,
+    redirect_uri: redirectUri(),
+    state,
+  });
+}
+
+/**
  * 앱 시작 시 소셜 SDK 초기화 (_layout 에서 1회 호출).
  * 카카오는 항상 초기화하고, 네이버/구글은 키가 채워졌을 때만 초기화한다
  * — 미설정 상태에선 네이티브 모듈을 건드리지 않아 재빌드 전에도 앱이 안전하게 뜬다.
@@ -105,6 +136,7 @@ export function initSocialSDKs(): void {
  * ⚠️ 백엔드 필드명은 팀 백엔드와 맞춘다 (현재 access_token 으로 가정).
  */
 export async function loginWithKakao(): Promise<SocialLoginResult> {
+  if (handOffToWeb('kakao')) return null;
   try {
     const token = await kakaoNativeLogin();
     return finishLogin(AuthEndpoints.socialLogin('kakao'), {
@@ -121,6 +153,7 @@ export async function loginWithKakao(): Promise<SocialLoginResult> {
  * SDK 초기화(NaverLogin.initialize)는 앱 시작 시 initSocialSDKs 에서 수행된다.
  */
 export async function loginWithNaver(): Promise<SocialLoginResult> {
+  if (handOffToWeb('naver')) return null;
   if (!isNaverConfigured()) {
     throw new Error('네이버 로그인 설정이 아직 없습니다. (키 대기 중)');
   }
@@ -142,6 +175,7 @@ export async function loginWithNaver(): Promise<SocialLoginResult> {
  * getTokens() 의 accessToken 을 백엔드로 보낸다 (백엔드가 userinfo 로 프로필 조회).
  */
 export async function loginWithGoogle(): Promise<SocialLoginResult> {
+  if (handOffToWeb('google')) return null;
   if (!isGoogleConfigured()) {
     throw new Error('구글 로그인 설정이 아직 없습니다. (키 대기 중)');
   }
@@ -190,12 +224,17 @@ export async function loginWithApple(): Promise<SocialLoginResult> {
         .join(' ')
     : '';
 
+  /* 백엔드 계약(SocialLoginSerializer)에 맞춘 이름으로 보낸다.
+     예전엔 identity_token/authorization_code/full_name 을 보내
+     "code 또는 access_token 중 하나가 필요합니다" 로 400 이 났다.
+
+     ⚠️ 그래도 애플은 아직 성공하지 못한다 — 백엔드가 애플에 **code 방식만** 열어 두고
+        (`authenticate_with_token` 은 애플 미지원), code 방식엔 `redirect_uri` 를 필수로 받는데
+        네이티브 Apple Sign In 에는 리디렉트 주소라는 게 없다.
+        백엔드가 네이티브(bundle id 클라이언트, redirect_uri 없음)를 받아줘야 열린다. */
   const body: Record<string, string> = {
-    identity_token: credential.identityToken,
-    ...(credential.authorizationCode
-      ? { authorization_code: credential.authorizationCode }
-      : {}),
-    ...(fullName ? { full_name: fullName } : {}),
+    ...(credential.authorizationCode ? { code: credential.authorizationCode } : {}),
+    ...(fullName ? { user_name: fullName } : {}),
   };
 
   return finishLogin('/api/v1/auth/apple/login/', body);

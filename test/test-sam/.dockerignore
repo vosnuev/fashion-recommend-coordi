@@ -1,0 +1,8 @@
+# 대용량·런타임 산출물은 빌드 컨텍스트에서 제외 (input/output/가중치는 볼륨 마운트)
+input/
+output/
+sam3/sam3.pt
+**/__pycache__/
+_to_delete/
+Dockerfile
+.dockerignore

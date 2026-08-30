@@ -1,0 +1,115 @@
+{
+  "comparison_rows": 4485,
+  "features": [
+    "gender",
+    "height",
+    "weight"
+  ],
+  "note": "legacy는 181명 대체 랜드마크 모델을 3D 정확 정의 정답에 직접 비교한 값",
+  "length_metrics": [
+    {
+      "model": "legacy_181_proxy",
+      "target": "thigh_length",
+      "mae_against_exact_cm": 1.6725838168905671,
+      "rmse_against_exact_cm": 2.167263304457203,
+      "bias_against_exact_cm": -0.41638858857584565
+    },
+    {
+      "model": "exact_v2_cv",
+      "target": "thigh_length",
+      "mae_against_exact_cm": 1.3956151293838972,
+      "rmse_against_exact_cm": 1.8044980901447722,
+      "bias_against_exact_cm": -0.0006166754106626755
+    },
+    {
+      "model": "legacy_181_proxy",
+      "target": "calf_length",
+      "mae_against_exact_cm": 2.4234740326407476,
+      "rmse_against_exact_cm": 2.8416072624970203,
+      "bias_against_exact_cm": 2.2264787031859568
+    },
+    {
+      "model": "exact_v2_cv",
+      "target": "calf_length",
+      "mae_against_exact_cm": 1.065362310057865,
+      "rmse_against_exact_cm": 1.3471035300240266,
+      "bias_against_exact_cm": -0.004347789944973426
+    },
+    {
+      "model": "legacy_181_proxy",
+      "target": "torso_length",
+      "mae_against_exact_cm": 2.944361711708425,
+      "rmse_against_exact_cm": 3.6668532334737014,
+      "bias_against_exact_cm": -2.460102881381963
+    },
+    {
+      "model": "exact_v2_cv",
+      "target": "torso_length",
+      "mae_against_exact_cm": 1.6603718006831458,
+      "rmse_against_exact_cm": 2.1690231324180616,
+      "bias_against_exact_cm": -0.001497087995214861
+    },
+    {
+      "model": "legacy_181_proxy",
+      "target": "leg_length",
+      "mae_against_exact_cm": 11.613467025663267,
+      "rmse_against_exact_cm": 12.050832602057513,
+      "bias_against_exact_cm": -11.612269148507753
+    },
+    {
+      "model": "exact_v2_cv",
+      "target": "leg_length",
+      "mae_against_exact_cm": 1.537373336235817,
+      "rmse_against_exact_cm": 1.9877489988048986,
+      "bias_against_exact_cm": -0.001081217498525681
+    },
+    {
+      "model": "legacy_181_proxy",
+      "target": "neck_length",
+      "mae_against_exact_cm": 2.1757942061627857,
+      "rmse_against_exact_cm": 2.681434029702191,
+      "bias_against_exact_cm": 1.877128606807299
+    },
+    {
+      "model": "exact_v2_cv",
+      "target": "neck_length",
+      "mae_against_exact_cm": 0.9172453911611237,
+      "rmse_against_exact_cm": 1.1588929865932749,
+      "bias_against_exact_cm": -0.004296191313935621
+    }
+  ],
+  "ratio_bucket_impact": {
+    "thigh_calf_ratio": {
+      "thresholds": {
+        "F": {
+          "p33": 0.8329430325596435,
+          "p67": 0.8806885091204391
+        },
+        "M": {
+          "p33": 0.7556082200446639,
+          "p67": 0.8082655706911501
+        }
+      },
+      "legacy_same_bucket_rate": 0.34782608695652173,
+      "legacy_changed_bucket_rate": 0.6521739130434783,
+      "exact_v2_cv_same_bucket_rate": 0.3661092530657748,
+      "exact_v2_cv_changed_bucket_rate": 0.6338907469342252
+    },
+    "torso_leg_ratio": {
+      "thresholds": {
+        "F": {
+          "p33": 0.5366449311930368,
+          "p67": 0.5680549364015892
+        },
+        "M": {
+          "p33": 0.5234608949431043,
+          "p67": 0.551796665654563
+        }
+      },
+      "legacy_same_bucket_rate": 0.34046822742474914,
+      "legacy_changed_bucket_rate": 0.6595317725752509,
+      "exact_v2_cv_same_bucket_rate": 0.37190635451505016,
+      "exact_v2_cv_changed_bucket_rate": 0.6280936454849498
+    }
+  }
+}

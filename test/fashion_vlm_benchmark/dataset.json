@@ -1,0 +1,213 @@
+{
+  "schema_version": 2,
+  "description": "기존 Wardrobe 이미지 프로세서 출력 계약 기준 Fashion VLM 상품 이미지 검수 데이터셋",
+  "samples": [
+    {
+      "id": "01_tshirt",
+      "input_mode": "catalog",
+      "file_name": "01_tshirt.jpg",
+      "product_name": "블랙 백 그래픽 반팔 티셔츠",
+      "expected": {
+        "item_name": "블랙 그래픽 반팔 티셔츠",
+        "category_large": "상의",
+        "category_small": "티셔츠",
+        "season": ["여름"],
+        "style": ["캐주얼", "스트릿"],
+        "color": "블랙",
+        "pattern": "그래픽/로고",
+        "fit": "레귤러핏",
+        "material": "코튼",
+        "sleeve": "반팔",
+        "length": "기본",
+        "usage": ["데일리", "외출"],
+        "layer_role": "기본 상의",
+        "layer_order": 1
+      },
+      "notes": "등판에 레터링과 그래픽 프린트가 있는 블랙 반팔 티셔츠"
+    },
+    {
+      "id": "02_shirt",
+      "input_mode": "catalog",
+      "file_name": "02_shirt.jpg",
+      "product_name": "아이보리 스트라이프 셔츠",
+      "expected": {
+        "item_name": "아이보리 스트라이프 긴팔 셔츠",
+        "category_large": "상의",
+        "category_small": "셔츠/블라우스",
+        "season": ["봄", "가을", "간절기"],
+        "style": ["캐주얼", "베이직"],
+        "color": "아이보리",
+        "pattern": "스트라이프",
+        "fit": "레귤러핏",
+        "material": "코튼",
+        "sleeve": "긴팔",
+        "length": "기본",
+        "usage": ["데일리", "외출", "출근"],
+        "layer_role": "기본 상의",
+        "layer_order": 1
+      },
+      "notes": "세로 스트라이프 패턴과 가슴 포켓이 있는 긴팔 버튼업 셔츠"
+    },
+    {
+      "id": "03_knit",
+      "input_mode": "catalog",
+      "file_name": "03_knit.jpg",
+      "product_name": "그레이 브이넥 니트",
+      "expected": {
+        "item_name": "그레이 오버핏 브이넥 니트",
+        "category_large": "상의",
+        "category_small": "니트/스웨터",
+        "season": ["가을", "겨울", "간절기"],
+        "style": ["캐주얼", "미니멀"],
+        "color": "그레이",
+        "pattern": "무지",
+        "fit": "오버핏",
+        "material": "니트",
+        "sleeve": "긴팔",
+        "length": "기본",
+        "usage": ["데일리", "외출"],
+        "layer_role": "기본 상의",
+        "layer_order": 1
+      },
+      "notes": "굵은 니트 조직과 브이넥 디자인의 긴팔 니트"
+    },
+    {
+      "id": "04_jacket",
+      "input_mode": "catalog",
+      "file_name": "04_jacket.jpeg",
+      "product_name": "블랙 집업 재킷",
+      "expected": {
+        "item_name": "블랙 카라 집업 자켓",
+        "category_large": "아우터",
+        "category_small": "자켓",
+        "season": ["봄", "가을", "간절기"],
+        "style": ["미니멀", "시크"],
+        "color": "블랙",
+        "pattern": "무지",
+        "fit": "레귤러핏",
+        "material": null,
+        "sleeve": "긴팔",
+        "length": "기본",
+        "usage": ["데일리", "외출"],
+        "layer_role": "아우터",
+        "layer_order": 3
+      },
+      "notes": "셔츠형 카라와 전면 지퍼가 있는 블랙 자켓. 소재는 이미지로 확정하지 않음"
+    },
+    {
+      "id": "05_pants",
+      "input_mode": "catalog",
+      "file_name": "05_pants.jpeg",
+      "product_name": "라이트 블루 와이드 데님 팬츠",
+      "expected": {
+        "item_name": "스카이블루 와이드 데님 팬츠",
+        "category_large": "하의",
+        "category_small": "데님 팬츠",
+        "season": ["봄", "가을", "간절기"],
+        "style": ["캐주얼", "스트릿"],
+        "color": "스카이블루",
+        "pattern": "무지",
+        "fit": "와이드핏",
+        "material": "데님",
+        "sleeve": null,
+        "length": "롱",
+        "usage": ["데일리", "외출"],
+        "layer_role": null,
+        "layer_order": null
+      },
+      "notes": "연청 색상의 긴 기장 와이드 데님 팬츠"
+    },
+    {
+      "id": "06_skirt",
+      "input_mode": "catalog",
+      "file_name": "06_skirt.jpeg",
+      "product_name": "차콜 셔링 플레어 스커트",
+      "expected": {
+        "item_name": "그레이 셔링 롱 플레어 스커트",
+        "category_large": "하의",
+        "category_small": "스커트",
+        "season": ["봄", "여름"],
+        "style": ["러블리", "페미닌"],
+        "color": "그레이",
+        "pattern": "무지",
+        "fit": "와이드핏",
+        "material": null,
+        "sleeve": null,
+        "length": "롱",
+        "usage": ["데일리", "외출"],
+        "layer_role": null,
+        "layer_order": null
+      },
+      "notes": "허리 아래 셔링과 밑단 장식이 있는 차콜 플레어 스커트. 소재는 이미지로 확정하지 않음"
+    },
+    {
+      "id": "07_dress",
+      "input_mode": "catalog",
+      "file_name": "07_dress.jpeg",
+      "product_name": "화이트 슬리브리스 미니 원피스",
+      "expected": {
+        "item_name": "화이트 슬림핏 민소매 원피스",
+        "category_large": "원피스/세트",
+        "category_small": "원피스",
+        "season": ["여름"],
+        "style": ["러블리", "페미닌"],
+        "color": "화이트",
+        "pattern": "무지",
+        "fit": "슬림핏",
+        "material": null,
+        "sleeve": "민소매",
+        "length": "기본",
+        "usage": ["외출", "휴양지"],
+        "layer_role": "기본 상의",
+        "layer_order": 1
+      },
+      "notes": "상체는 몸에 맞고 치마 부분이 퍼지는 민소매 미니 원피스. 소재는 이미지로 확정하지 않음"
+    },
+    {
+      "id": "08_shoes",
+      "input_mode": "catalog",
+      "file_name": "08_shoes.jpg",
+      "product_name": "블랙 화이트 로고 로우탑 스니커즈",
+      "expected": {
+        "item_name": "블랙 화이트 로고 로우탑 스니커즈",
+        "category_large": "신발",
+        "category_small": "스니커즈",
+        "season": ["봄", "여름", "가을", "간절기"],
+        "style": ["캐주얼", "스포티"],
+        "color": "멀티",
+        "pattern": "그래픽/로고",
+        "fit": null,
+        "material": null,
+        "sleeve": null,
+        "length": null,
+        "usage": ["데일리", "외출"],
+        "layer_role": null,
+        "layer_order": null
+      },
+      "notes": "블랙 어퍼와 화이트 끈 및 밑창이 조합된 로우탑 스니커즈"
+    },
+    {
+      "id": "09_bag",
+      "input_mode": "catalog",
+      "file_name": "09_bag.jpg",
+      "product_name": "블랙 토트백",
+      "expected": {
+        "item_name": "블랙 레더 토트백",
+        "category_large": "가방",
+        "category_small": "토트백",
+        "season": [],
+        "style": ["포멀", "미니멀"],
+        "color": "블랙",
+        "pattern": "무지",
+        "fit": null,
+        "material": "레더",
+        "sleeve": null,
+        "length": null,
+        "usage": ["데일리", "외출", "출근"],
+        "layer_role": null,
+        "layer_order": null
+      },
+      "notes": "긴 손잡이와 사다리꼴 형태를 가진 블랙 토트백"
+    }
+  ]
+}

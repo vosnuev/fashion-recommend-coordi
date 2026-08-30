@@ -1,0 +1,26 @@
+# 빌드 컨텍스트는 collector/ 이다.
+#   docker build -f eleven/Dockerfile.eleven collector/
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    TZ=Asia/Seoul
+
+WORKDIR /app/eleven
+
+COPY eleven/requirements.eleven.txt /app/eleven/requirements.txt
+RUN pip install --no-cache-dir -r /app/eleven/requirements.txt
+
+# Claude provider 사용 시 Claude Code CLI를 이미지에 포함한다.
+ARG INSTALL_CLAUDE_CLI=false
+RUN if [ "$INSTALL_CLAUDE_CLI" = "true" ]; then \
+        apt-get update && apt-get install -y --no-install-recommends nodejs npm \
+        && npm install -g @anthropic-ai/claude-code \
+        && apt-get clean && rm -rf /var/lib/apt/lists/*; \
+    fi
+
+COPY util /app/util
+COPY naver/keywords.py naver/attribute_extractor.py naver/category_mapping.py /app/naver/
+COPY eleven /app/eleven
+
+CMD ["python", "/app/eleven/eleven_collector_db.py", "--scheduler"]

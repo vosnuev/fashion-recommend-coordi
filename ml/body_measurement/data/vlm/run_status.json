@@ -1,0 +1,24 @@
+{
+  "status": "aligned_from_existing_predictions",
+  "reason": "비용이 드는 VLM 재호출 없이 기존 redefined-9targets 결과를 새 11개 CSV 계약으로 정렬했습니다. 기존 응답에 torso_length/leg_length가 없으면 해당 컬럼은 비워 둡니다.",
+  "model": "moonshotai/kimi-k2.5",
+  "validation_rows": 36,
+  "test_rows": 145,
+  "validation_result": "data/vlm/kimi-k2.5/validation-redefined-11targets/predictions.csv",
+  "test_result": "data/vlm/kimi-k2.5/test-redefined-11targets/predictions.csv",
+  "prompt_schema": "body_measurement_prompt_full.j2 + body_measurement_schema_full.json",
+  "targets": [
+    "shoulder",
+    "chest",
+    "waist",
+    "hip",
+    "thigh_length",
+    "calf_length",
+    "torso_length",
+    "leg_length",
+    "neck_length",
+    "thigh_calf_ratio",
+    "torso_leg_ratio"
+  ],
+  "ground_truth_status": "same_image_profile_lacks_some_new_landmarks"
+}

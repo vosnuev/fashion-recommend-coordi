@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100" role="img" aria-labelledby="title desc">
+  <title id="title">사진 기반 신체치수 추정 멀티모달 후보 비교</title>
+  <desc id="desc">이미지에서 텍스트를 출력하는 여섯 후보 모델을 실행 위치, 크기, 라이선스, 비용 기준으로 비교한다. 실제 치수 정확도는 아직 검증 전이다.</desc>
+  <style>
+    .bg { fill:#f8fafc; } .card { fill:#ffffff; stroke:#dbe4ee; stroke-width:2; }
+    .title { font:700 35px 'Malgun Gothic', Arial, sans-serif; fill:#0f172a; }
+    .sub { font:500 17px 'Malgun Gothic', Arial, sans-serif; fill:#475569; }
+    .h { font:700 21px 'Malgun Gothic', Arial, sans-serif; fill:#0f172a; }
+    .label { font:700 16px 'Malgun Gothic', Arial, sans-serif; fill:#0f172a; }
+    .body { font:500 15px 'Malgun Gothic', Arial, sans-serif; fill:#334155; }
+    .small { font:500 13px 'Malgun Gothic', Arial, sans-serif; fill:#475569; }
+    .white { font:700 15px 'Malgun Gothic', Arial, sans-serif; fill:#ffffff; }
+    .grid { stroke:#dbe4ee; stroke-width:1; }
+  </style>
+  <rect class="bg" width="1600" height="1100"/>
+  <text x="70" y="72" class="title">사진 기반 신체치수 추정: 멀티모달 후보 비교</text>
+  <text x="70" y="106" class="sub">공통 조건: 전신 사진 + 성별·키·몸무게 → cm 단위 JSON 텍스트 출력  |  ※ 실제 신체치수 정확도는 아직 검증 전</text>
+
+  <rect x="70" y="145" width="1460" height="250" rx="20" class="card"/>
+  <text x="105" y="190" class="h">한눈에 보기: 어디에서 실행할까?</text>
+  <line x1="105" y1="330" x2="1490" y2="330" class="grid"/>
+  <text x="105" y="365" class="small">무료/로컬 GPU</text>
+  <text x="1135" y="365" class="small">API 호출 비용</text>
+  <line x1="115" y1="280" x2="1475" y2="280" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="245" cy="280" r="42" fill="#16a34a"/><text x="215" y="286" class="white">Qwen 7B</text>
+  <circle cx="480" cy="280" r="42" fill="#16a34a"/><text x="450" y="286" class="white">Intern 8B</text>
+  <circle cx="715" cy="280" r="42" fill="#16a34a"/><text x="686" y="286" class="white">Gemma 12</text>
+  <circle cx="950" cy="280" r="42" fill="#16a34a"/><text x="920" y="286" class="white">Pixtral 12</text>
+  <circle cx="1200" cy="280" r="42" fill="#2563eb"/><text x="1171" y="286" class="white">Flash Lite</text>
+  <circle cx="1405" cy="280" r="42" fill="#f97316"/><text x="1378" y="286" class="white">Flash</text>
+  <rect x="120" y="218" width="132" height="26" rx="13" fill="#dcfce7"/><text x="137" y="237" class="small">오픈웨이트</text>
+  <rect x="1070" y="218" width="160" height="26" rx="13" fill="#dbeafe"/><text x="1086" y="237" class="small">저가 API</text>
+  <rect x="1320" y="218" width="130" height="26" rx="13" fill="#ffedd5"/><text x="1337" y="237" class="small">품질 API</text>
+
+  <rect x="70" y="430" width="1460" height="520" rx="20" class="card"/>
+  <text x="105" y="475" class="h">후보 카드</text>
+  <text x="105" y="502" class="small">✓ = 공식적으로 Image-to-Text / 이미지 입력이 확인됨. 숫자는 모델 크기 또는 API 토큰 가격이다.</text>
+  <line x1="105" y1="530" x2="1490" y2="530" class="grid"/>
+  <text x="120" y="560" class="label">후보</text><text x="390" y="560" class="label">실행</text><text x="585" y="560" class="label">크기·비용</text><text x="840" y="560" class="label">라이선스</text><text x="1050" y="560" class="label">왜 첫 후보인가?</text>
+  <line x1="105" y1="580" x2="1490" y2="580" class="grid"/>
+  <g class="body">
+    <text x="120" y="620">Qwen2.5-VL-7B</text><text x="390" y="620">로컬 GPU / HF</text><text x="585" y="620">7B</text><text x="840" y="620">Apache-2.0</text><text x="1050" y="620">다중 이미지, Alibaba 오픈웨이트</text>
+    <text x="120" y="680">InternVL3-8B</text><text x="390" y="680">로컬 GPU / HF</text><text x="585" y="680">8B</text><text x="840" y="680">Apache-2.0</text><text x="1050" y="680">30B 미만, 비용 없이 비교 가능</text>
+    <text x="120" y="740">Gemma 3 12B IT</text><text x="390" y="740">로컬 GPU / HF</text><text x="585" y="740">12B</text><text x="840" y="740">Gemma 약관</text><text x="1050" y="740">Google 계열 오픈웨이트 대조군</text>
+    <text x="120" y="800">Pixtral-12B</text><text x="390" y="800">로컬 GPU / HF</text><text x="585" y="800">12B + 비전 0.4B</text><text x="840" y="800">Apache-2.0</text><text x="1050" y="800">네이티브 멀티모달 대조군</text>
+    <text x="120" y="860">Gemini 2.5 Flash-Lite</text><text x="390" y="860">Gemini / OpenRouter</text><text x="585" y="860">$0.10/M in, $0.40/M out</text><text x="840" y="860">클라우드 API</text><text x="1050" y="860">저가·대량 스크리닝</text>
+    <text x="120" y="920">Gemini 2.5 Flash</text><text x="390" y="920">Gemini / OpenRouter</text><text x="585" y="920">$0.30/M in, $2.50/M out</text><text x="840" y="920">클라우드 API</text><text x="1050" y="920">품질 상한 비교군</text>
+  </g>
+  <g stroke="#e2e8f0" stroke-width="1"><line x1="105" y1="640" x2="1490" y2="640"/><line x1="105" y1="700" x2="1490" y2="700"/><line x1="105" y1="760" x2="1490" y2="760"/><line x1="105" y1="820" x2="1490" y2="820"/><line x1="105" y1="880" x2="1490" y2="880"/></g>
+
+  <rect x="70" y="980" width="1460" height="70" rx="20" fill="#e0f2fe"/>
+  <text x="105" y="1010" class="label">최종 판정</text>
+  <text x="105" y="1036" class="body">같은 시험지에서 사진+신체정보 MAE가 신체정보만 쓴 기준선보다 낮아야 통과. JSON 안정성·거부율·일상복 견고성·비용도 함께 평가한다.</text>
+</svg>

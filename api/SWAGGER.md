@@ -27,9 +27,6 @@ DJANGO_SETTINGS_MODULE=config.settings.swagger python manage.py runserver
 ```bash
 # 일회성 실행 (셸 환경변수가 .env 값보다 우선)
 DJANGO_SETTINGS_MODULE=config.settings.swagger docker compose --profile api up -d --build
-
-# 인증 우회까지 (로컬 전용)
-DJANGO_SETTINGS_MODULE=config.settings.swagger_noauth docker compose --profile api up -d --build
 ```
 
 상시 사용하려면 Infisical(dev)의 `DJANGO_SETTINGS_MODULE` 값을 바꾼 뒤 `.env`를 다시 export한다.
@@ -41,3 +38,4 @@ DJANGO_SETTINGS_MODULE=config.settings.swagger_noauth docker compose --profile a
 - OpenAPI schema: `http://localhost:8000/api/schema/`
 
 Swagger 설정은 개발 환경 설정을 확장하므로 운영 환경 설정으로 사용하지 않는다.
+보호된 API는 Swagger UI의 Authorize에서 정상 JWT를 입력해 호출한다.

@@ -1,0 +1,4 @@
+file_name,golden_id,source,source_uri,usage_scope,original_exposable,presentation_group,style,season,occasion,selection_reason,same_shoot_group,split
+look-001.jpg,golden-001,team-curation,s3://example-private/golden/pilot/look-001.jpg,INTERNAL,false,woman,미니멀;캐주얼,봄;가을,데일리;출근,색과 실루엣 균형을 검토하기 위해 선정,shoot-001,KNOWLEDGE
+look-002.jpg,golden-002,team-curation,s3://example-private/golden/pilot/look-002.jpg,INTERNAL,false,man,스트릿,가을,데일리,볼륨 대비의 경계 사례로 선정,shoot-002,KNOWLEDGE
+

@@ -144,11 +144,11 @@ export function DesktopLanding() {
 }
 
 const styles = StyleSheet.create({
-  page: { flex: 1, backgroundColor: Editorial.white },
+  page: { flex: 1, backgroundColor: Editorial.surface },
   pageContent: { paddingBottom: 0 },
   inner: { width: '100%', maxWidth: CONTENT_MAX, marginHorizontal: 'auto' },
 
-  nav: { borderBottomWidth: 1, borderBottomColor: ink(0.06), backgroundColor: Editorial.white },
+  nav: { borderBottomWidth: 1, borderBottomColor: ink(0.06), backgroundColor: Editorial.surface },
   navInner: {
     width: '100%',
     maxWidth: CONTENT_MAX,
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
   /* 세로 배치에선 flex:1이 남는 높이를 전부 먹어 이미지를 찌그러뜨린다 → 콘텐츠 높이로 되돌린다.
      flex:0 은 flexBasis:0% 까지 걸려 블록이 높이 0으로 붕괴하므로 basis 를 auto 로 명시한다. */
   heroTextNarrow: { flexGrow: 0, flexShrink: 0, flexBasis: 'auto' },
-  heroKicker: { fontSize: 13, letterSpacing: 3, color: ink(0.45), fontWeight: '600' },
+  heroKicker: { fontSize: 13, letterSpacing: 3, color: Editorial.textCaption, fontWeight: '600' },
   heroTitle: {
     fontFamily: Fonts.serif,
     fontSize: 52,
@@ -185,14 +185,14 @@ const styles = StyleSheet.create({
     fontWeight: HEADING_WEIGHT,
   },
   heroTitleNarrow: { fontSize: 42, lineHeight: 56 },
-  heroBody: { fontSize: 17, lineHeight: 27, color: ink(0.6), maxWidth: 460 },
+  heroBody: { fontSize: 17, lineHeight: 27, color: Editorial.textCaption, maxWidth: 460 },
   heroActions: { gap: 12, marginTop: 28 },
   primaryCta: {
     alignSelf: 'flex-start',
     height: 54,
     paddingHorizontal: 34,
     borderRadius: 999,
-    backgroundColor: Editorial.ink,
+    backgroundColor: Editorial.cta,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
   sectionKicker: {
     fontSize: 12,
     letterSpacing: 2.5,
-    color: ink(0.4),
+    color: Editorial.textCaption,
     fontWeight: '600',
     textAlign: 'center',
   },
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
   featureGrid: { flexDirection: 'row', gap: 28, marginTop: 48 },
   featureGridStacked: { flexDirection: 'column', gap: 40 },
   featureCard: { flex: 1, gap: 10 },
-  featureKicker: { fontSize: 11, letterSpacing: 2, color: ink(0.4), fontWeight: '600', marginTop: 16 },
+  featureKicker: { fontSize: 11, letterSpacing: 2, color: Editorial.textCaption, fontWeight: '600', marginTop: 16 },
   featureTitle: {
     fontFamily: Fonts.serif,
     fontSize: 22,
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
     fontWeight: HEADING_WEIGHT,
   },
-  featureBody: { fontSize: 15, lineHeight: 23, color: ink(0.55) },
+  featureBody: { fontSize: 15, lineHeight: 23, color: Editorial.textCaption },
 
   ctaBand: {
     alignItems: 'center',
@@ -247,19 +247,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: HEADING_WEIGHT,
   },
-  ctaBody: { fontSize: 16, color: ink(0.55), textAlign: 'center' },
+  ctaBody: { fontSize: 16, color: Editorial.textCaption, textAlign: 'center' },
   ctaBandButton: {
     marginTop: 12,
     height: 54,
     paddingHorizontal: 40,
     borderRadius: 999,
-    backgroundColor: Editorial.ink,
+    backgroundColor: Editorial.cta,
     alignItems: 'center',
     justifyContent: 'center',
   },
   ctaBandButtonText: { color: Editorial.white, fontSize: 16, fontWeight: '600' },
 
-  footer: { borderTopWidth: 1, borderTopColor: ink(0.06), backgroundColor: Editorial.white },
+  footer: { borderTopWidth: 1, borderTopColor: ink(0.06), backgroundColor: Editorial.surface },
   footerInner: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -268,5 +268,5 @@ const styles = StyleSheet.create({
     paddingVertical: 36,
   },
   footerBrand: { fontFamily: Fonts.serif, fontSize: 20, color: Editorial.ink },
-  footerText: { fontSize: 13, color: ink(0.45) },
+  footerText: { fontSize: 13, color: Editorial.textCaption },
 });

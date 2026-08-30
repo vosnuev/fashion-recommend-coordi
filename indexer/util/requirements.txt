@@ -1,0 +1,21 @@
+# util 공유 모듈(FashionSigLIPEmbedder) 의존성.
+# product_indexer/requirements.txt, old/requirements.txt가 -r로 참조한다.
+# torch는 CUDA 빌드가 환경(RunPod 베이스 이미지 등)에 이미 있으면 그대로 쓴다.
+# 없는 환경에서는 https://pytorch.org 안내에 따라 CUDA 버전에 맞게 먼저 설치할 것.
+torch>=2.1
+# torch 2.3(베이스 이미지)은 NumPy 1.x 기준 빌드라 numpy 2 유입을 막는다.
+numpy<2
+open_clip_torch>=2.24
+# marqo-fashionSigLIP는 open_clip 자체 토크나이저가 아닌 HFTokenizer를 쓴다.
+# transformers는 open_clip의 선택적 의존성이라 명시해야 하고,
+# SigLIP 토크나이저가 sentencepiece 기반이라 sentencepiece/protobuf도 필요하다.
+# 상한이 4.52인 이유: transformers 4.52.0의 check_torch_load_is_safe()가
+# .bin(pickle) 체크포인트 로드에 torch>=2.6을 강제한다 (CVE-2025-32434).
+# 베이스 이미지는 torch 2.3.1이고 BAAI/bge-m3에는 safetensors 가중치가 없어
+# 우회가 불가능하다. 4.51.3까지는 이 검사가 없다 (직접 확인함).
+# v5는 애초에 torch 최소 버전 요구가 더 높다 (is_torch_available()이 False가 됨).
+# 이 핀을 올리려면 indexer/product_indexer/bge_embedder.py docstring의
+# 선행 조건을 먼저 처리할 것.
+transformers>=4.40,<4.52
+sentencepiece>=0.2
+protobuf>=4.25

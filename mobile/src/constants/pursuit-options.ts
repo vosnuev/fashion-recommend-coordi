@@ -46,6 +46,8 @@ import JoggerPantsIcon from '@/assets/icons/pants-fit/jogger.svg';
 import StraightPantsIcon from '@/assets/icons/pants-fit/straight.svg';
 import SkinnyPantsIcon from '@/assets/icons/pants-fit/skinny.svg';
 import BootcutPantsIcon from '@/assets/icons/pants-fit/bootcut.svg';
+import SlacksPantsIcon from '@/assets/icons/pants-fit/slacks.svg';
+import SemiWidePantsIcon from '@/assets/icons/pants-fit/semi-wide.svg';
 // 바지 기장
 import ShortShortsIcon from '@/assets/icons/pants-length/short-shorts-3.svg';
 import ShortsIcon from '@/assets/icons/pants-length/shorts-5.svg';
@@ -86,8 +88,7 @@ export type CategoryKey =
   | 'necklines'
   | 'sleeves'
   | 'top_fits'
-  | 'top_lengths'
-  | 'occasions';
+  | 'top_lengths';
 
 export const CATEGORY_TITLES: Record<CategoryKey, string> = {
   seasons: '계절',
@@ -101,7 +102,6 @@ export const CATEGORY_TITLES: Record<CategoryKey, string> = {
   sleeves: '소매',
   top_fits: '상의 핏',
   top_lengths: '상의 기장',
-  occasions: '상황',
 };
 
 /**
@@ -154,9 +154,9 @@ export const CATEGORY_OPTIONS: Record<CategoryKey, PreferenceOption[]> = {
     { code: 'beige', label: '베이지', colorHex: '#F5F5DC' },
     { code: 'brown', label: '브라운', colorHex: '#8B4513' },
     { code: 'khaki', label: '카키', colorHex: '#F0E68C' },
+    { code: 'olive', label: '올리브', colorHex: '#6B7A3A' },
+    { code: 'carmel', label: '카멜', colorHex: '#C19A6B' },
     { code: 'denim_blue', label: '데님블루', colorHex: '#1560BD' },
-    { code: 'neon', label: '네온', colorHex: '#39FF14' },
-    { code: 'monotone', label: '모노톤', colorHex: '#A9A9A9' },
     { code: 'light_pink', label: '라이트 핑크', colorHex: '#FFB6C1' },
     { code: 'pink', label: '핑크', colorHex: '#FFC0CB' },
     { code: 'rose', label: '로즈', colorHex: '#FF007F' },
@@ -181,6 +181,8 @@ export const CATEGORY_OPTIONS: Record<CategoryKey, PreferenceOption[]> = {
     { code: 'straight', label: '스트레이트', icon: StraightPantsIcon },
     { code: 'skinny', label: '스키니', icon: SkinnyPantsIcon },
     { code: 'bootcut', label: '부츠컷', icon: BootcutPantsIcon },
+    { code: 'slacks', label: '슬랙스', icon: SlacksPantsIcon },
+    { code: 'semi_wide', label: '세미와이드', icon: SemiWidePantsIcon },
   ],
   pants_lengths: [
     { code: 'short_shorts', label: '짧은 반바지(3부)', icon: ShortShortsIcon },
@@ -236,23 +238,6 @@ export const CATEGORY_OPTIONS: Record<CategoryKey, PreferenceOption[]> = {
     { code: 'regular', label: '레귤러', icon: RegularLengthIcon },
     { code: 'long', label: '롱', icon: LongLengthIcon },
   ],
-  occasions: [
-    { code: 'daily', label: '데일리' },
-    { code: 'homewear', label: '홈웨어' },
-    { code: 'party', label: '파티' },
-    { code: 'clubwear', label: '클럽룩' },
-    { code: 'guest', label: '하객룩' },
-    { code: 'work', label: '출근룩' },
-    { code: 'travel', label: '여행' },
-    { code: 'outdoor', label: '아웃도어' },
-    { code: 'sports', label: '운동' },
-    { code: 'wedding', label: '웨딩' },
-    { code: 'water_festival', label: '워터 페스티벌' },
-    { code: 'resort', label: '휴양지' },
-    { code: 'interview', label: '면접' },
-    { code: 'christmas', label: '크리스마스' },
-    { code: 'body_profile', label: '바디프로필' },
-  ],
 };
 
 export const CATEGORY_ORDER: CategoryKey[] = [
@@ -267,5 +252,4 @@ export const CATEGORY_ORDER: CategoryKey[] = [
   'pants_lengths',
   'skirt_lengths',
   'skirt_types',
-  'occasions',
 ];

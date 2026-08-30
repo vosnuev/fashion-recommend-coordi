@@ -1,0 +1,42 @@
+{
+  "serving_status": "core_measurements_only",
+  "serving_targets": ["chest", "waist", "hip", "shoulder"],
+  "length_replacement": "hist_gradient_boosting_exact_lengths_v2.joblib",
+  "source": "SizeKorea 8차 직접측정 개인별 프로필 (이미지 세트 181명)",
+  "features": [
+    "gender",
+    "height",
+    "weight"
+  ],
+  "targets": [
+    "chest",
+    "waist",
+    "hip",
+    "thigh",
+    "calf",
+    "arm",
+    "shoulder",
+    "thigh_length",
+    "calf_length",
+    "torso_length",
+    "leg_length",
+    "neck_length"
+  ],
+  "ratios": {
+    "thigh_calf_ratio": "thigh_length / calf_length",
+    "torso_leg_ratio": "torso_length / leg_length"
+  },
+  "length_definitions": {
+    "thigh_length": "샅높이 - 무릎높이",
+    "calf_length": "무릎높이 (바닥 기준, 신발굽 제외)",
+    "torso_length": "겨드랑높이 - 엉덩이높이",
+    "leg_length": "샅높이 (바닥 기준, 신발굽 제외)",
+    "neck_length": "목뒤높이 - 겨드랑높이"
+  },
+  "rows": {
+    "profiles": 181,
+    "trained": 172
+  },
+  "seed": 42,
+  "note": "3D 기준값과 숫자가 호환되지 않는다. 골든셋 임계값을 이 분포로 재산출해야 한다."
+}

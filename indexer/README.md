@@ -1,83 +1,78 @@
-# indexer — S3 패션아이템 → 임베딩 → Qdrant
+# indexer — 임베딩 → Qdrant 적재 GPU worker
 
-S3의 패션 아이템(사진 + 텍스트)을 **Marqo Fashion SigLIP**으로 임베딩해
-Qdrant(REST API)에 적재하는 독립 실행 배치 구성요소.
-`collector`가 "외부 소스 → PostgreSQL"이라면, indexer는 "S3 → 벡터 DB"를 담당한다.
+컨테이너별로 패키지를 분리했다. 각 패키지는 자기 Dockerfile과 requirements를
+가지며, 공용 모듈만 `util/`에 둔다.
 
-현재 대상: **11번 ETRI 패션 코디 데이터셋** (`s3://skn28-cozy/11. 한국전자통신연구원_...패션 코디 데이터셋/`)
-
-## 데이터셋 구조 (11번)
-
-| 파일 | 내용 |
-|------|------|
-| `mdata.wst.txt.2020.6.23` | 아이템 메타데이터 (EUC-KR, 탭 구분). 아이템ID/구분/카테고리/속성/설명 |
-| `img/*.jpg` | 아이템 이미지 3,351장 (`BL-001.jpg` 형식) |
-| `ddata.wst.txt.*`, `ac_eval_*` | 코디 추천 대화 데이터 (indexer에서는 사용 안 함) |
-
-- 구분: `T` 상의, `B` 하의, `O` 아우터, `S` 신발
-- 카테고리(13종): BL 블라우스, CD 가디건, CT 코트, JK 재킷, JP 점퍼, KN 니트,
-  OP 원피스, PT 팬츠, SE 신발, SH 셔츠, SK 스커트, SW 스웨터, VT 베스트
-- 속성: `F` 형태, `M` 소재, `C` 색상, `E` 감성
-
-## Qdrant 스키마
-
-- 컬렉션: `QDRANT_COLLECTION` (기본 `fashion_items`)
-- named vector 2개 (cosine, 768차원):
-  - `image` — 모든 아이템
-  - `text` — mdata 설명이 있는 아이템만 (카테고리+색상+감성+형태+소재 문장)
-- payload: `item_id`, `part(_ko)`, `category(_ko)`, `features`(속성별 설명), `s3_bucket`, `s3_key`, `text`, `dataset`
-- point id = `uuid5("etri_fashion_poc_11:{item_id}")` → **재실행 멱등** (중복 적재 없음)
-
-## 실행
-
-### 필요 환경변수 (루트 `.env` 또는 컨테이너 주입)
-
-```bash
-QDRANT_URL=http://<qdrant-호스트>:6333   # 프로젝트 qdrant 컨테이너
-QDRANT_API_KEY=                          # 설정된 경우만
-QDRANT_COLLECTION=fashion_items
-AWS_ACCESS_KEY_ID=...                    # S3 읽기 권한 (또는 IAM 역할/프로파일)
-AWS_SECRET_ACCESS_KEY=...
-AWS_DEFAULT_REGION=ap-southeast-2
+```text
+indexer/
+├── util/                 # 두 컨테이너가 공유하는 모듈
+│   ├── embedder.py       #   FashionSigLIPEmbedder (model_id·device를 인자로 받음)
+│   └── requirements.txt  #   torch / open_clip / transformers 등 공용 의존성
+├── product_indexer/      # [운영] 네이버·11번가 상품 임베딩 worker
+│   ├── Dockerfile.product-indexer
+│   ├── requirements.txt  #   -r ../util/requirements.txt + 상품 파이프라인 의존성
+│   ├── product_indexer.py / product_indexer_api.py / product_config.py
+│   ├── product_assets.py / product_catalog_api.py / product_qdrant.py
+│   ├── product_text.py / bge_embedder.py
+│   ├── tests/
+│   └── PRODUCTS_README.md
+└── old/                  # [레거시] ETRI 패션 코디 데이터셋 적재
+    ├── Dockerfile.indexer.old
+    ├── requirements.txt
+    ├── config.py / etri_dataset.py / fashion_indexer.py / qdrant_loader.py
+    └── README.md
 ```
 
-### GPU 환경에서 직접 실행 (RunPod 등)
+## 빌드 컨텍스트
+
+두 Dockerfile 모두 `util/`을 함께 COPY 해야 하므로 **빌드 컨텍스트는 `indexer/`**이고
+`-f`로 패키지 안의 Dockerfile을 지정한다.
+
+```bash
+# 운영 상품 임베딩 worker (기본 CMD: drain 트리거 HTTP API)
+docker build -f indexer/product_indexer/Dockerfile.product-indexer \
+  -t skn28-product-indexer indexer/
+
+# 레거시 ETRI 적재 배치
+docker build -f indexer/old/Dockerfile.indexer.old \
+  -t skn28-indexer-old indexer/
+```
+
+## GPU 서버 (docker compose)
+
+운영에서는 루트 `docker-compose.gpu.yml`로 image-processor와 함께 띄운다.
+
+```bash
+./run-gpu.sh                                          # 시크릿 내보내기 + 기동
+docker compose -f docker-compose.gpu.yml up -d --build product-indexer
+```
+
+`.env`는 루트 하나만 쓴다. compose가 `env_file: .env`로 값을 컨테이너 환경변수에
+직접 주입하므로 **이미지 안에는 `.env` 파일이 없다**. 반대로 아래처럼 리포에서
+직접 실행할 때는 코드가 루트 `.env` 파일을 읽어야 하는데, 두 경우를 모두
+만족시키려고 `util/env.py`의 `load_project_env()`가
+`ENV_FILE` 지정 → 상위 디렉터리 탐색 → (없으면) 조용히 통과 순으로 동작한다.
+항상 `override=False`라 compose가 주입한 값을 `.env` 파일이 덮어쓰지 않는다.
+
+## 로컬 실행
+
+`indexer/`를 import 루트로 삼는다.
 
 ```bash
 cd indexer
-pip install -r requirements.txt   # torch는 CUDA 빌드가 이미 있으면 재설치 안 됨
-python fashion_indexer.py --limit 32    # 스모크 테스트
-python fashion_indexer.py               # 전체 적재 (3090 기준 수 분)
+pip install -r product_indexer/requirements.txt
+python -m product_indexer.product_indexer --once --batch-size 2
+python -m product_indexer.product_indexer_api
+
+pip install -r old/requirements.txt
+python -m old.fashion_indexer --limit 32
 ```
 
-### Docker
+## 테스트
 
 ```bash
-docker build -f indexer/Dockerfile.indexer -t skn28-indexer indexer/
-docker run --gpus all --env-file .env skn28-indexer --limit 32
-docker run --gpus all --env-file .env skn28-indexer
+cd indexer
+python -m unittest discover -s product_indexer/tests -t .
 ```
 
-옵션: `--limit N`(상한), `--batch-size N`(기본 64), `--recreate`(컬렉션 재생성), `--category BL`(특정 카테고리만)
-
-## 적재 확인 / 검색 예시 (Qdrant REST)
-
-```bash
-# 적재 수 확인
-curl "$QDRANT_URL/collections/fashion_items" | jq .result.points_count
-
-# 텍스트 벡터로 유사 아이템 검색 (쿼리 벡터는 동일 모델로 임베딩해서 사용)
-curl -X POST "$QDRANT_URL/collections/fashion_items/points/query" \
-  -H "Content-Type: application/json" \
-  -d '{"query": [/* 768-dim */], "using": "image", "limit": 5, "with_payload": true}'
-```
-
-## 주의 / 알려진 한계
-
-- **한국어 텍스트 임베딩 품질**: Marqo Fashion SigLIP은 영어 패션 텍스트로 학습된
-  모델이라 한국어 mdata 설명의 임베딩 품질에 한계가 있다. 이미지 벡터를 기본 검색
-  축으로 쓰고, 한국어 텍스트 검색 품질이 중요해지면 다국어 모델 도입을 검토할 것.
-- **텍스트 컨텍스트 64 토큰**: 초과분은 잘린다. 중요한 속성(카테고리·색상·감성)을
-  앞쪽에 배치해 완화했다.
-- 모델 래퍼(`embedder.py`)는 추후 추천 API가 쿼리 임베딩에 재사용할 수 있도록
-  `ml/`로 이동을 검토한다 (현재는 컨테이너 자급자족을 위해 indexer에 둠).
+자세한 내용은 `product_indexer/PRODUCTS_README.md`(운영)와 `old/README.md`(레거시)를 본다.

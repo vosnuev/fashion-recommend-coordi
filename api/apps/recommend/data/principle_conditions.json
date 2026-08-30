@@ -1,0 +1,590 @@
+[
+ {
+  "principle_key": "댄디:A1_COLOR_HARMONY:dandy_color_axis_bright_break",
+  "cluster_id": "댄디",
+  "axis": "A1_COLOR_HARMONY",
+  "statement": "오버핏 상의와 넓은 하의로 전체적인 부피를 키우고, 아이템의 길이와 노출되는 부분을 조절해 여유롭고 입체적인 실루엣을 만들었어요.",
+  "conditions": [
+   {
+    "kind": "single",
+    "slot": "top",
+    "attribute": "핏",
+    "value": "오버핏"
+   },
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "핏",
+    "value": "와이드"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "댄디:A1_COLOR_HARMONY:dandy_dark_top_light_pants_dark_shoes",
+  "cluster_id": "댄디",
+  "axis": "A1_COLOR_HARMONY",
+  "statement": "어두운 톤의 상의와 밝은 톤의 하의를 매치하여 명도 대비를 줄 때, 신발을 상의와 유사한 어두운 톤으로 선택하면 상하체의 명도 균형을 맞추고 안정감을 줄 수 있습니다.",
+  "conditions": [
+   {
+    "kind": "single",
+    "slot": "top",
+    "attribute": "명도",
+    "value": "어두움"
+   },
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "명도",
+    "value": "밝음"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "댄디:A2_SILHOUETTE_PROPORTION:cropped_top_high_waist_pants_proportion",
+  "cluster_id": "댄디",
+  "axis": "A2_SILHOUETTE_PROPORTION",
+  "statement": "허리선 부근에서 끝나는 숏/크롭 기장의 아우터나 니트를 매치하고, 허리선이 높은 와이드 또는 스트레이트 팬츠를 조합하면 다리의 시작점이 시각적으로 높아져 하체가 길어 보이는 효과를 얻을 수 있습니다.",
+  "conditions": [
+   {
+    "kind": "single",
+    "slot": "outer",
+    "attribute": "기장",
+    "value": "크롭"
+   },
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "허리",
+    "value": "하이"
+   },
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "핏",
+    "value": "와이드"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "댄디:A2_SILHOUETTE_PROPORTION:tucked_in_top_high_waist_pants_proportion",
+  "cluster_id": "댄디",
+  "axis": "A2_SILHOUETTE_PROPORTION",
+  "statement": "셔츠나 티셔츠 등의 상의를 하이웨스트 팬츠 안으로 넣어 입어 허리선을 명확히 드러내면, 상체가 짧아 보이고 하체로 시선이 길게 이어져 비율이 개선되는 효과를 줍니다.",
+  "conditions": [
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "허리",
+    "value": "하이"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "댄디:A5_MATERIAL_PATTERN:dandy_solid_material_pattern_layering",
+  "cluster_id": "댄디",
+  "axis": "A5_MATERIAL_PATTERN",
+  "statement": "댄디 룩 구성 시 무지 코튼이나 무지 니트 등 패턴이 없는 솔리드 소재를 기본으로 삼아 깔끔함을 극대화하되, 레이어드 시에는 이너의 잔 스트라이프 패턴 등을 칼라나 소매 등 테두리 영역에만 제한적으로 노출시켜 정돈된 시각적 포인트를 줄 수 있다.",
+  "conditions": [
+   {
+    "kind": "single",
+    "slot": "top",
+    "attribute": "패턴",
+    "value": "무지"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "러블리:A2_SILHOUETTE_PROPORTION:lovely_crop_high_waist_proportion",
+  "cluster_id": "러블리",
+  "axis": "A2_SILHOUETTE_PROPORTION",
+  "statement": "허리선 부근에서 끝나는 크롭 상의와 하이웨이스트 하의를 조합하면 허리선을 시각적으로 높여 하체가 길어 보이는 안정적인 비율을 연출할 수 있다.",
+  "conditions": [
+   {
+    "kind": "single",
+    "slot": "top",
+    "attribute": "기장",
+    "value": "크롭"
+   },
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "허리",
+    "value": "하이"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "러블리:A2_SILHOUETTE_PROPORTION:lovely_slim_fit_volume_skirt_contrast",
+  "cluster_id": "러블리",
+  "axis": "A2_SILHOUETTE_PROPORTION",
+  "statement": "몸에 밀착되는 슬림한 상의와 층층이 퍼지는 볼륨감 있는 스커트를 매치하면 상체는 슬림하게 연출하고 하체에는 풍성한 부피감을 주어 극적인 실루엣 대비를 완성할 수 있다.",
+  "conditions": [
+   {
+    "kind": "single",
+    "slot": "top",
+    "attribute": "핏",
+    "value": "슬림"
+   },
+   {
+    "kind": "relation",
+    "relation": "볼륨대비",
+    "slot_a": "top",
+    "slot_b": "bottom"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "러블리:A5_MATERIAL_PATTERN:lovely_texture_contrast_same_color",
+  "cluster_id": "러블리",
+  "axis": "A5_MATERIAL_PATTERN",
+  "statement": "동일한 색상 계열이나 톤의 아이템을 매치할 때, 표면의 질감(케이블 니트, 데님, 무광 코튼, 광택 타이츠, 튤, 퍼 등)이 서로 다른 소재를 혼용함으로써 단조로움을 피하고 입체적인 상하 구분을 형성한다.",
+  "conditions": [
+   {
+    "kind": "relation",
+    "relation": "색통일",
+    "slot_a": "top",
+    "slot_b": "bottom"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "미니멀:A1_COLOR_HARMONY:minimal_brightness_contrast_division",
+  "cluster_id": "미니멀",
+  "axis": "A1_COLOR_HARMONY",
+  "statement": "상하의의 명도를 뚜렷하게 대비시키거나 상하단에 밝은 톤을 배치하여 미니멀한 착장에 시각적인 경계와 균형감을 부여합니다.",
+  "conditions": [
+   {
+    "kind": "relation",
+    "relation": "명도대비",
+    "slot_a": "top",
+    "slot_b": "bottom"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "미니멀:A1_COLOR_HARMONY:minimal_monotone_contrast_accent",
+  "cluster_id": "미니멀",
+  "axis": "A1_COLOR_HARMONY",
+  "statement": "유사한 톤이나 단색조로 통일된 상하의 구성에 명도 대비가 확실한 이너나 액세서리(벨트, 가방 등)를 더해 단조로움을 피하고 시각적 포인트를 형성합니다.",
+  "conditions": [
+   {
+    "kind": "relation",
+    "relation": "색통일",
+    "slot_a": "top",
+    "slot_b": "bottom"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "미니멀:A2_SILHOUETTE_PROPORTION:slim_top_wide_bottom_contrast_silhouette",
+  "cluster_id": "미니멀",
+  "axis": "A2_SILHOUETTE_PROPORTION",
+  "statement": "몸에 붙는 슬림한 상의를 하이웨스트 와이드 슬랙스에 넣어 허리선을 또렷하게 하고, 간결한 상체와 여유 있는 하체의 대비로 깔끔한 실루엣을 만들었어요.",
+  "conditions": [
+   {
+    "kind": "single",
+    "slot": "top",
+    "attribute": "핏",
+    "value": "슬림"
+   },
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "허리",
+    "value": "하이"
+   },
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "핏",
+    "value": "와이드"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "빈티지:A1_COLOR_HARMONY:low_saturation_natural_color_harmony",
+  "cluster_id": "빈티지",
+  "axis": "A1_COLOR_HARMONY",
+  "statement": "세이지 그린, 베이지, 올리브 등 채도를 낮춘 자연색(Earth tone) 위주로 상하의를 매치하면 편안하고 내추럴한 조화를 이루며, 이때 스카프나 반다나 같은 소품으로 포인트를 주어 시선을 모을 수 있습니다.",
+  "conditions": [
+   {
+    "kind": "single",
+    "slot": "top",
+    "attribute": "색",
+    "value": "어스톤"
+   },
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "색",
+    "value": "어스톤"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "스트릿:A1_COLOR_HARMONY:contrast_softening_with_midtones",
+  "cluster_id": "스트릿",
+  "axis": "A1_COLOR_HARMONY",
+  "statement": "명도 대비가 큰 상하의 조합을 매치할 때, 중간 명도의 프린트나 벨트 등의 디테일을 경계 부근에 배치하면 급격한 대비를 완화하고 상하의를 자연스럽게 연결할 수 있다.",
+  "conditions": [
+   {
+    "kind": "relation",
+    "relation": "명도대비",
+    "slot_a": "top",
+    "slot_b": "bottom"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "스트릿:A1_COLOR_HARMONY:monochrome_with_single_point_color",
+  "cluster_id": "스트릿",
+  "axis": "A1_COLOR_HARMONY",
+  "statement": "무채색 위주의 차분한 상하의 구성에 단 하나의 선명한 유색 포인트 아이템을 매치하면, 전체적인 단조로움을 깨고 특정 부위로 시선을 집중시키는 효과를 얻을 수 있다.",
+  "conditions": [
+   {
+    "kind": "single",
+    "slot": "top",
+    "attribute": "색",
+    "value": "무채색"
+   },
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "색",
+    "value": "무채색"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "스트릿:A2_SILHOUETTE_PROPORTION:street_tight_top_wide_bottom_contrast",
+  "cluster_id": "스트릿",
+  "axis": "A2_SILHOUETTE_PROPORTION",
+  "statement": "짧고 몸에 붙는 상의와 크게 퍼지는 와이드·배기 하의를 대비해, 시선과 볼륨을 하체에 집중시키는 과감한 실루엣을 만들었어요.",
+  "conditions": [
+   {
+    "kind": "single",
+    "slot": "top",
+    "attribute": "기장",
+    "value": "크롭"
+   },
+   {
+    "kind": "single",
+    "slot": "top",
+    "attribute": "핏",
+    "value": "슬림"
+   },
+   {
+    "kind": "relation",
+    "relation": "볼륨대비",
+    "slot_a": "top",
+    "slot_b": "bottom"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "스포티:A1_COLOR_HARMONY:color_harmony_principle_1",
+  "cluster_id": "스포티",
+  "axis": "A1_COLOR_HARMONY",
+  "statement": "밝은 색상의 상의와 어두운 색상의 하의를 조합하여 상체와 하체의 명도 차이를 강조하는 것이 균형 잡힌 조화를 이끈다.",
+  "conditions": [
+   {
+    "kind": "single",
+    "slot": "top",
+    "attribute": "명도",
+    "value": "밝음"
+   },
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "명도",
+    "value": "어두움"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "스포티:A1_COLOR_HARMONY:color_harmony_principle_2",
+  "cluster_id": "스포티",
+  "axis": "A1_COLOR_HARMONY",
+  "statement": "부드러운 색조의 상의와 하의가 서로 어우러져 경계가 흐려지면서 전체적인 색의 일관성을 유지하는 것이 중요한 요소이다.",
+  "conditions": [
+   {
+    "kind": "relation",
+    "relation": "색통일",
+    "slot_a": "top",
+    "slot_b": "bottom"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "스포티:A1_COLOR_HARMONY:color_harmony_principle_3",
+  "cluster_id": "스포티",
+  "axis": "A1_COLOR_HARMONY",
+  "statement": "어두운 색상의 상의와 밝은 하의가 같이 배치되어 각 요소 간의 상반된 명도가 조화롭게 어우러지는 것.",
+  "conditions": [
+   {
+    "kind": "single",
+    "slot": "top",
+    "attribute": "명도",
+    "value": "어두움"
+   },
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "명도",
+    "value": "밝음"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "스포티:A2_SILHOUETTE_PROPORTION:A2_SILHOUETTE_PROPORTION_CRITERION_1",
+  "cluster_id": "스포티",
+  "axis": "A2_SILHOUETTE_PROPORTION",
+  "statement": "짧은 크롭 상의와 허리가 높은 쇼츠가 허리를 드러내 상체를 짧게 다리를 길게 나눔",
+  "conditions": [
+   {
+    "kind": "single",
+    "slot": "top",
+    "attribute": "기장",
+    "value": "크롭"
+   },
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "허리",
+    "value": "하이"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "시크:A2_SILHOUETTE_PROPORTION:short_jacket_wide_bottom",
+  "cluster_id": "시크",
+  "axis": "A2_SILHOUETTE_PROPORTION",
+  "statement": "허리에서 끝나는 짧은 라이더와 발등을 덮는 와이드 슬랙스가 상체를 조여주고 하체에 볼륨감을 줌",
+  "conditions": [
+   {
+    "kind": "single",
+    "slot": "outer",
+    "attribute": "기장",
+    "value": "숏"
+   },
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "핏",
+    "value": "와이드"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "아메카지:A1_COLOR_HARMONY:A1_COLOR_HARMONY_002",
+  "cluster_id": "아메카지",
+  "axis": "A1_COLOR_HARMONY",
+  "statement": "비슷한 톤의 셋업으로 전체를 정돈하고, 밝거나 선명한 이너로 한곳에 포인트를 더했어요.",
+  "conditions": [
+   {
+    "kind": "relation",
+    "relation": "색통일",
+    "slot_a": "outer",
+    "slot_b": "bottom"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "아메카지:A2_SILHOUETTE_PROPORTION:short_trucker_high_wide_slacks",
+  "cluster_id": "아메카지",
+  "axis": "A2_SILHOUETTE_PROPORTION",
+  "statement": "허리에서 끝나는 짧은 트러커와 허리가 높은 와이드 슬랙스가 다리 시작점을 위로 올림.",
+  "conditions": [
+   {
+    "kind": "single",
+    "slot": "outer",
+    "attribute": "기장",
+    "value": "숏"
+   },
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "허리",
+    "value": "하이"
+   },
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "핏",
+    "value": "와이드"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "캐주얼:A1_COLOR_HARMONY:color_harmony_1",
+  "cluster_id": "캐주얼",
+  "axis": "A1_COLOR_HARMONY",
+  "statement": "어두운 색상의 상의와 밝은 색상의 하의 또는 신발이 명도를 갈라 상하의 구분을 확실히 한다.",
+  "conditions": [
+   {
+    "kind": "single",
+    "slot": "top",
+    "attribute": "명도",
+    "value": "어두움"
+   },
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "명도",
+    "value": "밝음"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "캐주얼:A2_SILHOUETTE_PROPORTION:length_highlighting",
+  "cluster_id": "캐주얼",
+  "axis": "A2_SILHOUETTE_PROPORTION",
+  "statement": "상체를 좁히고 하체를 부풀리기 위해 몸에 붙는 상의를 허리선에 넣고 하이웨스트 바지나 밑단이 퍼지는 하의를 착용하여 길이를 강조함.",
+  "conditions": [
+   {
+    "kind": "single",
+    "slot": "top",
+    "attribute": "핏",
+    "value": "슬림"
+   },
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "허리",
+    "value": "하이"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "캐주얼:A2_SILHOUETTE_PROPORTION:proportion_balance",
+  "cluster_id": "캐주얼",
+  "axis": "A2_SILHOUETTE_PROPORTION",
+  "statement": "상체와 하체의 비율을 맞추기 위해 위쪽은 좁고 아래쪽은 넓은 실루엣을 연출하여 인체를 균형 있게 보이게 함.",
+  "conditions": [
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "핏",
+    "value": "와이드"
+   },
+   {
+    "kind": "relation",
+    "relation": "볼륨대비",
+    "slot_a": "top",
+    "slot_b": "bottom"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "캐주얼:A7_COMPLETENESS_DETAIL:casual_layering_harmony",
+  "cluster_id": "캐주얼",
+  "axis": "A7_COMPLETENESS_DETAIL",
+  "statement": "단색 위주의 코디에 이너의 목선·밑단, 벨트, 어깨에 묶은 니트처럼 선명한 포인트를 더해 시선을 나누고 옷차림에 깊이감을 만들었어요.",
+  "conditions": [
+   {
+    "kind": "relation",
+    "relation": "색통일",
+    "slot_a": "top",
+    "slot_b": "bottom"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "트렌디:A7_COMPLETENESS_DETAIL:trendy_detailing",
+  "cluster_id": "트렌디",
+  "axis": "A7_COMPLETENESS_DETAIL",
+  "statement": "어두운 색상 계열의 의상에 밝은 선이나 아이템을 추가하여 전체적인 조화를 이루는 것이 효과적이다.",
+  "conditions": [
+   {
+    "kind": "single",
+    "slot": "top",
+    "attribute": "명도",
+    "value": "어두움"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "페미닌:A2_SILHOUETTE_PROPORTION:feminine_silhouette_proportion",
+  "cluster_id": "페미닌",
+  "axis": "A2_SILHOUETTE_PROPORTION",
+  "statement": "허리선을 높여 상체를 짧게 보이게 하고, 아래로 퍼지는 밑단과 긴 길이를 연결해 다리가 길어 보이는 여성스러운 실루엣을 만들었어요.",
+  "conditions": [
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "허리",
+    "value": "하이"
+   },
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "기장",
+    "value": "롱"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "포멀:A2_SILHOUETTE_PROPORTION:silhouette_proportion_1",
+  "cluster_id": "포멀",
+  "axis": "A2_SILHOUETTE_PROPORTION",
+  "statement": "높은 허리선과 발목까지 이어지는 긴 하의를 활용해 세로 흐름을 살리고 다리가 길어 보이게 연출했어요.",
+  "conditions": [
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "허리",
+    "value": "하이"
+   },
+   {
+    "kind": "single",
+    "slot": "bottom",
+    "attribute": "기장",
+    "value": "롱"
+   }
+  ],
+  "source": "chatgpt-draft"
+ },
+ {
+  "principle_key": "포멀:A7_COMPLETENESS_DETAIL:contrasting_elements_as_focus",
+  "cluster_id": "포멀",
+  "axis": "A7_COMPLETENESS_DETAIL",
+  "statement": "단색 위주의 코디에 골드 단추나 블랙 플랫·선글라스처럼 대비되는 작은 포인트를 더해 시선을 모으고 전체 스타일을 정돈했어요.",
+  "conditions": [
+   {
+    "kind": "relation",
+    "relation": "색통일",
+    "slot_a": "top",
+    "slot_b": "bottom"
+   }
+  ],
+  "source": "chatgpt-draft"
+ }
+]
