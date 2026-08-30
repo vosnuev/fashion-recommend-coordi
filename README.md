@@ -152,29 +152,6 @@
 
 <br/>
 
-<div align="right"><a href="#tableContents">목차로 이동</a></div>
-
----
-
-<a name="tableContents"></a>
-
-## 🔎 목차
-
-1. <a href="#mywork">🙋 내가 한 일</a>
-1. <a href="#why">🎯 왜 만들었나</a>
-1. <a href="#features">⭐️ 핵심 기능</a>
-1. <a href="#architecture">⚙️ 시스템 아키텍처</a>
-1. <a href="#pipeline">🧠 AI 파이프라인</a>
-1. <a href="#evaluation">📊 모델 선정과 평가</a>
-1. <a href="#data">🗂 데이터</a>
-1. <a href="#stack">🛠️ 기술 스택</a>
-1. <a href="#structure">📁 저장소 구조</a>
-1. <a href="#quickstart">🚀 빠른 시작</a>
-1. <a href="#api">🔌 주요 API</a>
-1. <a href="#team">👥 팀원 소개</a>
-
-<br/>
-
 <!------- 왜 만들었나 -------->
 
 <a name="why"></a>
