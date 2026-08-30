@@ -194,98 +194,44 @@
 
 <img src="docs/cozy-architecture.png" width="100%">
 
-### 1. 클라이언트 (Client)
-
-Expo Router 기반 React Native 앱. iOS / Android / Web 동시 타겟. 모든 요청은 HTTPS + JWT, 추천·채팅 응답은 SSE로 실시간 스트리밍.
-
-| 서비스 | 역할 | 통신 |
-|---|---|---|
-| `mobile/` | Expo 57 · RN 0.86 · TypeScript · 디자인 시스템 | REST · SSE |
-
-### 2. 애플리케이션 (Application)
-
-Django 5 + DRF + gunicorn, Docker Compose로 AWS EC2에 단일 스택. JWT 인증, drf-spectacular로 스키마 소유, 모든 비동기 작업은 Redis 큐로 위임.
-
-| 서비스 | 역할 | 통신 |
-|---|---|---|
-| `api` | 사용자/인증/옷장/추천/채팅/룩북/캘린더 REST API | 내부 Redis Queue |
-| `users` | OAuth(네이버·카카오·구글) · 이메일 인증 · JWT | HTTP |
-| `home` | 홈 대시보드 (날씨 + 오늘의 룩 상태) | HTTP |
-| `wardrobe` | 개인 옷장 · 일괄 등록 · 해시태그 | HTTP |
-| `catalog` | 상품 카탈로그 (collector가 사용) | DB |
-| `style_calendar` | 착장 캘린더 (슬롯 중복 방지) | HTTP |
-| `lookbook` | 룩북 · 공개 피드 · 탐색 | HTTP |
-| `recommend` | 추천 · 오늘의 룩 · 코디 평가 · 렌더 · 찜 | HTTP + Redis |
-| `chat` | AI 스타일리스트 채팅 (멀티에이전트) | HTTP + SSE |
-
-### 3. 작업 큐 (Job Queue)
-
-LPUSH → `BLMOVE pending→processing` → ack 시에만 제거. 재시도 3회 초과 시 dead-letter 큐로 격리. 모든 비동기 처리의 단일 진입점.
-
-| 컴포넌트 | 역할 |
-|---|---|
-| `Redis 7` | LPUSH · BLMOVE · dead letter |
-| Stream | `outfit_analysis` · `daily_look` · `chat` · `outfit_render` · `wardrobe_jobs` · `wardrobe_item_jobs` |
-
-### 4. 워커 계층 (Worker Layer)
-
-4개 서브계층으로 구성. 모든 워커는 DB를 직접 건드리지 않고, API 콜백 또는 SSE publish로 결과를 돌려준다.
-
-#### 4.1 애플리케이션 워커 (Application Workers)
-
-| 서비스 | 역할 | 통신 |
-|---|---|---|
-| `outfit-worker` | 코디 평가 — 8개 축 점수 + LLM 루브릭 | Redis Stream → SSE |
-| `chat-worker` | 스타일리스트 3인(미니멀·실용·실험) 오케스트레이션 · 결과 푸시 | Redis Stream → SSE |
-| `outfit-render-worker` | 추천 카드 · 가상 착장 이미지 렌더 | Redis Stream |
-| `daily-look-worker` | 오늘의 룩 생성 · 날씨·옷장·TPO 기반 | Redis Stream |
-
-#### 4.2 수집 모듈 (Collectors)
-
-| 서비스 | 역할 | 통신 |
-|---|---|---|
-| `weather-collector` | 기상청 APIHub — 실황/단기/중기 | 외부 API → DB |
-| `naver-collector` | 네이버 쇼핑 Open API + LLM 태깅 | 외부 API → S3 |
-| `eleven-collector` | 11번가 Open API + LLM 태깅 | 외부 API → S3 |
-
-#### 4.3 GPU 워커 (GPU Workers)
-
-docker-compose.gpu.yml (RunPod GPU / GPU EC2) — Redis 추천 워커 이후 HF 모델 캐시 공유로 모델 1회만 다운로드.
-
-| 서비스 | 역할 | 통신 |
-|---|---|---|
-| `image-processor` | 옷장 사진 → ① 열거 → ② 상품컷 → ③ 태깅 → ④ 임베딩 | Redis Stream |
-| `wardrobe-item-tagger` | 단일 아이템 사진 일괄 태깅 (Qwen3-VL) | Redis Stream |
-| `product-indexer` | 상품 이미지·텍스트 임베딩 → Qdrant | Redis Stream → Qdrant |
-| `text-embedding-api` | 채팅 질의 → BGE-M3 벡터 (FashionSigLIP 보조) | HTTP |
-| `golden-set` | 검수된 코디 → 판단 지식·보조 점수 앵커 배치 | 배치 → Qdrant |
-
-### 5. 외부 서비스 · 데이터 소스 (External)
-
-| 서비스 | 용도 |
-|---|---|
-| `OpenRouter` | Gemini 3.5 Flash · GPT-4o · Claude 다중 라우팅 |
-| `OpenAI API` | GPT-4o-mini (페르소나 합성·상품 태깅) |
-| `기상청 APIHub` | 실황·단기·중기 예보 |
-| `네이버 쇼핑 / 11번가` | Open API로 상품 카탈로그 수집 |
-
-### 6. 데이터 계층 (Data Layer)
-
-| 저장소 | 용도 |
-|---|---|
-| `PostgreSQL 16` (RDS) | 사용자·옷장·추천·캘린더·룩북 (원본·관계) |
-| `Redis 7` | 작업 큐 · 캐시 · dead-letter |
-| `Qdrant` (벡터 DB) | `wardrobe_items` · `products_*` · `outfit_goldenset` · `knowledge` |
-| `AWS S3` | 옷장·상품·렌더 이미지 |
-
-### 7. 인프라 · 운영 (Infra)
-
-| 컴포넌트 | 용도 |
-|---|---|
-| `AWS` | EC2 · ECS · RDS · S3 (프로덕션) |
-| `RunPod GPU` | 모델 추론(학습·임시환경) |
-| `Docker Compose` | profiles: `db` / `api` / `weather` / `naver` / `eleven` / `all` |
-| `Infisical` | 시크릿 관리 — `.env`는 `infisical export`로만 생성, 커밋 금지 |
+| 계층 | 서비스 | 역할 | 통신 |
+|---|---|---|---|
+| **클라이언트** | `mobile/` | Expo Router 기반 RN 앱 (iOS · Android · Web) | REST · SSE |
+| **애플리케이션** | `api` | Django/DRF · JWT · 스키마 소유 · 작업 큐잉 | 내부 Redis Queue |
+| | `users` | OAuth(네이버·카카오·구글) · 이메일 인증 · JWT 발급 | HTTP |
+| | `home` | 홈 대시보드 (날씨 + 오늘의 룩 상태) | HTTP |
+| | `wardrobe` | 개인 옷장 · 일괄 등록 · 해시태그 · 공유 | HTTP |
+| | `catalog` | 상품 카탈로그 (collector가 사용) | DB |
+| | `style_calendar` | 착장 캘린더 · 슬롯 중복 방지 | HTTP |
+| | `lookbook` | 룩북 · 공개 피드 · 탐색 | HTTP |
+| | `recommend` | 추천 · 오늘의 룩 · 코디 평가 · 렌더 · 찜 | HTTP + Redis |
+| | `chat` | AI 스타일리스트 채팅 (멀티에이전트 · SSE) | HTTP + SSE |
+| **작업 큐** | `Redis 7` | LPUSH · BLMOVE · dead letter (3회 재시도 후 격리) | — |
+| | Stream | `outfit_analysis` · `daily_look` · `chat` · `outfit_render` · `wardrobe_jobs` · `wardrobe_item_jobs` | Redis Stream |
+| **워커 — 앱** | `outfit-worker` | 코디 평가 (룰 계산 + LLM 루브릭) | Redis Stream → SSE |
+| | `chat-worker` | 스타일리스트 3인(미니멀·실용·실험) 오케스트레이션 | Redis Stream → SSE |
+| | `outfit-render-worker` | 추천 카드 · 가상 착장 이미지 렌더 | Redis Stream |
+| | `daily-look-worker` | 오늘의 룩 생성 · 날씨·옷장·TPO 기반 | Redis Stream |
+| **워커 — 수집** | `weather-collector` | 기상청 APIHub — 실황/단기/중기 | 외부 API → DB |
+| | `naver-collector` | 네이버 쇼핑 Open API + LLM 태깅 | 외부 API → S3 |
+| | `eleven-collector` | 11번가 Open API + LLM 태깅 | 외부 API → S3 |
+| **워커 — GPU** | `image-processor` | 옷장 사진 → ① 열거 → ② 상품컷 → ③ 태깅 → ④ 임베딩 | Redis Stream |
+| | `wardrobe-item-tagger` | 단일 아이템 사진 일괄 태깅 (Qwen3-VL) | Redis Stream |
+| | `wardrobe-reindex-worker` | 기존 크롭·태그 → 임베딩 재생성 | Redis Stream |
+| | `product-indexer` | 상품 이미지·텍스트 임베딩 → Qdrant | Redis Stream → Qdrant |
+| | `text-embedding-api` | 채팅 질의 → BGE-M3 벡터 (한국어) | HTTP |
+| | `golden-set` | 검수된 코디 → 판단 지식·보조 점수 앵커 배치 | 배치 → Qdrant |
+| **외부** | `OpenRouter` | Gemini 3.5 Flash · GPT-4o · Claude 다중 라우팅 | 외부 API |
+| | `OpenAI API` | GPT-4o-mini (페르소나 합성·상품 태깅) | 외부 API |
+| | `기상청 APIHub` | 실황·단기·중기 예보 | 외부 API |
+| | `네이버 쇼핑 / 11번가` | Open API로 상품 카탈로그 수집 | 외부 API |
+| **데이터** | `PostgreSQL 16` (RDS) | 사용자·옷장·추천·캘린더·룩북 (원본·관계) | SQL |
+| | `Qdrant` (벡터 DB) | `wardrobe_items` · `products_*` · `outfit_goldenset` · `knowledge` | REST |
+| | `AWS S3` | 옷장·상품·렌더 이미지 | API |
+| **인프라** | `AWS` | EC2 · ECS · RDS · S3 (프로덕션) | — |
+| | `RunPod GPU` | 모델 추론(학습·임시환경) | — |
+| | `Docker Compose` | profiles: `db` / `api` / `weather` / `naver` / `eleven` / `all` | — |
+| | `Infisical` | 시크릿 관리 — `.env`는 `infisical export`로만 생성, 커밋 금지 | — |
 
 클라이언트 — 백엔드 — AI 워커 — 데이터의 4계층이다. **API 서버는 무거운 AI 작업을 직접 하지 않는다.** 모든 생성·분석 작업은 Redis 신뢰성 큐(`BLMOVE pending→processing`, ack 시에만 제거, 재시도 초과 시 dead 큐)에 넣고 202로 응답하며, 워커가 처리한 뒤 내부 콜백 또는 SSE로 결과를 돌려준다.
 
