@@ -438,8 +438,6 @@ S3 버킷 실측(2026-07-13): **총 6,405,835 객체 / 1.58 TB**. 이 중 약 70
 
 ## 📁 저장소 구조
 
-`` 표시는 내가 주로 작업한 영역이다.
-
 ```
 fashion-recommend-coordi/
 ├── docker-compose.yml          # 통합 스택 (profiles: db/api/weather/naver/eleven/all)
