@@ -641,12 +641,12 @@ python manage.py sweep_stale_analyses             # 고착된 코디 평가 정�
 
 | 이름 | GitHub | 주요 영역 |
 |---|---|---|
-| 이건우 | [@rp1028](https://github.com/rp1028) | 모바일 앱 개발 — 화면 · 네비게이션 · 디자인 시스템 |
-| 신혜지 | [@HyejiShin-20](https://github.com/HyejiShin-20) | 채팅 멀티에이전트 · 추천 파이프라인 |
-| 박건우 | [@92shepherd](https://github.com/92shepherd) | API 아키텍처 · 인프라 · 배포 |
+| 이건우 | [@rp1028](https://github.com/rp1028) | 모바일 UI·UX · 웹 디자인 시스템 · 탭바·사이드바 · 룩북·온보딩·프로필 · 가입·탐색·저장 흐름 · React Native · Expo · TypeScript |
+| 신혜지 | [@HyejiShin-20](https://github.com/HyejiShin-20) | 채팅 멀티에이전트(3인 페르소나) · 추천 파이프라인(교체 적합도·TPO·색상) · 골든셋 원칙 RAG · 룩북 유사상품 · 스타일리스트 · OpenAI/GPT · Qdrant |
+| 박건우 | [@92shepherd](https://github.com/92shepherd) | API 아키텍처 · 인프라·배포 · 채팅/오늘의 룩/가상피팅 워커 · 마이그레이션 충돌 해소 · Django/DRF · Docker · AWS · Redis |
 | **전하영** | [**@vosnuev**](https://github.com/vosnuev) | **신체치수 추정 ML · 공유옷장 FE·BE · 추구미 FE·BE · 골든셋(체형·색상)·가중치 · 캘린더 · 스타일리스트·옷장 채팅 기획·요구사항 · Expo EAS 빌드** |
-| 김민욱 | [@WHwi99](https://github.com/WHwi99) | 가상 착장(VTON) · VLM 벤치마크 · 이미지 워커 |
-| 김지효 | [@jjeoe0317](https://github.com/jjeoe0317) | 룩북 · 캘린더 · 서비스 기획 · 시나리오 정립 |
+| 김민욱 | [@WHwi99](https://github.com/WHwi99) | 가상 착장(VTON) · VLM 벤치마크 · Qwen 옷장 일괄 태깅 · SAM3 · 신체 측정 페이지 · 예산 API · 이미지 워커 |
+| 김지효 | [@jjeoe0317](https://github.com/jjeoe0317) | 룩북 · 캘린더 · 코디 평가 · 이메일 인증 · 체형 온보딩 · 착장 분석 · 관리자 룩·상품 가격 비교 · 서비스 기획 · 시나리오 정립 |
 
 <br/>
 
