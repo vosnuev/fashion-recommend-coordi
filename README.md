@@ -59,7 +59,7 @@
 | `thigh_length` `calf_length` `torso_length` `leg_length` `neck_length` | 5 | `hist_gradient_boosting_exact_lengths_v2` | SizeKorea 8차 **3D 측정** (정제 4,485행) |
 | `thigh_calf_ratio` `torso_leg_ratio` | 2 | 모델 없음 — 서버 후처리 나눗셈 | — |
 
-**세 모델의 학습 모집단이 다르다는 사실을 문서에 못박아 뒀다.** 직접측정 계열(181명)과 3D 계열(4,485명)은 `subject_id` 교집합이 0명이다. 그래서 길이 오차(MAE 0.92 ~ 1.66 cm)와 둘레 오차(MAE 1.17~3.41 cm)를 **하나의 범위로 묶어 인용하면 안 된다** — "MAE 1~1.6cm"라고 말하는 순간 허리(3.406)에서 2배 이상 틀린 주장이 된다.
+**세 모델의 학습 모집단이 다르다는 사실을 문서에 못박아 뒀다.** 직접측정 계열(181명)과 3D 계열(4,485명)은 `subject_id` 교집합이 0명이다. 그래서 길이 오차(MAE 0.92 ~ 1.66 cm)와 둘레 오차(MAE 1.17 ~ 3.41 cm)를 **하나의 범위로 묶어 인용하면 안 된다** — "MAE 1 ~ 1.6cm"라고 말하는 순간 허리(3.406)에서 2배 이상 틀린 주장이 된다.
 
 ### 왜 HistGradientBoosting인가 — KNN이 MAE 1위였는데도
 
