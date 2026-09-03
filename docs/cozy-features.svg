@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 600" width="1100" height="600" role="img" aria-label="COZY 핵심 기능 인포그래픽">
+  <rect x="0" y="0" width="1100" height="600" fill="#FFFFFF"/>
+  <g font-family="Apple SD Gothic Neo, Malgun Gothic, Noto Sans KR, Helvetica Neue, sans-serif">
+
+    <text x="40" y="52" font-size="32" font-weight="700" fill="#111111">COZY · 핵심 기능</text>
+    <text x="40" y="84" font-size="19" fill="#666666">— 내 옷장이 후보 풀 · 오늘 바로 입을 수 있는 코디</text>
+    <rect x="905" y="30" width="155" height="30" rx="15" fill="#FF6633"/>
+    <text x="982" y="50" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">■ = 내가 구현</text>
+
+    <rect x="40" y="112" width="196" height="46" rx="23" fill="#F8B584"/>
+    <text x="138" y="141" font-size="19" font-weight="600" fill="#111111" text-anchor="middle">옷장 등록</text>
+    <path d="M244 135 L266 135 M258 129 L266 135 L258 141" stroke="#FF6633" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="274" y="112" width="196" height="46" rx="23" fill="#F89B6C"/>
+    <text x="372" y="141" font-size="19" font-weight="600" fill="#111111" text-anchor="middle">맥락 수집</text>
+    <path d="M478 135 L500 135 M492 129 L500 135 L492 141" stroke="#FF6633" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="508" y="112" width="196" height="46" rx="23" fill="#FF6633"/>
+    <text x="606" y="141" font-size="19" font-weight="600" fill="#FFFFFF" text-anchor="middle">코디 추천</text>
+    <path d="M712 135 L734 135 M726 129 L734 135 L726 141" stroke="#FF6633" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="742" y="112" width="196" height="46" rx="23" fill="#F8B584"/>
+    <text x="840" y="141" font-size="19" font-weight="600" fill="#111111" text-anchor="middle">평가 · 기록</text>
+
+    <rect x="40" y="192" width="330" height="180" rx="16" fill="#FFFFFF" stroke="#E3E3E3" stroke-width="2"/>
+    <g stroke="#FF6633" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M76 236 a9 9 0 1 1 9 9 v6"/>
+      <path d="M85 251 L62 272 h46 z"/>
+    </g>
+    <text x="124" y="248" font-size="24" font-weight="700" fill="#111111">옷장</text>
+    <text x="70" y="300" font-size="19" fill="#444444">— 사진 1장 → 아이템 자동 분리</text>
+    <text x="70" y="330" font-size="19" fill="#444444">— 카테고리 · 색 · 소재 자동 태깅</text>
+    <text x="70" y="360" font-size="19" fill="#444444">— 일괄 등록 · 개인 해시태그</text>
+
+    <rect x="385" y="192" width="330" height="180" rx="16" fill="#FFFFFF" stroke="#E3E3E3" stroke-width="2"/>
+    <g stroke="#FF6633" stroke-width="3" fill="none" stroke-linecap="round">
+      <circle cx="425" cy="242" r="14"/>
+      <path d="M425 216 v-8 M425 276 v8 M399 242 h-8 M451 242 h8 M407 224 l-6-6 M443 260 l6 6 M443 224 l6-6 M407 260 l-6 6"/>
+    </g>
+    <text x="469" y="251" font-size="24" font-weight="700" fill="#111111">오늘의 룩</text>
+    <text x="415" y="300" font-size="19" fill="#444444">— 날씨 반영 · 자동 생성</text>
+    <text x="415" y="330" font-size="19" fill="#444444">— 조회가 곧 생성 트리거</text>
+    <text x="415" y="360" font-size="19" fill="#444444">— 최근 5일 착장은 제외</text>
+
+    <rect x="730" y="192" width="330" height="180" rx="16" fill="#FFFFFF" stroke="#E3E3E3" stroke-width="2"/>
+    <path d="M772 224 h44 a8 8 0 0 1 8 8 v26 a8 8 0 0 1 -8 8 h-24 l-14 12 v-12 h-6 a8 8 0 0 1 -8 -8 v-26 a8 8 0 0 1 8 -8 z" stroke="#FF6633" stroke-width="3" fill="none" stroke-linejoin="round"/>
+    <text x="838" y="251" font-size="24" font-weight="700" fill="#111111">AI 스타일리스트</text>
+    <text x="760" y="300" font-size="19" fill="#444444">— 스타일리스트 3인 동시 제안</text>
+    <text x="760" y="330" font-size="19" fill="#444444">— 옷장 · 상품 · 지식 동시 검색</text>
+    <text x="760" y="360" font-size="19" fill="#444444">— SSE 실시간 스트리밍</text>
+
+    <rect x="40" y="392" width="330" height="180" rx="16" fill="#FFFFFF" stroke="#E3E3E3" stroke-width="2"/>
+    <g fill="#FF6633">
+      <rect x="64" y="446" width="14" height="24" rx="3"/>
+      <rect x="84" y="430" width="14" height="40" rx="3"/>
+      <rect x="104" y="418" width="14" height="52" rx="3"/>
+    </g>
+    <text x="132" y="452" font-size="24" font-weight="700" fill="#111111">코디 평가</text>
+    <text x="70" y="500" font-size="19" fill="#444444">— 8개 축 · 0~100점</text>
+    <text x="70" y="530" font-size="19" fill="#444444">— 축별 코멘트</text>
+    <text x="70" y="560" font-size="19" fill="#444444">— 근거 없는 축은 끄고 재정규화</text>
+
+    <rect x="385" y="392" width="330" height="180" rx="16" fill="#FFF6F2" stroke="#FF6633" stroke-width="2.5"/>
+    <rect x="385" y="392" width="10" height="180" rx="5" fill="#FF6633"/>
+    <g stroke="#FF6633" stroke-width="3" fill="none" stroke-linecap="round">
+      <circle cx="428" cy="428" r="11"/>
+      <path d="M428 439 v26 M410 450 h36 M428 465 l-13 22 M428 465 l13 22"/>
+    </g>
+    <text x="466" y="452" font-size="24" font-weight="700" fill="#111111">신체치수 ■</text>
+    <text x="415" y="500" font-size="19" fill="#444444">— 키 · 몸무게 → 14개 치수</text>
+    <text x="415" y="530" font-size="19" fill="#444444">— 모델 3개 조합 (무사진)</text>
+    <text x="415" y="560" font-size="19" fill="#444444">— 전신 사진 VLM 보정</text>
+
+    <rect x="730" y="392" width="330" height="180" rx="16" fill="#FFF6F2" stroke="#FF6633" stroke-width="2.5"/>
+    <rect x="730" y="392" width="10" height="180" rx="5" fill="#FF6633"/>
+    <g stroke="#FF6633" stroke-width="3" fill="none">
+      <circle cx="770" cy="432" r="12"/>
+      <circle cx="800" cy="452" r="12"/>
+      <circle cx="770" cy="472" r="12"/>
+      <path d="M780 438 L790 446 M780 466 L790 458" stroke-linecap="round"/>
+    </g>
+    <text x="828" y="452" font-size="24" font-weight="700" fill="#111111">공유 옷장 ■</text>
+    <text x="760" y="500" font-size="19" fill="#444444">— 최대 6명 · 초대 코드 24h</text>
+    <text x="760" y="530" font-size="19" fill="#444444">— 한 옷을 여러 방에 공유</text>
+    <text x="760" y="560" font-size="19" fill="#444444">— 남의 옷도 추천 후보</text>
+
+  </g>
+</svg>
