@@ -71,9 +71,6 @@
 | `thigh/calf/torso/leg/neck_length` | 5 | `hist_gradient_boosting_exact_lengths_v2` | 3D **4,485행** |
 | `thigh_calf_ratio` `torso_leg_ratio` | 2 | 모델 없음 — 서버 후처리 나눗셈 | — |
 
-> ⚠️ **인용 규칙** — 세 모델의 학습 모집단이 서로 다름. 직접측정 계열(181명)과 3D 계열(4,485명)은 `subject_id` 교집합 **0명**.
-> 길이 오차(0.92 ~ 1.66cm)와 둘레 오차(1.17 ~ 3.41cm)를 한 범위로 묶으면 안 됨 — "MAE 1 ~ 1.6cm"는 허리(3.406)에서 2배 이상 틀린 주장.
-
 ---
 
 ### 1-2. 왜 셋으로 쪼갰나 — "오차"가 아니라 "정의"가 틀림
