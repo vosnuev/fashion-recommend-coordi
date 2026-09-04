@@ -290,19 +290,6 @@
 - **팀 인프라** — Infisical 시크릿 온보딩 가이드([`docs/infisical-guide.md`](docs/infisical-guide.md)) 작성. compose가 값을 찾는 두 경로(`env_file` vs `${VAR}` 보간)를 문서화해, 팀에서 반복되던 기동 실패를 정리했다.
 - **실사용 버그** — iPhone portrait 사진 EXIF 회전 허용, 가방 개수 표기 오류, 공유 옷장 타일 텍스트 잘림 등.
 
-### 실기기 빌드 — 팀 EAS 계정에 막혔을 때 [`skncozyhy`](https://expo.dev/accounts/vosnuevo/projects/skncozyhy)
-
-시뮬레이터와 실기기는 다르게 동작하는데, 팀 EAS 프로젝트(`skn-1st`)에 읽기 권한이 없어 `eas project:info`가 **Entity not authorized**로 즉시 실패했다. 권한을 기다리는 대신 **내 Expo 계정에 프로젝트를 새로 파서 같은 코드를 빌드**하는 경로를 만들었다.
-
-- `owner` / `projectId` / `updates.url`을 비워 `eas init`이 내 계정에 새 프로젝트를 만들게 분리
-- `package` · `bundleIdentifier`에 `.mybuild` 접미사 — 팀 앱과 **한 기기에 나란히 설치**되도록 (덮어쓰기 방지)
-- `usesCleartextTraffic` 추가 — Android 9+는 평문 HTTP를 기본 차단해서, 없으면 APK가 로컬 백엔드에 아예 붙지 못한다
-- `mybuild` 프로필 — `preview`를 확장하되 API 주소만 덮어씀. `preview`는 EAS 서버 환경변수를 읽는데 새 프로젝트에는 비어 있어 `API_BASE_URL`이 `localhost`(= 폰 자기 자신)로 떨어진다
-- 마이크 권한(`RECORD_AUDIO`) 등 네이티브 권한 설정 보강
-
-> EAS 빌드 프로필의 원형(`preview` · `production`)은 팀원이 먼저 만들어 뒀고, **개인 계정 분리와 위 4건의 문제 해결이 내 작업**이다.
-
-
 <br/>
 
 <!------- 왜 만들었나 -------->
