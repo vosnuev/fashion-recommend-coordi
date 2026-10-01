@@ -205,6 +205,8 @@ mobile/package-lock.json
 output
 # Local docs/artifacts
 docs/*
+!docs/history/
+!docs/history/**
 !docs/wardrobe-product-import-investigation.md
 !docs/lookbook-admin-csv-guide.md
 !docs/lookbook-api-design.md
